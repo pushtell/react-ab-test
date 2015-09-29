@@ -1,0 +1,13 @@
+{
+  "enforceall": true,
+  "camelcase": false,
+  "nocomma": false,
+  "esnext": true,
+  "node": true,
+  "es3": false,
+  "esnext": true,
+  "mocha": true,
+  "singleGroups": false,
+  "loopfunc": true,
+  "noyield": true
+}

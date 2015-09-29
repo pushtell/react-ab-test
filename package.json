@@ -1,0 +1,44 @@
+{
+  "name": "pushtell-react",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "react": "^0.13.3",
+    "store": "*"
+  },
+  "devDependencies": {
+    "babel": "*",
+    "babel-loader": "*",
+    "assert": "*",
+    "co": "*",
+    "regenerator-loader": "*",
+    "envify": "*",
+    "karma": "*",
+    "karma-chrome-launcher": "*",
+    "karma-mocha": "*",
+    "karma-sourcemap-loader": "*",
+    "karma-webpack": "*",
+    "karma-browserstack-launcher": "*",
+    "karma-firefox-launcher": "*",
+    "es6-promise": "*",
+    "node-uuid": "*"
+  },
+  "scripts": {
+    "test": "./node_modules/karma/bin/karma start test/karma.conf.js",
+    "build": "./node_modules/babel/bin/babel.js ./src --out-dir ./lib"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wehriam/pushtell-react.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/wehriam/pushtell-react/issues"
+  },
+  "homepage": "https://github.com/wehriam/pushtell-react#readme"
+}
