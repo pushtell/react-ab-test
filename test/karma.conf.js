@@ -82,11 +82,10 @@ module.exports = function (karma) {
       noInfo: true,
     }
   };
-  if(process.env.TEST_RUNNER === "browserstack") {
-    var config = require("./config.json");
+  if(process.env.BROWSERSTACK_USERNAME && process.env.BROWSERSTACK_ACCESS_KEY) {
     options.browserStack = {
-      username: config.browserstackUsername,
-      accessKey: config.browserstackAccessKey,
+      username: process.env.BROWSERSTACK_USERNAME,
+      accessKey: process.env.BROWSERSTACK_ACCESS_KEY
     };
     options.browsers = Object.keys(options.customLaunchers);
   } else {

@@ -51,6 +51,9 @@ describe("Core", function() {
     });
     assert.equal(played_variant, "A");
   }));
+  it("should fail.", co.wrap(function *(){
+    assert.equal(true, false);
+  }));
 });
 
 
