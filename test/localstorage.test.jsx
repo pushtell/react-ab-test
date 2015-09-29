@@ -44,12 +44,12 @@ describe("LocalStorage", function() {
     yield new Promise(function(resolve, reject){
       React.render(<AppWithDefaultValue />, document.getElementById("react"), resolve);
     });
-    let elementWithDefualtValue = document.getElementById('expiriment-' + defaultValue);
-    assert.notEqual(elementWithDefualtValue, null);
+    let elementWithDefaultValue = document.getElementById('expiriment-' + defaultValue);
+    assert.notEqual(elementWithDefaultValue, null);
     yield new Promise(function(resolve, reject){
       React.render(<AppWithoutDefaultValue />, document.getElementById("react"), resolve);
     });
-    let elementWithoutDefualtValue = document.getElementById('expiriment-' + defaultValue);
-    assert.notEqual(elementWithoutDefualtValue, null);
+    let elementWithoutDefaultValue = document.getElementById('expiriment-' + defaultValue);
+    assert.notEqual(elementWithoutDefaultValue, null);
   }));
 });
