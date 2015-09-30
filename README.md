@@ -13,7 +13,7 @@ npm install pushtell-react --save
 
 ## Basic Usage
 
-Try it [on JSFiddle](https://jsfiddle.net/ydb573Ly/)
+Try it [on JSFiddle](https://jsfiddle.net/pushtell/m14qvy7r/)
 
 ```js
 
