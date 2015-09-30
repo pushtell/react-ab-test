@@ -23,26 +23,28 @@ var App = React.createClass({
     this.refs.expiriment.win();
   },
   render: function(){
-    return <Expiriment ref="expiriment" name="your-expiriment-name" defaultValue="A">
-      <Variant name="A"><a id="expiriment-a" href="#A" onClick={this.onClickVariant}>A</a></Variant>
-      <Variant name="B"><a id="expiriment-b" href="#B" onClick={this.onClickVariant}>B</a></Variant>
+    return <Expiriment ref="expiriment" name="your-expiriment-name">
+      <Variant name="A">
+        <a id="expiriment-a" href="#A" onClick={this.onClickVariant}>A</a>
+      </Variant>
+      <Variant name="B">
+        <a id="expiriment-b" href="#B" onClick={this.onClickVariant}>B</a>
+      </Variant>
     </Expiriment>;
   }
 });
 
 // Executed when the component mounts.
 var playSubscription = Expiriment.emitter.addListener('play', function(name, value){
-  console.log(name);  //prints “your-expiriment-name”
-  console.log(value); //prints “A”
+  alert("Displaying expiriment '" + name + "' with variant '" + value + "'");
 });
 
 // Executed when a 'win' is recorded, in this case by this.refs.expiriment.win();
 var winSubscription = Expiriment.emitter.addListener('win', function(name, value){
-  console.log(name);  //prints “your-expiriment-name”
-  console.log(value); //prints “A”
+  alert("Expiriment " + name + " with variant '" + value + "'" was clicked on.");
 });
 
 ```
 
-Try It [on JSFiddle](https://jsfiddle.net/ydb573Ly/)
+Try it [on JSFiddle](https://jsfiddle.net/ydb573Ly/)
 
