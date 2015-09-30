@@ -66,7 +66,7 @@ module.exports = function (karma) {
     webpack: {
       devtool: 'inline-source-map',
       module: {
-        loaders: [
+        preLoaders: [
           {
             exclude: /node_modules/,
             loader: 'babel-loader',
@@ -75,13 +75,11 @@ module.exports = function (karma) {
             exclude: /node_modules/,
             loader: 'regenerator-loader',
             test: /\.jsx$/
-          }
-        ],
-        postLoaders: [
+          },
           {
-            test: /\.jsx?$/,
             exclude: /(test|node_modules|lib)\//,
-            loader: 'istanbul-instrumenter'
+            loader: 'isparta',
+            test: /\.jsx?$/
           }
         ]
       }
