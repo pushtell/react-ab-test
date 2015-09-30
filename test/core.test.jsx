@@ -28,10 +28,10 @@ describe("Core", function() {
     yield new Promise(function(resolve, reject){
       React.render(<App />, document.getElementById("react"), resolve);
     });
-    let element_a = document.getElementById('expiriment-a');
-    let element_b = document.getElementById('expiriment-b');
-    assert.notEqual(element_a, null);
-    assert.equal(element_b, null);
+    let elementA = document.getElementById('expiriment-a');
+    let elementB = document.getElementById('expiriment-b');
+    assert.notEqual(elementA, null);
+    assert.equal(elementB, null);
   }));
   it("should callback when a variant is played.", co.wrap(function *(){
     let played_variant = null;

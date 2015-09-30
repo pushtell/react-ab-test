@@ -18,15 +18,16 @@ describe("LocalStorage", function() {
     document.getElementsByTagName('body')[0].removeChild(container);
   });
   it("should render the correct variant.", co.wrap(function *(){
-    let variant_names = [];
+    let reactElement = document.getElementById("react");
+    let variantNames = [];
     for(let i = 0; i < 100; i++) {
-      variant_names.push(UUID.v4());
+      variantNames.push(UUID.v4());
     }
-    let defaultValue = variant_names[Math.floor(Math.random() * variant_names.length)];
+    let defaultValue = variantNames[Math.floor(Math.random() * variantNames.length)];
     let AppWithDefaultValue = React.createClass({
       render: function(){
         return <Expiriment name="test" defaultValue={defaultValue}>
-          {variant_names.map(name => {
+          {variantNames.map(name => {
             return <Variant key={name} name={name}><div id={'expiriment-' + name}></div></Variant>
           })}
         </Expiriment>;
@@ -35,19 +36,20 @@ describe("LocalStorage", function() {
     let AppWithoutDefaultValue = React.createClass({
       render: function(){
         return <Expiriment name="test">
-          {variant_names.map(name => {
+          {variantNames.map(name => {
             return <Variant key={name} name={name}><div id={'expiriment-' + name}></div></Variant>
           })}
         </Expiriment>;
       }
     });
     yield new Promise(function(resolve, reject){
-      React.render(<AppWithDefaultValue />, document.getElementById("react"), resolve);
+      React.render(<AppWithDefaultValue />, reactElement, resolve);
     });
     let elementWithDefaultValue = document.getElementById('expiriment-' + defaultValue);
     assert.notEqual(elementWithDefaultValue, null);
+    reactElement.innerHTML = "";
     yield new Promise(function(resolve, reject){
-      React.render(<AppWithoutDefaultValue />, document.getElementById("react"), resolve);
+      React.render(<AppWithoutDefaultValue />, reactElement, resolve);
     });
     let elementWithoutDefaultValue = document.getElementById('expiriment-' + defaultValue);
     assert.notEqual(elementWithoutDefaultValue, null);
