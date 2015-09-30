@@ -8,13 +8,14 @@ module.exports = function (karma) {
       'karma-firefox-launcher',
       'karma-chrome-launcher',
       'karma-mocha',
-      'karma-sourcemap-loader',
+      'karma-coveralls',
+      'karma-coverage',
       'karma-sourcemap-loader',
       'karma-webpack',
       'karma-browserstack-launcher'
     ],
     preprocessors: {
-      'tests.bundle.js': [ 'webpack', 'sourcemap' ]
+      'tests.bundle.js': ['webpack', 'sourcemap'],
     },
     customLaunchers: {
       bs_windows_7_ie_9: {
@@ -76,6 +77,13 @@ module.exports = function (karma) {
             test: /\.jsx$/
           }
         ],
+        postLoaders: [
+          {
+            test: /\.jsx?$/,
+            exclude: /(test|node_modules|lib)\//,
+            loader: 'istanbul-instrumenter'
+          }
+        ]
       }
     },
     webpackMiddleware: {
@@ -90,6 +98,13 @@ module.exports = function (karma) {
     options.browsers = Object.keys(options.customLaunchers);
   } else {
     options.browsers = ['Chrome'];
+  }
+  if(process.env.COVERALLS_REPO_TOKEN) {
+    options.reporters = options.reporters.concat(['coverage', 'coveralls']);
+    options.coverageReporter = {
+      type: 'lcov',
+      dir: 'coverage/'
+    };
   }
   karma.set(options);
 };

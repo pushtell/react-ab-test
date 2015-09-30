@@ -12,10 +12,11 @@
   },
   "devDependencies": {
     "babel": "*",
-    "babel-loader": "*",
     "assert": "*",
     "co": "*",
     "regenerator-loader": "*",
+    "babel-loader": "*",
+    "istanbul-instrumenter-loader": "*",
     "envify": "*",
     "karma": "*",
     "karma-chrome-launcher": "*",
@@ -25,7 +26,9 @@
     "karma-browserstack-launcher": "*",
     "karma-firefox-launcher": "*",
     "es6-promise": "*",
-    "node-uuid": "*"
+    "node-uuid": "*",
+    "karma-coveralls": "*",
+    "karma-coverage": "*"
   },
   "scripts": {
     "test": "./node_modules/karma/bin/karma start test/karma.conf.js",
