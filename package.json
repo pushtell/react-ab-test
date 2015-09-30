@@ -1,7 +1,7 @@
 {
   "name": "pushtell-react",
   "main": "index.js",
-  "version": "0.0.9",
+  "version": "0.1.0",
   "description": "A/B Testing React Components",
   "directories": {
     "test": "test"
@@ -30,7 +30,8 @@
     "es6-promise": "*",
     "node-uuid": "*",
     "karma-coveralls": "*",
-    "karma-coverage": "*"
+    "karma-coverage": "*",
+    "effroi":"*"
   },
   "scripts": {
     "test": "./node_modules/karma/bin/karma start test/karma.conf.js",

@@ -12,7 +12,11 @@ export default React.createClass({
     onWin: React.PropTypes.func
   },
   statics: {
-    win: Expiriment.win
+    win: Expiriment.win,
+    emitter: Expiriment.emitter
+  },
+  win(){
+    Expiriment.emitter.emit("win", this.props.name, this.state.value);
   },
   getInitialState(){
     Expiriment.expiriments[this.props.name] = Expiriment.expiriments[this.props.name] || {};

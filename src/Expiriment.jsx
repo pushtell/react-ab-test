@@ -2,6 +2,7 @@ import React from 'react';
 import {EventEmitter} from 'fbemitter';
 
 const expiriments = {};
+const values = {};
 const emitter = new EventEmitter();
 
 export default React.createClass({
@@ -15,15 +16,15 @@ export default React.createClass({
   statics: {
     emitter: emitter,
     expiriments: expiriments,
-    win(expirimentName, variantName){
+    win(expirimentName){
       if(typeof expirimentName !== 'string') {
         throw new Error("Required argument 'expirimentName' should have type 'string'");
       }
-      if(typeof variantName !== 'string') {
-        throw new Error("Required argument 'variantName' should have type 'string'");
-      }
-      emitter.emit("win", expirimentName, variantName);
+      emitter.emit("win", expirimentName, values[expirimentName]);
     }
+  },
+  win(){
+    emitter.emit("win", this.props.name, this.props.value);
   },
   getInitialState(){
     let children = {};
@@ -58,6 +59,7 @@ export default React.createClass({
     }
     emitter.emit('play', this.props.name, this.props.value);
     this.emitterSubscription = emitter.addListener('win', this.winListener);
+    values[this.props.name] = this.props.value;
   },
   componentWillUnmount(){
     this.emitterSubscription.remove();
