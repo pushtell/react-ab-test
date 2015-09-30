@@ -59,11 +59,42 @@ module.exports = function (karma) {
         os_version: 'Yosemite',
         browser: 'safari',
         browser_version : 'latest'
+      },
+      bs_android_4_default: {
+        base: 'BrowserStack',
+        os_version: "4.1",
+        device: "Google Nexus 7",
+        browser_version: null,
+        os: "android",
+        browser: "android"
+      },
+      bs_android_5_default: {
+        base: 'BrowserStack',
+        os_version: "5.0",
+        device: "Google Nexus 5",
+        browser_version: null,
+        os: "android",
+        browser: "android"
+      },
+      bs_ios_7_default: {
+        base: 'BrowserStack',
+        os_version: "7.0",
+        device: "iPad Air",
+        browser_version: null,
+        os: "ios",
+        browser: "ipad"
       }
     },
-    reporters: ['dots'],
+    reporters: ['dots', 'coverage'],
+    coverageReporter:{
+      type: 'lcov',
+      dir: 'coverage/'
+    },
     singleRun: true,
     webpack: {
+      resolve: {
+        extensions: ['', '.js', '.jsx']
+      },
       devtool: 'inline-source-map',
       module: {
         preLoaders: [
@@ -98,11 +129,7 @@ module.exports = function (karma) {
     options.browsers = ['Chrome'];
   }
   if(process.env.COVERALLS_REPO_TOKEN) {
-    options.reporters = options.reporters.concat(['coverage', 'coveralls']);
-    options.coverageReporter = {
-      type: 'lcov',
-      dir: 'coverage/'
-    };
+    options.reporters.push('coveralls');
   }
   karma.set(options);
 };

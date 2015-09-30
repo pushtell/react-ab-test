@@ -34,9 +34,9 @@ describe("Core", function() {
     assert.equal(elementB, null);
   }));
   it("should callback when a variant is played.", co.wrap(function *(){
-    let played_variant = null;
+    let playedVariant = null;
     let playCallback = function(variant){
-      played_variant = variant;
+      playedVariant = variant;
     };
     let App = React.createClass({
       render: function(){
@@ -49,7 +49,26 @@ describe("Core", function() {
     yield new Promise(function(resolve, reject){
       React.render(<App />, document.getElementById("react"), resolve);
     });
-    assert.equal(played_variant, "A");
+    assert.equal(playedVariant, "A");
+  }));
+  it("should callback when a variant wins.", co.wrap(function *(){
+    let winningVariant = null;
+    let winCallback = function(variant){
+      winningVariant = variant;
+    };
+    let App = React.createClass({
+      render: function(){
+        return <Expiriment name="test" value="A" onWin={winCallback}>
+          <Variant name="A"><div id="expiriment-a"/></Variant>
+          <Variant name="B"><div id="expiriment-b"/></Variant>
+        </Expiriment>;
+      }
+    });
+    yield new Promise(function(resolve, reject){
+      React.render(<App />, document.getElementById("react"), resolve);
+    });
+    Expiriment.win("test", "A");
+    assert.equal(winningVariant, "A");
   }));
 });
 
