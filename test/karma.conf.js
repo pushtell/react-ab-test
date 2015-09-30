@@ -114,7 +114,8 @@ module.exports = function (karma) {
   if(process.env.BROWSERSTACK_USERNAME && process.env.BROWSERSTACK_ACCESS_KEY) {
     options.browserStack = {
       username: process.env.BROWSERSTACK_USERNAME,
-      accessKey: process.env.BROWSERSTACK_ACCESS_KEY
+      accessKey: process.env.BROWSERSTACK_ACCESS_KEY,
+      pollingTimeout: 10000
     };
     options.browsers = Object.keys(options.customLaunchers);
   } else {

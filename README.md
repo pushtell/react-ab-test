@@ -13,6 +13,8 @@ npm install pushtell-react --save
 
 ## Basic Usage
 
+Try it [on JSFiddle](https://jsfiddle.net/ydb573Ly/)
+
 ```js
 
 var Expiriment = require("pushtell-react").Expiriment;
@@ -41,10 +43,8 @@ var playSubscription = Expiriment.emitter.addListener('play', function(name, val
 
 // Executed when a 'win' is recorded, in this case by this.refs.expiriment.win();
 var winSubscription = Expiriment.emitter.addListener('win', function(name, value){
-  alert("Expiriment " + name + " with variant '" + value + "'" was clicked on.");
+  alert("Expiriment " + name + " with variant '" + value + "' was clicked on.");
 });
 
 ```
-
-Try it [on JSFiddle](https://jsfiddle.net/ydb573Ly/)
 
