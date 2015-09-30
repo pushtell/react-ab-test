@@ -21,29 +21,32 @@ var Expiriment = require("pushtell-react").Expiriment;
 var Variant = require("pushtell-react").Variant;
 
 var App = React.createClass({
-  onClickVariant: function(e){
+  onButtonClick: function(e){
     this.refs.expiriment.win();
   },
   render: function(){
-    return <Expiriment ref="expiriment" name="your-expiriment-name">
-      <Variant name="A">
-        <a id="expiriment-a" href="#A" onClick={this.onClickVariant}>A</a>
-      </Variant>
-      <Variant name="B">
-        <a id="expiriment-b" href="#B" onClick={this.onClickVariant}>B</a>
-      </Variant>
-    </Expiriment>;
+    return <div>
+      <Expiriment ref="expiriment" name="example">
+        <Variant name="A">
+          <h1>Headline A</h1>
+        </Variant>
+        <Variant name="B">
+          <h1>Headline B</h1>
+        </Variant>
+      </Expiriment>
+      <button onClick={this.onButtonClick}>Click me to record a win!</button>
+    </div>;
   }
 });
 
 // Executed when the component mounts.
 var playSubscription = Expiriment.emitter.addListener('play', function(name, value){
-  alert("Displaying expiriment '" + name + "' with variant '" + value + "'");
+  alert("Displaying '" + name + "' variant '" + value + "'");
 });
 
 // Executed when a 'win' is recorded, in this case by this.refs.expiriment.win();
 var winSubscription = Expiriment.emitter.addListener('win', function(name, value){
-  alert("Expiriment " + name + " with variant '" + value + "' was clicked on.");
+  alert("Expiriment '" + name + "' variant '" + value + "' was clicked on.");
 });
 
 ```

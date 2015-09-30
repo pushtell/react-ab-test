@@ -68,13 +68,13 @@ module.exports = function (karma) {
         os: "android",
         browser: "android"
       },
-      bs_ios_7_default: {
+      bs_ios_8_default: {
         base: 'BrowserStack',
-        os_version: "7.0",
-        device: "iPad Air",
+        os_version: "8.3",
+        device: "iPhone 6",
         browser_version: null,
         os: "ios",
-        browser: "ipad"
+        browser: "iphone"
       }
     },
     reporters: ['dots', 'coverage'],
