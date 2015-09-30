@@ -1,9 +1,9 @@
 import React from "react";
-import Expiriment from "../Expiriment";
+import Experiment from "../Experiment";
 import store from "store";
 
 export default React.createClass({
-  displayName: "Pushtell.LocalStorage.Expiriment",
+  displayName: "Pushtell.LocalStorage.Experiment",
   propTypes: {
     defaultValue: React.PropTypes.string,
     variantNames: React.PropTypes.array,
@@ -12,24 +12,24 @@ export default React.createClass({
     onWin: React.PropTypes.func
   },
   statics: {
-    win: Expiriment.win,
-    emitter: Expiriment.emitter
+    win: Experiment.win,
+    emitter: Experiment.emitter
   },
   win(){
-    Expiriment.emitter.emit("win", this.props.name, this.state.value);
+    Experiment.emitter.emit("win", this.props.name, this.state.value);
   },
   getInitialState(){
-    Expiriment.expiriments[this.props.name] = Expiriment.expiriments[this.props.name] || {};
+    Experiment.experiments[this.props.name] = Experiment.experiments[this.props.name] || {};
     if(this.props.variantNames) {
       this.props.variantNames.forEach(name => {
-        Expiriment.expiriments[this.props.name][name] = true;
+        Experiment.experiments[this.props.name][name] = true;
       });
     }
     React.Children.forEach(this.props.children, element => {
       if(!React.isValidElement(element) || element.type.displayName !== "Pushtell.Variant"){
-        throw new Error("Pushtell Expiriment children must be Pushtell Variant components.");
+        throw new Error("Pushtell Experiment children must be Pushtell Variant components.");
       }
-      Expiriment.expiriments[this.props.name][element.props.name] = true;
+      Experiment.experiments[this.props.name][element.props.name] = true;
     });
     return {};
   },
@@ -46,7 +46,7 @@ export default React.createClass({
         value: this.props.defaultValue
       });
     }
-    let variantNames = Object.keys(Expiriment.expiriments[this.props.name]);
+    let variantNames = Object.keys(Experiment.experiments[this.props.name]);
     let randomValue = variantNames[Math.floor(Math.random() * variantNames.length)];
     store.set('PUSHTELL-' + this.props.name, randomValue);
     return this.setState({
@@ -54,6 +54,6 @@ export default React.createClass({
     });
   },
   render() {
-    return <Expiriment {...this.props} {...this.state} />;
+    return <Experiment {...this.props} {...this.state} />;
   }
 });

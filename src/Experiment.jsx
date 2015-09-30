@@ -1,12 +1,12 @@
 import React from 'react';
 import {EventEmitter} from 'fbemitter';
 
-const expiriments = {};
+const experiments = {};
 const values = {};
 const emitter = new EventEmitter();
 
 export default React.createClass({
-  displayName: "Pushtell.Expiriment",
+  displayName: "Pushtell.Experiment",
   propTypes: {
     name: React.PropTypes.string.isRequired,
     value: React.PropTypes.string.isRequired,
@@ -15,12 +15,12 @@ export default React.createClass({
   },
   statics: {
     emitter: emitter,
-    expiriments: expiriments,
-    win(expirimentName){
-      if(typeof expirimentName !== 'string') {
-        throw new Error("Required argument 'expirimentName' should have type 'string'");
+    experiments: experiments,
+    win(experimentName){
+      if(typeof experimentName !== 'string') {
+        throw new Error("Required argument 'experimentName' should have type 'string'");
       }
-      emitter.emit("win", expirimentName, values[expirimentName]);
+      emitter.emit("win", experimentName, values[experimentName]);
     }
   },
   win(){
@@ -30,13 +30,13 @@ export default React.createClass({
     let children = {};
     React.Children.forEach(this.props.children, element => {
       if(!React.isValidElement(element) || element.type.displayName !== "Pushtell.Variant"){
-        throw new Error("Pushtell Expiriment children must be Pushtell Variant components.");
+        throw new Error("Pushtell Experiment children must be Pushtell Variant components.");
       }
       children[element.props.name] = element;
     });
     if(!children[this.props.value]) {
       if("production" !== process.env.NODE_ENV) {
-        console.debug('Expiriment “' + this.props.name + '” does not contain variant “' + this.props.value + '”');
+        console.debug('Experiment “' + this.props.name + '” does not contain variant “' + this.props.value + '”');
         console.trace();
       }
       return null;
@@ -45,11 +45,11 @@ export default React.createClass({
       element: children[this.props.value]
     };
   },
-  winListener(expirimentName, variantName){
+  winListener(experimentName, variantName){
     if(!this.props.onWin){
       return;
     }
-    if(expirimentName === this.props.name) {
+    if(experimentName === this.props.name) {
       this.props.onWin(variantName);
     }
   },

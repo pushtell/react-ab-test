@@ -17,36 +17,36 @@ Try it [on JSFiddle](https://jsfiddle.net/pushtell/m14qvy7r/)
 
 ```js
 
-var Expiriment = require("pushtell-react").Expiriment;
+var Experiment = require("pushtell-react").Experiment;
 var Variant = require("pushtell-react").Variant;
 
 var App = React.createClass({
   onButtonClick: function(e){
-    this.refs.expiriment.win();
+    this.refs.experiment.win();
   },
   render: function(){
     return <div>
-      <Expiriment ref="expiriment" name="example">
+      <Experiment ref="experiment" name="example">
         <Variant name="A">
           <h1>Headline A</h1>
         </Variant>
         <Variant name="B">
           <h1>Headline B</h1>
         </Variant>
-      </Expiriment>
+      </Experiment>
       <button onClick={this.onButtonClick}>Click me to record a win!</button>
     </div>;
   }
 });
 
 // Executed when the component mounts.
-var playSubscription = Expiriment.emitter.addListener('play', function(name, value){
+var playSubscription = Experiment.emitter.addListener('play', function(name, value){
   alert("Displaying '" + name + "' variant '" + value + "'");
 });
 
-// Executed when a 'win' is recorded, in this case by this.refs.expiriment.win();
-var winSubscription = Expiriment.emitter.addListener('win', function(name, value){
-  alert("Expiriment '" + name + "' variant '" + value + "' was clicked on.");
+// Executed when a 'win' is recorded, in this case by this.refs.experiment.win();
+var winSubscription = Experiment.emitter.addListener('win', function(name, value){
+  alert("Experiment '" + name + "' variant '" + value + "' was clicked on.");
 });
 
 ```
