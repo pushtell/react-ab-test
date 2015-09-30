@@ -11,8 +11,23 @@
 npm install pushtell-react --save
 ```
 
-## Usage
+## Basic Usage
 
 ```js
 
+var Expiriment = require("pushtell-react").Expiriment;
+var Variant = require("pushtell-react").Variant;
+
+var App = React.createClass({
+  render: function() {
+    return <Expiriment name="test">
+      <Variant name="A">A</Variant>
+      <Variant name="B">B</Variant>
+    </Expiriment>;
+  }
+});
+
 ```
+
+Try It [on JSFiddle](https://jsfiddle.net/ydb573Ly/)
+
