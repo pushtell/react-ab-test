@@ -14,6 +14,21 @@ export default React.createClass({
   statics: {
     win: Expiriment.win
   },
+  getInitialState(){
+    Expiriment.expiriments[this.props.name] = Expiriment.expiriments[this.props.name] || {};
+    if(this.props.variantNames) {
+      this.props.variantNames.forEach(name => {
+        Expiriment.expiriments[this.props.name][name] = true;
+      });
+    }
+    React.Children.forEach(this.props.children, element => {
+      if(!React.isValidElement(element) || element.type.displayName !== "Pushtell.Variant"){
+        throw new Error("Pushtell Expiriment children must be Pushtell Variant components.");
+      }
+      Expiriment.expiriments[this.props.name][element.props.name] = true;
+    });
+    return {};
+  },
   componentWillMount() {
     let storedValue = store.get('PUSHTELL-' + this.props.name);
     if(typeof storedValue !== "undefined") {

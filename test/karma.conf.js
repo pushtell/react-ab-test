@@ -68,14 +68,6 @@ module.exports = function (karma) {
         os: "android",
         browser: "android"
       },
-      bs_android_5_default: {
-        base: 'BrowserStack',
-        os_version: "5.0",
-        device: "Google Nexus 5",
-        browser_version: null,
-        os: "android",
-        browser: "android"
-      },
       bs_ios_7_default: {
         base: 'BrowserStack',
         os_version: "7.0",
