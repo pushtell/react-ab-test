@@ -2,10 +2,16 @@ import React from "react";
 import Experiment from "../Experiment";
 import {canUseDOM} from 'react/lib/ExecutionEnvironment';
 
-const store = canUseDOM ? require("store") : {
+let store = {
   get: function(){},
   set: function(){}
 };
+
+if(canUseDOM) {
+  try {
+    store = require("store");
+  } catch(e) {}
+}
 
 export default React.createClass({
   displayName: "Pushtell.LocalStorage.Experiment",
