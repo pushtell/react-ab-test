@@ -1,4 +1,4 @@
 module.exports = {
-  Experiment: "./lib/LocalStorage/Experiment",
-  Variant: "./lib/Variant"
+  Experiment: require("./lib/LocalStorage/Experiment"),
+  Variant: require("./lib/Variant")
 };
