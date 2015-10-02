@@ -1,17 +1,10 @@
 import React from "react";
 import Experiment from "../Experiment";
-import {canUseDOM} from 'react/lib/ExecutionEnvironment';
 
-let store = {
-  get: function(){},
-  set: function(){}
+const store = typeof window !== 'undefined' && 'localStorage' in window && window['localStorage'] !== null ? window.localStorage : {
+  getItem: function(){},
+  setItem: function(){}
 };
-
-if(canUseDOM) {
-  try {
-    store = require("store");
-  } catch(e) {}
-}
 
 export default React.createClass({
   displayName: "Pushtell.LocalStorage.Experiment",
@@ -45,21 +38,21 @@ export default React.createClass({
     return {};
   },
   componentWillMount() {
-    let storedValue = store.get('PUSHTELL-' + this.props.name);
-    if(typeof storedValue !== "undefined") {
+    let storedValue = store.getItem('PUSHTELL-' + this.props.name);
+    if(typeof storedValue === "string") {
       return this.setState({
         value: storedValue
       });
     }
-    if(typeof this.props.defaultValue !== 'undefined') {
-      store.set('PUSHTELL-' + this.props.name, this.props.defaultValue);
+    if(typeof this.props.defaultValue === 'string') {
+      store.setItem('PUSHTELL-' + this.props.name, this.props.defaultValue);
       return this.setState({
         value: this.props.defaultValue
       });
     }
     let variantNames = Object.keys(Experiment.experiments[this.props.name]);
     let randomValue = variantNames[Math.floor(Math.random() * variantNames.length)];
-    store.set('PUSHTELL-' + this.props.name, randomValue);
+    store.setItem('PUSHTELL-' + this.props.name, randomValue);
     return this.setState({
       value: randomValue
     });
