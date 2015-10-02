@@ -77,6 +77,7 @@ describe("LocalStorage", function() {
     assert.notEqual(elementWithoutDefaultValue, null);
   }));
   it("should callback when a variant is clicked.", co.wrap(function *(){
+    let reactElement = document.getElementById("react");
     let experimentName = UUID.v4();
     let winningVariant = null;
     let winCallback = function(variant){
@@ -94,10 +95,26 @@ describe("LocalStorage", function() {
       }
     });
     yield new Promise(function(resolve, reject){
-      React.render(<App />, document.getElementById("react"), resolve);
+      React.render(<App />, reactElement, resolve);
     });
     let elementA = document.getElementById('experiment-a');
     mouse.click(elementA);
     assert.equal(winningVariant, "A");
+  }));
+  it("should not error if an older test variant is set.", co.wrap(function *(){
+    let reactElement = document.getElementById("react");
+    let experimentName = UUID.v4();
+    localStorage.setItem("PUSHTELL-" + experimentName, "C");
+    let App = React.createClass({
+      render: function(){
+        return <Experiment name={experimentName}>
+          <Variant name="A"><a id="experiment-a" href="#A" onClick={this.onClickVariant}>A</a></Variant>
+          <Variant name="B"><a id="experiment-b" href="#B" onClick={this.onClickVariant}>B</a></Variant>
+        </Experiment>;
+      }
+    });
+    yield new Promise(function(resolve, reject){
+      React.render(<App />, reactElement, resolve);
+    });
   }));
 });

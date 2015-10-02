@@ -39,7 +39,9 @@ export default React.createClass({
         console.debug('Experiment “' + this.props.name + '” does not contain variant “' + this.props.value + '”');
         console.trace();
       }
-      return null;
+      return {
+        element: null
+      };
     }
     return {
       element: children[this.props.value]
