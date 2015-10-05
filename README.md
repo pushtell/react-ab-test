@@ -18,7 +18,7 @@
   - [`<Expiriment name="My Test" defaultValue="Optional Default Value" />`](#expiriment-namemy-test-defaultvalueoptional-default-value-)
     - [`expiriment.props.name`](#expirimentpropsname)
     - [`expiriment.props.defaultValue`](#expirimentpropsdefaultvalue)
-  - [```js <Variant name="Variant Name" /> ```](#js-variant-namevariant-name--)
+  - [`<Variant name="Variant Name" />`](#variant-namevariant-name-)
     - [`variant.props.name`](#variantpropsname)
   - [`emitter`](#emitter)
     - [`emitter.emitWin(experimentName)`](#emitteremitwinexperimentname)
@@ -263,9 +263,7 @@ The name of the expiriment. (Required. String. Example: "my-test")
 
 The name of the variant to default to. (Optional. String. Example: "A")
 
-### ```js
-<Variant name="Variant Name" />
-```
+### `<Variant name="Variant Name" />`
 
 Variant component.
 
