@@ -257,13 +257,12 @@ var winSubscription = emitter.addWinListener("example", function(variantName){
 
 Experiment container component. Children must be of type [Variant](#variant-).
 
-   #### `props.name`
-
-   The name of the experiment. Required. Type `string`. Example: `"My Test"`
-
-   #### `props.defaultValue`
-
-   The default variant name of the experiment. Required. Type `string`. Example: `"A"`
+<dd>
+  <dd>#### `props.name`</dd>
+  <dd>The name of the experiment. Required. Type `string`. Example: `"My Test"`</dd>
+  <dd>#### `props.defaultValue`</dd>
+  <dd>The default variant name of the experiment. Required. Type `string`. Example: `"A"`</dd>
+</dl>
 
 ### `<Variant />`
 
