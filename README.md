@@ -5,6 +5,24 @@
 [![Coverage Status](https://coveralls.io/repos/pushtell/react-ab-test/badge.svg?branch=master&service=github)](https://coveralls.io/github/pushtell/react-ab-test?branch=master)
 [![Dependency Status](https://david-dm.org/pushtell/react-ab-test.svg)](https://david-dm.org/pushtell/react-ab-test)
 
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+  - [Install](#install)
+  - [Basic Usage](#basic-usage)
+    - [In a single component](#in-a-single-component)
+- [Headline A](#headline-a)
+- [Headline B](#headline-b)
+    - [Across multiple components](#across-multiple-components)
+- [Headline A](#headline-a-1)
+- [Headline B](#headline-b-1)
+    - [Debugging](#debugging)
+- [Headline A](#headline-a-2)
+- [Headline B](#headline-b-2)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ## Install
 
 ```bash
