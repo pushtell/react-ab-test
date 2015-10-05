@@ -7,7 +7,10 @@ export default React.createClass({
   displayName: "Pushtell.Experiment",
   propTypes: {
     name: React.PropTypes.string.isRequired,
-    value: React.PropTypes.string.isRequired
+    value: React.PropTypes.oneOfType([
+      React.PropTypes.string,
+      React.PropTypes.func
+    ]).isRequired
   },
   win(){
     emitter.emitWin(this.props.name);
@@ -21,24 +24,41 @@ export default React.createClass({
         throw error;
       }
       children[element.props.name] = element;
+      emitter.addExperimentVariant(this.props.name, element.props.name);
     });
-    if(!children[this.props.value]) {
-      if ("production" !== process.env.NODE_ENV) {
-        warning(true, 'Experiment “' + this.props.name + '” does not contain variant “' + this.props.value + '”');
-      }
-      return {
-        element: null
-      };
-    }
     return {
-      element: children[this.props.value]
+      variants: children
     };
   },
+  componentWillReceiveProps(nextProps) {
+    if(nextProps.value !== this.state.value) {
+      this.setState({
+        value: nextProps.value
+      });
+    }
+  },
   componentWillMount(){
-    emitter.setExperimentValue(this.props.name, this.props.value);
-    emitter.emit('play', this.props.name, this.props.value);
+    let value = typeof this.props.value === "function" ? this.props.value() : this.props.value;
+    if(!this.state.variants[value]) {
+      if ("production" !== process.env.NODE_ENV) {
+        warning(true, 'Experiment “' + this.props.name + '” does not contain variant “' + value + '”');
+      }
+    }
+    emitter.setExperimentValue(this.props.name, value);
+    emitter.emit('play', this.props.name, value);
+    this.setState({
+      value: value
+    });
+    this.valueSubscription = emitter.addValueListener(this.props.name, value => {
+      this.setState({
+        value: value
+      });
+    });
+  },
+  componentWillUnmount(){
+    this.valueSubscription.remove();
   },
   render(){
-    return this.state.element;
+    return this.state.variants[this.state.value] || null;
   }
 });

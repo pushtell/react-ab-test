@@ -55,41 +55,22 @@ exports["default"] = _react2["default"].createClass({
   win: function win() {
     _emitter2["default"].emitWin(this.props.name);
   },
-  getInitialState: function getInitialState() {
-    var _this = this;
-
-    _react2["default"].Children.forEach(this.props.children, function (element) {
-      if (!_react2["default"].isValidElement(element) || element.type.displayName !== "Pushtell.Variant") {
-        var error = new Error("Pushtell Experiment children must be Pushtell Variant components.");
-        error.type = "PUSHTELL_INVALID_CHILD";
-        throw error;
-      }
-      _emitter2["default"].addExperimentVariant(_this.props.name, element.props.name);
-    });
-    return {};
-  },
-  componentWillMount: function componentWillMount() {
+  getLocalStorageValue: function getLocalStorageValue() {
     var storedValue = store.getItem('PUSHTELL-' + this.props.name);
     if (typeof storedValue === "string") {
-      return this.setState({
-        value: storedValue
-      });
+      return storedValue;
     }
     if (typeof this.props.defaultValue === 'string') {
       store.setItem('PUSHTELL-' + this.props.name, this.props.defaultValue);
-      return this.setState({
-        value: this.props.defaultValue
-      });
+      return this.props.defaultValue;
     }
     var variants = _emitter2["default"].getSortedVariants(this.props.name);
     var randomValue = variants[Math.floor(Math.random() * variants.length)];
     store.setItem('PUSHTELL-' + this.props.name, randomValue);
-    return this.setState({
-      value: randomValue
-    });
+    return randomValue;
   },
   render: function render() {
-    return _react2["default"].createElement(_Experiment2["default"], _extends({}, this.props, this.state));
+    return _react2["default"].createElement(_Experiment2["default"], _extends({}, this.props, { value: this.getLocalStorageValue }));
   }
 });
 module.exports = exports["default"];

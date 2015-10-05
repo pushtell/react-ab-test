@@ -35,6 +35,24 @@ var PushtellEventEmitter = (function (_EventEmitter) {
       this.emit("win", experimentName, values[experimentName]);
     }
   }, {
+    key: 'addVariantListener',
+    value: function addVariantListener(experimentName, callback) {
+      return this.addListener('variant', function (_experimentName, variantName) {
+        if (_experimentName === experimentName) {
+          callback(variantName);
+        }
+      });
+    }
+  }, {
+    key: 'addValueListener',
+    value: function addValueListener(experimentName, callback) {
+      return this.addListener('value', function (_experimentName, variantName) {
+        if (_experimentName === experimentName) {
+          callback(variantName);
+        }
+      });
+    }
+  }, {
     key: 'addPlayListener',
     value: function addPlayListener(experimentName, callback) {
       return this.addListener('play', function (_experimentName, variantName) {
@@ -55,8 +73,13 @@ var PushtellEventEmitter = (function (_EventEmitter) {
   }, {
     key: 'addExperimentVariants',
     value: function addExperimentVariants(experimentName, variantNames) {
+      var _this = this;
+
       experiments[experimentName] = experiments[experimentName] || {};
       variantNames.forEach(function (variantName) {
+        if (experiments[experimentName][variantName] !== true) {
+          _this.emit("variant", experimentName, variantName);
+        }
         experiments[experimentName][variantName] = true;
       });
     }
@@ -71,15 +94,19 @@ var PushtellEventEmitter = (function (_EventEmitter) {
     key: 'setExperimentValue',
     value: function setExperimentValue(experimentName, variantName) {
       values[experimentName] = variantName;
+      this.emit("value", experimentName, variantName);
     }
   }, {
     key: 'addExperimentVariant',
     value: function addExperimentVariant(experimentName, variantName) {
       experiments[experimentName] = experiments[experimentName] || {};
-      if (values[experimentName] && experiments[experimentName][variantName] !== true) {
-        var error = new Error("Expiriment “" + experimentName + "” added new variants after a variant was selected. Declare the variant names using emitter.addExpirimentVariants(expirimentName, variantNames).");
-        error.type = "PUSHTELL_INVALID_VARIANT";
-        throw error;
+      if (experiments[experimentName][variantName] !== true) {
+        if (values[experimentName]) {
+          var error = new Error("Expiriment “" + experimentName + "” added new variants after a variant was selected. Declare the variant names using emitter.addExpirimentVariants(expirimentName, variantNames).");
+          error.type = "PUSHTELL_INVALID_VARIANT";
+          throw error;
+        }
+        this.emit("variant", experimentName, variantName);
       }
       experiments[experimentName][variantName] = true;
     }

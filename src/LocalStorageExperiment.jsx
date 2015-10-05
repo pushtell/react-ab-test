@@ -37,38 +37,21 @@ export default React.createClass({
   win(){
     emitter.emitWin(this.props.name);
   },
-  getInitialState(){
-    React.Children.forEach(this.props.children, element => {
-      if(!React.isValidElement(element) || element.type.displayName !== "Pushtell.Variant"){
-        let error = new Error("Pushtell Experiment children must be Pushtell Variant components.");
-        error.type = "PUSHTELL_INVALID_CHILD";
-        throw error;
-      }
-      emitter.addExperimentVariant(this.props.name, element.props.name);
-    });
-    return {};
-  },
-  componentWillMount() {
+  getLocalStorageValue() {
     let storedValue = store.getItem('PUSHTELL-' + this.props.name);
     if(typeof storedValue === "string") {
-      return this.setState({
-        value: storedValue
-      });
+      return storedValue;
     }
     if(typeof this.props.defaultValue === 'string') {
       store.setItem('PUSHTELL-' + this.props.name, this.props.defaultValue);
-      return this.setState({
-        value: this.props.defaultValue
-      });
+      return this.props.defaultValue;
     }
     let variants = emitter.getSortedVariants(this.props.name);
     let randomValue = variants[Math.floor(Math.random() * variants.length)];
     store.setItem('PUSHTELL-' + this.props.name, randomValue);
-    return this.setState({
-      value: randomValue
-    });
+    return randomValue;
   },
   render() {
-    return <Experiment {...this.props} {...this.state} />;
+    return <Experiment {...this.props} value={this.getLocalStorageValue} />;
   }
 });

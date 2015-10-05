@@ -136,3 +136,85 @@ var winSubscription = emitter.addWinListener("example", function(value){
 });
 
 ```
+
+
+### Debugging
+
+Try it [on JSFiddle](http://jsfiddle.net/pushtell/vs9kkxLd/)
+
+```js
+
+var Experiment = require("pushtell-react").Experiment;
+var Variant = require("pushtell-react").Variant;
+var emitter = require("pushtell-react").emitter;
+
+var VariantSelector = React.createClass({
+  propTypes: {
+    name: React.PropTypes.string.isRequired
+  },
+  getInitialState: function(){
+    return {
+      variants: []
+    }
+  },
+  addVariant: function(name) {
+    var variants = this.state.variants;
+    variants.push(name);
+    this.setState({
+      variants: variants
+    });
+  },
+  componentWillMount: function(){
+    this.variantSubscription = emitter.addVariantListener(this.props.name, this.addVariant);
+  },
+  componentWillUnmount: function(){
+    this.variantSubscription.remove();
+  },
+  changeVariant: function(variantName, e) {
+    emitter.setExperimentValue(this.props.name, variantName);
+  },
+  render: function(){
+    return <div>
+      {this.state.variants.map(variantName => {
+        <div className="radio" key={variantName}>
+          <label>
+            <input type="radio" name="variant" value={variantName} onClick={this.changeVariant.bind(this, variantName)}/>
+            Variant {variantName}
+          </label>
+        </div>
+      })}
+    </div>;
+  }
+});
+
+var App = React.createClass({
+  onButtonClick: function(e){
+    this.refs.experiment.win();
+  },
+  render: function(){
+    return <div>
+      <Experiment ref="experiment" name="example">
+        <Variant name="A">
+          <h1>Headline A</h1>
+        </Variant>
+        <Variant name="B">
+          <h1>Headline B</h1>
+        </Variant>
+      </Experiment>
+      <button onClick={this.onButtonClick}>Click me to record a win!</button>
+      <VariantSelector name="example" />
+    </div>;
+  }
+});
+
+// Executed when the experiment is run
+var playSubscription = emitter.addPlayListener("example", function(value){
+  console.log("Displaying experiment ‘example’ variant ‘" + value + "’");
+});
+
+// Executed when a 'win' is emitted, in this case by this.refs.experiment.win();
+var winSubscription = emitter.addWinListener("example", function(value){
+  console.log("Experiment ‘example’ variant ‘" + value + "’ was clicked on");
+});
+
+```

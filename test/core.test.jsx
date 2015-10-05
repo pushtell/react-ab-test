@@ -128,5 +128,48 @@ describe("Core", function() {
     assert.equal(winningVariant, "A");
     winSubscription.remove();
   }));
+  it("should listen for variant names.", co.wrap(function *(){
+    let experimentName = UUID.v4();
+    let variants = [];
+    let variantSubscription = emitter.addVariantListener(experimentName, variantName => {
+      variants.push(variantName);
+    });
+    let App = React.createClass({
+      render: function(){
+        return <Experiment name={experimentName} value="A">
+          <Variant name="A"><div id="variant-a" /></Variant>
+          <Variant name="B"><div id="variant-b" /></Variant>
+        </Experiment>;
+      }
+    });
+    yield new Promise(function(resolve, reject){
+      React.render(<App />, document.getElementById("react"), resolve);
+    });
+    assert.deepEqual(variants, ["A", "B"]);
+    variantSubscription.remove();
+  }));
+  it("should update the rendered version when emitter.setExperimentValue() is called.", co.wrap(function *(){
+    let experimentName = UUID.v4();
+    let App = React.createClass({
+      render: function(){
+        return <Experiment name={experimentName} value="A">
+          <Variant name="A"><div id="variant-a" /></Variant>
+          <Variant name="B"><div id="variant-b" /></Variant>
+        </Experiment>;
+      }
+    });
+    yield new Promise(function(resolve, reject){
+      React.render(<App />, document.getElementById("react"), resolve);
+    });
+    let elementA = document.getElementById('variant-a');
+    let elementB = document.getElementById('variant-b');
+    assert.notEqual(elementA, null);
+    assert.equal(elementB, null);
+    emitter.setExperimentValue(experimentName, "B");
+    elementA = document.getElementById('variant-a');
+    elementB = document.getElementById('variant-b');
+    assert.equal(elementA, null);
+    assert.notEqual(elementB, null);
+  }));
 });
 

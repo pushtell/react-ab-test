@@ -26,12 +26,14 @@ exports["default"] = _react2["default"].createClass({
   displayName: "Pushtell.Experiment",
   propTypes: {
     name: _react2["default"].PropTypes.string.isRequired,
-    value: _react2["default"].PropTypes.string.isRequired
+    value: _react2["default"].PropTypes.oneOfType([_react2["default"].PropTypes.string, _react2["default"].PropTypes.func]).isRequired
   },
   win: function win() {
     _emitter2["default"].emitWin(this.props.name);
   },
   getInitialState: function getInitialState() {
+    var _this = this;
+
     var children = {};
     _react2["default"].Children.forEach(this.props.children, function (element) {
       if (!_react2["default"].isValidElement(element) || element.type.displayName !== "Pushtell.Variant") {
@@ -40,25 +42,44 @@ exports["default"] = _react2["default"].createClass({
         throw error;
       }
       children[element.props.name] = element;
+      _emitter2["default"].addExperimentVariant(_this.props.name, element.props.name);
     });
-    if (!children[this.props.value]) {
-      if ("production" !== process.env.NODE_ENV) {
-        (0, _reactLibWarning2["default"])(true, 'Experiment “' + this.props.name + '” does not contain variant “' + this.props.value + '”');
-      }
-      return {
-        element: null
-      };
-    }
     return {
-      element: children[this.props.value]
+      variants: children
     };
   },
+  componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
+    if (nextProps.value !== this.state.value) {
+      this.setState({
+        value: nextProps.value
+      });
+    }
+  },
   componentWillMount: function componentWillMount() {
-    _emitter2["default"].setExperimentValue(this.props.name, this.props.value);
-    _emitter2["default"].emit('play', this.props.name, this.props.value);
+    var _this2 = this;
+
+    var value = typeof this.props.value === "function" ? this.props.value() : this.props.value;
+    if (!this.state.variants[value]) {
+      if ("production" !== process.env.NODE_ENV) {
+        (0, _reactLibWarning2["default"])(true, 'Experiment “' + this.props.name + '” does not contain variant “' + value + '”');
+      }
+    }
+    _emitter2["default"].setExperimentValue(this.props.name, value);
+    _emitter2["default"].emit('play', this.props.name, value);
+    this.setState({
+      value: value
+    });
+    this.valueSubscription = _emitter2["default"].addValueListener(this.props.name, function (value) {
+      _this2.setState({
+        value: value
+      });
+    });
+  },
+  componentWillUnmount: function componentWillUnmount() {
+    this.valueSubscription.remove();
   },
   render: function render() {
-    return this.state.element;
+    return this.state.variants[this.state.value] || null;
   }
 });
 module.exports = exports["default"];
