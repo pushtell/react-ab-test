@@ -9,22 +9,30 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 ##Table of Contents
 
-- [Install](#install)
+- [Installation](#installation)
 - [Usage](#usage)
-  - [In a standalone component](#in-a-standalone-component)
-  - [Across multiple components](#across-multiple-components)
-  - [With a debugger](#with-a-debugger)
+  - [Standalone Component](#standalone-component)
+  - [Coordinate Multiple Components](#coordinate-multiple-components)
+  - [Debugging](#debugging)
 - [API](#api)
-  - [&lt;Expiriment /&gt;](#&ltexpiriment-&gt)
-    - [Properties](#properties)
-  - [&lt;Variant /&gt;](#&ltvariant-&gt)
-    - [Properties](#properties-1)
-  - [emitter](#emitter)
-    - [Methods](#methods)
+  - [`&lt;Expiriment /&gt;`](#&ltexpiriment-&gt)
+    - [`expiriment.props.name`](#expirimentpropsname)
+    - [`expiriment.props.defaultValue`](#expirimentpropsdefaultvalue)
+  - [`&lt;Variant name="Variant Name" /&gt;`](#&ltvariant-namevariant-name-&gt)
+    - [`variant.props.name`](#variantpropsname)
+  - [`emitter`](#emitter)
+    - [`emitter.emitWin(experimentName)`](#emitteremitwinexperimentname)
+    - [`emitter.addVariantListener([experimentName, ] callback)`](#emitteraddvariantlistenerexperimentname--callback)
+    - [`emitter.addValueListener([experimentName, ] callback)`](#emitteraddvaluelistenerexperimentname--callback)
+    - [`emitter.addPlayListener([experimentName, ] callback)`](#emitteraddplaylistenerexperimentname--callback)
+    - [`emitter.addWinListener([experimentName, ] callback)`](#emitteraddwinlistenerexperimentname--callback)
+    - [`getExperimentValue(experimentName)`](#getexperimentvalueexperimentname)
+    - [`emitter.addExperimentVariants(experimentName, variantNames)`](#emitteraddexperimentvariantsexperimentname-variantnames)
+    - [`emitter.setExperimentValue(experimentName, variantName)`](#emittersetexperimentvalueexperimentname-variantname)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-## Install
+## Installation
 
 ```bash
 npm install react-ab-test
@@ -32,7 +40,7 @@ npm install react-ab-test
 
 ## Usage
 
-### In a standalone component
+### Standalone Component
 
 Try it [on JSFiddle](https://jsfiddle.net/pushtell/m14qvy7r/)
 
@@ -73,7 +81,7 @@ var winSubscription = emitter.addWinListener("example", function(variantName){
 
 ```
 
-### Across multiple components
+### Coordinate Multiple Components
 
 Try it [on JSFiddle](http://jsfiddle.net/pushtell/pcutps9q/)
 
@@ -152,8 +160,7 @@ var winSubscription = emitter.addWinListener("example", function(variantName){
 
 ```
 
-
-### With a debugger
+### Debugging
 
 Try it [on JSFiddle](http://jsfiddle.net/pushtell/vs9kkxLd/)
 
@@ -244,34 +251,36 @@ var winSubscription = emitter.addWinListener("example", function(variantName){
 
 ## API
 
-### &lt;Expiriment /&gt;
+### `&lt;Expiriment /&gt;`
 
 Experiment container component. Children must be of type [Variant](#&ltvariant-&gt).
 
-#### Properties
+#### `expiriment.props.name`
 
- * **name** - The name of the expiriment. (Required. String. Example: "my-test")
- * **defaultValue** - The name of the variant to default to. (Optional. String. Example: "A")
+The name of the expiriment. (Required. String. Example: "my-test")
 
-### &lt;Variant /&gt;
+#### `expiriment.props.defaultValue`
+
+The name of the variant to default to. (Optional. String. Example: "A")
+
+### `&lt;Variant name="Variant Name" /&gt;`
 
 Variant component.
 
-#### Properties
+#### `variant.props.name`
 
- * **name** - The name of the variant. (Required. String. Example: "A")
+The name of the variant. (Required. String. Example: "A")
 
-### emitter
+### `emitter`
 
 Event emitter.
 
-#### Methods
-
- * **emitWin(experimentName)**
- * **addVariantListener(experimentName, callback)**
- * **addValueListener(experimentName, callback)**
- * **addPlayListener(experimentName, callback)**
- * **addWinListener(experimentName, callback)**
- * **addExperimentVariants(experimentName, variantNames)**
- * **setExperimentValue(experimentName, variantName)**
+#### `emitter.emitWin(experimentName)`
+#### `emitter.addVariantListener([experimentName, ] callback)`
+#### `emitter.addValueListener([experimentName, ] callback)`
+#### `emitter.addPlayListener([experimentName, ] callback)`
+#### `emitter.addWinListener([experimentName, ] callback)`
+#### `getExperimentValue(experimentName)`
+#### `emitter.addExperimentVariants(experimentName, variantNames)`
+#### `emitter.setExperimentValue(experimentName, variantName)`
 
