@@ -5,6 +5,10 @@
 [![Coverage Status](https://coveralls.io/repos/pushtell/react/badge.svg?branch=master&service=github)](https://coveralls.io/github/pushtell/react?branch=master)
 [![Dependency Status](https://david-dm.org/olahol/react-ab.svg)](https://david-dm.org/pushtell/react)
 
+## Notes
+
+This project is under active development and not suitable for use in production environments.
+
 ## Install
 
 ```bash
