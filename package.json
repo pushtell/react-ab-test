@@ -1,5 +1,5 @@
 {
-  "name": "pushtell-react",
+  "name": "react-ab-test",
   "main": "index.js",
   "version": "0.5.1",
   "description": "A/B Testing React Components",
@@ -38,12 +38,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/pushtell/react.git"
+    "url": "git+https://github.com/pushtell/react-ab-test.git"
   },
   "author": "",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/pushtell/react/issues"
+    "url": "https://github.com/pushtell/react-ab-test/issues"
   },
-  "homepage": "https://github.com/pushtell/react#readme"
+  "homepage": "https://github.com/pushtell/react-ab-test#readme"
 }
