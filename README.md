@@ -261,7 +261,10 @@ Experiment container component. Children must be of type [Variant](#variant-).
 
 ##### `props.name`
 
-&nbsp;&nbsp;&nbsp;&nbsp; The name of the experiment. Required. Type `string`. Example: `"My Test"`
+&nbsp;&nbsp;&nbsp;&nbsp; The name of the experiment
+&nbsp;&nbsp;&nbsp;&nbsp; Required.
+&nbsp;&nbsp;&nbsp;&nbsp; Type `string`
+&nbsp;&nbsp;&nbsp;&nbsp; Example: `"My Test"`
 
 ##### `props.defaultValue`
 
