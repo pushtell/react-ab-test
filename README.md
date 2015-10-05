@@ -314,10 +314,12 @@ Event emitter.
 
 ## Alternative Libraries
 
-| Library | Description | Author |
-| ------- | ----------- | ------ |
-| [react-ab](https://github.com/olahol/react-ab) | Simple declarative and universal A/B testing component for React. | [Ola Holmström](https://github.com/olahol) |
-| [react-native-ab](https://github.com/lwansbrough/react-native-ab/) | A component for rendering A/B tests in React Native. | [Loch Wansbrough](https://github.com/lwansbrough) |
+| GitHub | Author |
+| ------ | ------ |
+| [react-ab](https://github.com/olahol/react-ab): Simple declarative and universal A/B testing component for React. | [Ola Holmström](https://github.com/olahol) |
+| [react-native-ab](https://github.com/lwansbrough/react-native-ab/): A component for rendering A/B tests in React Native. | [Loch Wansbrough](https://github.com/lwansbrough) |
+
+<iframe src="https://ghbtns.com/github-btn.html?user=twbs&repo=bootstrap&type=star&count=true" frameborder="0" scrolling="0" width="170px" height="20px"></iframe>
 
 ## Resources for A/B Testing with React
 
