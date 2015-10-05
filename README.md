@@ -259,8 +259,8 @@ var winSubscription = emitter.addWinListener("example", function(variantName){
 
 | Property | Description |
 | -------- | ----------- |
-| ##### `props.name` | The name of the experiment. Required. Type `string`. Example: `"My Test"` |
-| ##### `props.defaultValue` | The default variant name of the experiment. Required. Type `string`. Example: `"A"` |
+| ##### `props.name` <br /> Required | The name of the experiment. Type `string`. Example: `"My Test"` |
+| ##### `props.defaultValue` <br /> Optional | The default variant name of the experiment. Type `string`. Example: `"A"` |
 
 ### `<Variant />`
 
