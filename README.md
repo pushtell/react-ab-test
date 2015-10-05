@@ -315,7 +315,7 @@ Event emitter.
 
 ## Alternative Libraries
 
-
+| :---------- | :----- | :---- |
 | Description | Author | Stars |
 | ----------- | ------ | ----- |
 | [**react-ab**](https://github.com/olahol/react-ab) - Simple declarative and universal A/B testing component for React. | [Ola Holmström](https://github.com/olahol) | ![Stars](https://img.shields.io/github/stars/olahol/react-ab.svg?style=flat-square&label=Stars) |
