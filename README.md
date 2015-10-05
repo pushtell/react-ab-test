@@ -18,8 +18,10 @@
   - [`<Experiment />`](#experiment-)
     - [`props.name`](#propsname)
     - [`props.defaultValue`](#propsdefaultvalue)
+- [](#)
   - [`<Variant />`](#variant-)
     - [`props.name`](#propsname-1)
+- [](#-1)
   - [`emitter`](#emitter)
     - [`.emitWin(experimentName)`](#emitwinexperimentname)
       - [`experimentName`](#experimentname)
@@ -30,6 +32,8 @@
     - [`.getExperimentValue(experimentName)`](#getexperimentvalueexperimentname)
     - [`.addExperimentVariants(experimentName, variantNames)`](#addexperimentvariantsexperimentname-variantnames)
     - [`.setExperimentValue(experimentName, variantName)`](#setexperimentvalueexperimentname-variantname)
+- [Alternative Libraries](#alternative-libraries)
+- [Resources for A/B Testing with React](#resources-for-ab-testing-with-react)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -272,9 +276,11 @@ The name of the variant to default to.
  * **Type:** `string`
  * **Example:** `"A"`
 
+---
+
 ### `<Variant />`
 
-> Variant component.
+Variant component.
 
 #### `props.name`
 
@@ -282,6 +288,8 @@ The name of the variant to default to.
  * **Required:** Yes
  * **Type:** `string`
  * **Example:** `"My Test"`
+
+---
 
 ### `emitter`
 
@@ -304,3 +312,13 @@ Event emitter.
 #### `.addExperimentVariants(experimentName, variantNames)`
 #### `.setExperimentValue(experimentName, variantName)`
 
+## Alternative Libraries
+
+| Library | Description | Author |
+| ------- | ----------- | ------ |
+| [react-ab](https://github.com/olahol/react-ab) | Simple declarative and universal A/B testing component for React. | [Ola Holmström](https://github.com/olahol) |
+| [react-native-ab](https://github.com/lwansbrough/react-native-ab/) | A component for rendering A/B tests in React Native. | [Loch Wansbrough](https://github.com/lwansbrough) |
+
+## Resources for A/B Testing with React
+
+* [Roll Your Own A/B Tests With Optimizely and React](http://engineering.tilt.com/roll-your-own-ab-tests-with-optimizely-and-react/) on the [Tilt Engineering Blog](http://engineering.tilt.com/)
