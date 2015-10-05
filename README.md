@@ -16,8 +16,6 @@
   - [Debugging](#debugging)
 - [API](#api)
   - [`<Experiment />`](#experiment-)
-    - [`props.name` ||](#propsname-)
-- [#### `props.name` ||](#-propsname-)
   - [`<Variant />`](#variant-)
     - [`props.name`](#propsname)
   - [`emitter`](#emitter)
