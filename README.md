@@ -15,13 +15,14 @@
   - [Coordinate Multiple Components](#coordinate-multiple-components)
   - [Debugging](#debugging)
 - [API](#api)
-  - [`<Expiriment />`](#expiriment-)
-    - [`.props.name`](#propsname)
-    - [`.props.defaultValue`](#propsdefaultvalue)
+  - [`<Experiment />`](#experiment-)
+    - [`props.name`](#propsname)
+    - [`props.defaultValue`](#propsdefaultvalue)
   - [`<Variant />`](#variant-)
-    - [`.props.name`](#propsname-1)
+    - [`props.name`](#propsname-1)
   - [`emitter`](#emitter)
     - [`.emitWin(experimentName)`](#emitwinexperimentname)
+      - [`experimentName`](#experimentname)
     - [`.addVariantListener([experimentName, ] callback)`](#addvariantlistenerexperimentname--callback)
     - [`.addValueListener([experimentName, ] callback)`](#addvaluelistenerexperimentname--callback)
     - [`.addPlayListener([experimentName, ] callback)`](#addplaylistenerexperimentname--callback)
@@ -251,18 +252,18 @@ var winSubscription = emitter.addWinListener("example", function(variantName){
 
 ## API
 
-### `<Expiriment />`
+### `<Experiment />`
 
 Experiment container component. Children must be of type [Variant](#variant-).
 
-#### `.props.name`
+#### `props.name`
 
- * **Description:** The name of the expiriment.
+ * **Description:** The name of the experiment.
  * **Required:** Yes
  * **Type:** `string`
  * **Example:** `"My Test"`
 
-#### `.props.defaultValue`
+#### `props.defaultValue`
 
  * **Description:** The name of the variant to default to.
  * **Required:** No
@@ -273,15 +274,26 @@ Experiment container component. Children must be of type [Variant](#variant-).
 
 Variant component.
 
-#### `.props.name`
+#### `props.name`
 
-The name of the variant. (Required. String. Example: "A")
+ * **Description:** The name of the variant.
+ * **Required:** Yes
+ * **Type:** `string`
+ * **Example:** `"My Test"`
 
 ### `emitter`
 
 Event emitter.
 
 #### `.emitWin(experimentName)`
+
+##### `experimentName`
+
+ * **Description:** The name of the experiment.
+ * **Required:** Yes
+ * **Type:** `string`
+ * **Example:** `"My Test"`
+
 #### `.addVariantListener([experimentName, ] callback)`
 #### `.addValueListener([experimentName, ] callback)`
 #### `.addPlayListener([experimentName, ] callback)`
