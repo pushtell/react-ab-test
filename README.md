@@ -263,7 +263,9 @@ The name of the expiriment. (Required. String. Example: "my-test")
 
 The name of the variant to default to. (Optional. String. Example: "A")
 
-### ```js <Variant name="Variant Name" /> ```
+### ```js
+<Variant name="Variant Name" />
+```
 
 Variant component.
 
