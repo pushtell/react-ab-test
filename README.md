@@ -16,9 +16,8 @@
   - [Debugging](#debugging)
 - [API](#api)
   - [`<Experiment />`](#experiment-)
-    - [`props.name`](#propsname)
   - [`<Variant />`](#variant-)
-    - [`props.name`](#propsname-1)
+    - [`props.name`](#propsname)
   - [`emitter`](#emitter)
     - [`.emitWin(experimentName)`](#emitwinexperimentname)
       - [`experimentName`](#experimentname)
@@ -255,9 +254,8 @@ var winSubscription = emitter.addWinListener("example", function(variantName){
 
 Experiment container component. Children must be of type [Variant](#variant-).
 
-#### `props.name`
 
-|                                                ||
+| #### `props.name`                              ||
 | ----------------: | :-------------------------- |
 | **Description**   | The name of the experiment. |
 | **Required**      | Yes                         |
