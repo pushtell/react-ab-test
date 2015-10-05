@@ -115,6 +115,11 @@ var PushtellEventEmitter = (function (_EventEmitter) {
       return names;
     }
   }, {
+    key: 'getExperimentValue',
+    value: function getExperimentValue(experimentName) {
+      return values[experimentName];
+    }
+  }, {
     key: 'setExperimentValue',
     value: function setExperimentValue(experimentName, variantName) {
       values[experimentName] = variantName;

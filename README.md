@@ -180,6 +180,9 @@ var VariantSelector = React.createClass({
     });
   },
   componentWillMount: function(){
+    this.setState({
+      variants: emitter.getSortedVariants(this.props.name)
+    });
     this.variantSubscription = emitter.addVariantListener(this.props.name, this.addVariant);
   },
   componentWillUnmount: function(){
@@ -191,9 +194,14 @@ var VariantSelector = React.createClass({
   render: function(){
     return <div>
       {this.state.variants.map(variantName => {
-        <div className="radio" key={variantName}>
+        return <div className="radio" key={variantName}>
           <label>
-            <input type="radio" name="variant" value={variantName} onClick={this.changeVariant.bind(this, variantName)}/>
+            <input
+              type="radio"
+              name="variant"
+              value={variantName}
+              onClick={this.changeVariant.bind(this, variantName)}
+              defaultChecked={this.state.value === variantName} />
             Variant {variantName}
           </label>
         </div>

@@ -76,6 +76,9 @@ class PushtellEventEmitter extends EventEmitter {
     names.sort();
     return names;
   }
+  getExperimentValue(experimentName){
+    return values[experimentName];
+  }
   setExperimentValue(experimentName, variantName){
     values[experimentName] = variantName;
     this.emit("value", experimentName, variantName);
