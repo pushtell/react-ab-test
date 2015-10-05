@@ -15,6 +15,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== 'function' 
 var _fbemitter = require('fbemitter');
 
 var values = {};
+var experiments = {};
 
 var PushtellEventEmitter = (function (_EventEmitter) {
   _inherits(PushtellEventEmitter, _EventEmitter);
@@ -26,17 +27,61 @@ var PushtellEventEmitter = (function (_EventEmitter) {
   }
 
   _createClass(PushtellEventEmitter, [{
-    key: 'win',
-    value: function win(experimentName) {
+    key: 'emitWin',
+    value: function emitWin(experimentName) {
       if (typeof experimentName !== 'string') {
         throw new Error("Required argument 'experimentName' should have type 'string'");
       }
       this.emit("win", experimentName, values[experimentName]);
     }
   }, {
+    key: 'addPlayListener',
+    value: function addPlayListener(experimentName, callback) {
+      return this.addListener('play', function (_experimentName, variantName) {
+        if (_experimentName === experimentName) {
+          callback(variantName);
+        }
+      });
+    }
+  }, {
+    key: 'addWinListener',
+    value: function addWinListener(experimentName, callback) {
+      return this.addListener('win', function (_experimentName, variantName) {
+        if (_experimentName === experimentName) {
+          callback(variantName);
+        }
+      });
+    }
+  }, {
+    key: 'addExperimentVariants',
+    value: function addExperimentVariants(experimentName, variantNames) {
+      experiments[experimentName] = experiments[experimentName] || {};
+      variantNames.forEach(function (variantName) {
+        experiments[experimentName][variantName] = true;
+      });
+    }
+  }, {
+    key: 'getSortedVariants',
+    value: function getSortedVariants(experimentName) {
+      var names = Object.keys(experiments[experimentName]);
+      names.sort();
+      return names;
+    }
+  }, {
+    key: 'setExperimentValue',
+    value: function setExperimentValue(experimentName, variantName) {
+      values[experimentName] = variantName;
+    }
+  }, {
     key: 'addExperimentVariant',
     value: function addExperimentVariant(experimentName, variantName) {
-      values[experimentName] = variantName;
+      experiments[experimentName] = experiments[experimentName] || {};
+      if (values[experimentName] && experiments[experimentName][variantName] !== true) {
+        var error = new Error("Expiriment “" + experimentName + "” added new variants after a variant was selected. Declare the variant names using emitter.addExpirimentVariants(expirimentName, variantNames).");
+        error.type = "PUSHTELL_INVALID_VARIANT";
+        throw error;
+      }
+      experiments[experimentName][variantName] = true;
     }
   }]);
 

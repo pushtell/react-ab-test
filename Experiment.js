@@ -18,27 +18,26 @@ var _emitter = require("./emitter");
 
 var _emitter2 = _interopRequireDefault(_emitter);
 
-var experiments = {};
+var _Variant = require("./Variant");
+
+var _Variant2 = _interopRequireDefault(_Variant);
 
 exports["default"] = _react2["default"].createClass({
   displayName: "Pushtell.Experiment",
   propTypes: {
     name: _react2["default"].PropTypes.string.isRequired,
-    value: _react2["default"].PropTypes.string.isRequired,
-    onPlay: _react2["default"].PropTypes.func,
-    onWin: _react2["default"].PropTypes.func
-  },
-  statics: {
-    experiments: experiments
+    value: _react2["default"].PropTypes.string.isRequired
   },
   win: function win() {
-    _emitter2["default"].win(this.props.name, this.props.value);
+    _emitter2["default"].emitWin(this.props.name);
   },
   getInitialState: function getInitialState() {
     var children = {};
     _react2["default"].Children.forEach(this.props.children, function (element) {
       if (!_react2["default"].isValidElement(element) || element.type.displayName !== "Pushtell.Variant") {
-        throw new Error("Pushtell Experiment children must be Pushtell Variant components.");
+        var error = new Error("Pushtell Experiment children must be Pushtell Variant components.");
+        error.type = "PUSHTELL_INVALID_CHILD";
+        throw error;
       }
       children[element.props.name] = element;
     });
@@ -54,24 +53,9 @@ exports["default"] = _react2["default"].createClass({
       element: children[this.props.value]
     };
   },
-  winListener: function winListener(experimentName, variantName) {
-    if (!this.props.onWin) {
-      return;
-    }
-    if (experimentName === this.props.name) {
-      this.props.onWin(variantName);
-    }
-  },
   componentWillMount: function componentWillMount() {
-    if (this.props.onPlay) {
-      this.props.onPlay(this.props.value);
-    }
+    _emitter2["default"].setExperimentValue(this.props.name, this.props.value);
     _emitter2["default"].emit('play', this.props.name, this.props.value);
-    this.emitterSubscription = _emitter2["default"].addListener('win', this.winListener);
-    _emitter2["default"].addExperimentVariant(this.props.name, this.props.value);
-  },
-  componentWillUnmount: function componentWillUnmount() {
-    this.emitterSubscription.remove();
   },
   render: function render() {
     return this.state.element;

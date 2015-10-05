@@ -35,20 +35,16 @@ export default React.createClass({
     onWin: React.PropTypes.func
   },
   win(){
-    emitter.emit("win", this.props.name, this.state.value);
+    emitter.emitWin(this.props.name);
   },
   getInitialState(){
-    Experiment.experiments[this.props.name] = Experiment.experiments[this.props.name] || {};
-    if(this.props.variantNames) {
-      this.props.variantNames.forEach(name => {
-        Experiment.experiments[this.props.name][name] = true;
-      });
-    }
     React.Children.forEach(this.props.children, element => {
       if(!React.isValidElement(element) || element.type.displayName !== "Pushtell.Variant"){
-        throw new Error("Pushtell Experiment children must be Pushtell Variant components.");
+        let error = new Error("Pushtell Experiment children must be Pushtell Variant components.");
+        error.type = "PUSHTELL_INVALID_CHILD";
+        throw error;
       }
-      Experiment.experiments[this.props.name][element.props.name] = true;
+      emitter.addExperimentVariant(this.props.name, element.props.name);
     });
     return {};
   },
@@ -65,8 +61,8 @@ export default React.createClass({
         value: this.props.defaultValue
       });
     }
-    let variantNames = Object.keys(Experiment.experiments[this.props.name]);
-    let randomValue = variantNames[Math.floor(Math.random() * variantNames.length)];
+    let variants = emitter.getSortedVariants(this.props.name);
+    let randomValue = variants[Math.floor(Math.random() * variants.length)];
     store.setItem('PUSHTELL-' + this.props.name, randomValue);
     return this.setState({
       value: randomValue

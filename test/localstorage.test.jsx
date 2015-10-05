@@ -1,6 +1,7 @@
 import React from "react";
 import Experiment from "../src/LocalStorageExperiment.jsx";
 import Variant from "../src/Variant.jsx";
+import emitter from "../src/emitter.jsx";
 import assert from "assert";
 import co from "co";
 import UUID from "node-uuid";
@@ -76,30 +77,78 @@ describe("LocalStorage", function() {
     let elementWithoutDefaultValue = document.getElementById('experiment-' + defaultValue);
     assert.notEqual(elementWithoutDefaultValue, null);
   }));
-  it("should callback when a variant is clicked.", co.wrap(function *(){
+  it("should error if variants are added to a experiment after a variant was selected.", co.wrap(function *(){
     let reactElement = document.getElementById("react");
     let experimentName = UUID.v4();
-    let winningVariant = null;
-    let winCallback = function(variant){
-      winningVariant = variant;
-    };
-    let App = React.createClass({
+    let AppPart1 = React.createClass({
       onClickVariant: function(e){
         this.refs.experiment.win();
       },
       render: function(){
-        return <Experiment ref="experiment" name={experimentName} defaultValue="A" onWin={winCallback}>
-          <Variant name="A"><a id="experiment-a" href="#A" onClick={this.onClickVariant}>A</a></Variant>
-          <Variant name="B"><a id="experiment-b" href="#B" onClick={this.onClickVariant}>B</a></Variant>
+        return <Experiment ref="experiment" name={experimentName}>
+          <Variant name="A"><a id="variant-a" href="#A">A</a></Variant>
+          <Variant name="B"><a id="variant-b" href="#B">B</a></Variant>
+        </Experiment>;
+      }
+    });
+    let AppPart2 = React.createClass({
+      onClickVariant: function(e){
+        this.refs.experiment.win();
+      },
+      render: function(){
+        return <Experiment ref="experiment" name={experimentName}>
+          <Variant name="C"><a id="variant-c" href="#C">C</a></Variant>
+          <Variant name="D"><a id="variant-d" href="#D">D</a></Variant>
         </Experiment>;
       }
     });
     yield new Promise(function(resolve, reject){
-      React.render(<App />, reactElement, resolve);
+      React.render(<AppPart1 />, reactElement, resolve);
     });
-    let elementA = document.getElementById('experiment-a');
-    mouse.click(elementA);
-    assert.equal(winningVariant, "A");
+    try {
+      yield new Promise(function(resolve, reject){
+        React.render(<AppPart2 />, reactElement, resolve);
+      });
+    } catch(error) {
+      if(error.type !== "PUSHTELL_INVALID_VARIANT") {
+        throw error;
+      }
+      return;
+    }
+    throw new Error("New variant was added after variant was selected.");
+  }));
+  it("should not error if variants are added to a experiment after a variant was selected if variants were declared.", co.wrap(function *(){
+    let reactElement = document.getElementById("react");
+    let experimentName = UUID.v4();
+    emitter.addExperimentVariants(experimentName, ["A", "B", "C", "D"]);
+    let AppPart1 = React.createClass({
+      onClickVariant: function(e){
+        this.refs.experiment.win();
+      },
+      render: function(){
+        return <Experiment ref="experiment" name={experimentName}>
+          <Variant name="A"><a id="variant-a" href="#A">A</a></Variant>
+          <Variant name="B"><a id="variant-b" href="#B">B</a></Variant>
+        </Experiment>;
+      }
+    });
+    let AppPart2 = React.createClass({
+      onClickVariant: function(e){
+        this.refs.experiment.win();
+      },
+      render: function(){
+        return <Experiment ref="experiment" name={experimentName}>
+          <Variant name="C"><a id="variant-c" href="#C">C</a></Variant>
+          <Variant name="D"><a id="variant-d" href="#D">D</a></Variant>
+        </Experiment>;
+      }
+    });
+    yield new Promise(function(resolve, reject){
+      React.render(<AppPart1 />, reactElement, resolve);
+    });
+    yield new Promise(function(resolve, reject){
+      React.render(<AppPart2 />, reactElement, resolve);
+    });
   }));
   it("should not error if an older test variant is set.", co.wrap(function *(){
     let reactElement = document.getElementById("react");
@@ -108,8 +157,8 @@ describe("LocalStorage", function() {
     let App = React.createClass({
       render: function(){
         return <Experiment name={experimentName}>
-          <Variant name="A"><a id="experiment-a" href="#A" onClick={this.onClickVariant}>A</a></Variant>
-          <Variant name="B"><a id="experiment-b" href="#B" onClick={this.onClickVariant}>B</a></Variant>
+          <Variant name="A"><a id="variant-a" href="#A" onClick={this.onClickVariant}>A</a></Variant>
+          <Variant name="B"><a id="variant-b" href="#B" onClick={this.onClickVariant}>B</a></Variant>
         </Experiment>;
       }
     });

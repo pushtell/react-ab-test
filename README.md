@@ -17,7 +17,9 @@ npm install pushtell-react --save
 
 ## Basic Usage
 
-Try it [on JSFiddle](https://jsfiddle.net/pushtell/m14qvy7r/)
+### In a single component
+
+Try a single component example [on JSFiddle](https://jsfiddle.net/pushtell/m14qvy7r/)
 
 ```js
 
@@ -44,15 +46,93 @@ var App = React.createClass({
   }
 });
 
-// Executed when the component mounts.
-var playSubscription = emitter.addListener('play', function(name, value){
-  alert("Displaying '" + name + "' variant '" + value + "'");
+// Executed when the experiment is run
+var playSubscription = emitter.addPlayListener("example", function(name, value){
+  alert("Displaying experiment ‘" + name + "’ variant ‘" + value + "’");
 });
 
-// Executed when a 'win' is recorded, in this case by this.refs.experiment.win();
-var winSubscription = emitter.addListener('win', function(name, value){
-  alert("Experiment '" + name + "' variant '" + value + "' was clicked on.");
+// Executed when a 'win' is emitted, in this case by this.refs.experiment.win();
+var winSubscription = emitter.addWinListener("example", function(name, value){
+  alert("Experiment experiment ‘" + name + "’ variant ‘" + value + "’ was clicked on.");
 });
 
 ```
 
+### Across multiple components
+
+Try a multi-component example at [on JSFiddle](http://jsfiddle.net/pushtell/pcutps9q/)
+
+```js
+
+var Experiment = require("pushtell-react").Experiment;
+var Variant = require("pushtell-react").Variant;
+var emitter = require("pushtell-react").emitter;
+
+// Add variants in advance.
+emitter.addExperimentVariants("example", ["A", "B", "C"]);
+
+var Component1 = React.createClass({
+  render: function(){
+    return <div>
+      <Experiment ref="experiment" name="example">
+        <Variant name="A">
+          <h1>Headline A</h1>
+        </Variant>
+        <Variant name="B">
+          <h1>Headline B</h1>
+        </Variant>
+      </Experiment>
+    </div>;
+  }
+});
+
+var Component2 = React.createClass({
+  render: function(){
+    return <div>
+      <Experiment ref="experiment" name="example">
+        <Variant name="A">
+          <p>Section A</p>
+        </Variant>
+        <Variant name="B">
+          <p>Section B</p>
+        </Variant>
+        <Variant name="C">
+          <p>Section C</p>
+        </Variant>
+      </Experiment>
+    </div>;
+  }
+});
+
+var Component3 = React.createClass({
+  onButtonClick: function(e){
+    emitter.emitWin("example");
+  },
+  render: function(){
+    return <div>
+      <button onClick={this.onButtonClick}>Click me to record a win!</button>
+    </div>;
+  }
+});
+
+var App = React.createClass({
+  render: function(){
+    return <div>
+      <Component1 />
+      <Component2 />
+      <Component3 />
+    </div>;
+  }
+});
+
+// Executed when the experiment is run.
+var playSubscription = emitter.addPlayListener("example", function(name, value){
+  alert("Displaying experiment ‘" + name + "’ variant ‘" + value + "’");
+});
+
+// Executed when a 'win' is emitted, in this case by emitter.emitWin("example")
+var winSubscription = emitter.addWinListener("example", function(name, value){
+  alert("Experiment experiment ‘" + name + "’ variant ‘" + value + "’ was clicked on.");
+});
+
+```

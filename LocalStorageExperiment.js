@@ -53,22 +53,18 @@ exports["default"] = _react2["default"].createClass({
     onWin: _react2["default"].PropTypes.func
   },
   win: function win() {
-    _emitter2["default"].emit("win", this.props.name, this.state.value);
+    _emitter2["default"].emitWin(this.props.name);
   },
   getInitialState: function getInitialState() {
     var _this = this;
 
-    _Experiment2["default"].experiments[this.props.name] = _Experiment2["default"].experiments[this.props.name] || {};
-    if (this.props.variantNames) {
-      this.props.variantNames.forEach(function (name) {
-        _Experiment2["default"].experiments[_this.props.name][name] = true;
-      });
-    }
     _react2["default"].Children.forEach(this.props.children, function (element) {
       if (!_react2["default"].isValidElement(element) || element.type.displayName !== "Pushtell.Variant") {
-        throw new Error("Pushtell Experiment children must be Pushtell Variant components.");
+        var error = new Error("Pushtell Experiment children must be Pushtell Variant components.");
+        error.type = "PUSHTELL_INVALID_CHILD";
+        throw error;
       }
-      _Experiment2["default"].experiments[_this.props.name][element.props.name] = true;
+      _emitter2["default"].addExperimentVariant(_this.props.name, element.props.name);
     });
     return {};
   },
@@ -85,8 +81,8 @@ exports["default"] = _react2["default"].createClass({
         value: this.props.defaultValue
       });
     }
-    var variantNames = Object.keys(_Experiment2["default"].experiments[this.props.name]);
-    var randomValue = variantNames[Math.floor(Math.random() * variantNames.length)];
+    var variants = _emitter2["default"].getSortedVariants(this.props.name);
+    var randomValue = variants[Math.floor(Math.random() * variants.length)];
     store.setItem('PUSHTELL-' + this.props.name, randomValue);
     return this.setState({
       value: randomValue
