@@ -15,10 +15,10 @@
   - [Coordinate Multiple Components](#coordinate-multiple-components)
   - [Debugging](#debugging)
 - [API](#api)
-  - [`&lt;Expiriment /&gt;`](#&ltexpiriment-&gt)
+  - [`<Expiriment name="My Test" defaultValue="Optional Default Value" />`](#expiriment-namemy-test-defaultvalueoptional-default-value-)
     - [`expiriment.props.name`](#expirimentpropsname)
     - [`expiriment.props.defaultValue`](#expirimentpropsdefaultvalue)
-  - [`&lt;Variant name="Variant Name" /&gt;`](#&ltvariant-namevariant-name-&gt)
+  - [```js <Variant name="Variant Name" /> ```](#js-variant-namevariant-name--)
     - [`variant.props.name`](#variantpropsname)
   - [`emitter`](#emitter)
     - [`emitter.emitWin(experimentName)`](#emitteremitwinexperimentname)
@@ -251,7 +251,7 @@ var winSubscription = emitter.addWinListener("example", function(variantName){
 
 ## API
 
-### `&lt;Expiriment /&gt;`
+### `<Expiriment name="My Test" defaultValue="Optional Default Value" />`
 
 Experiment container component. Children must be of type [Variant](#&ltvariant-&gt).
 
@@ -263,7 +263,7 @@ The name of the expiriment. (Required. String. Example: "my-test")
 
 The name of the variant to default to. (Optional. String. Example: "A")
 
-### `&lt;Variant name="Variant Name" /&gt;`
+### ```js <Variant name="Variant Name" /> ```
 
 Variant component.
 
