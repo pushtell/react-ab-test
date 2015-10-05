@@ -11,6 +11,12 @@ class PushtellEventEmitter extends EventEmitter {
     this.emit("win", experimentName, values[experimentName]);
   }
   addVariantListener(experimentName, callback) {
+    if(typeof experimentName === "function") {
+      callback = experimentName;
+      return this.addListener('variant', (_experimentName, variantName) => {
+        callback(_experimentName, variantName);
+      });
+    }
     return this.addListener('variant', (_experimentName, variantName) => {
       if(_experimentName === experimentName) {
         callback(variantName);
@@ -18,6 +24,12 @@ class PushtellEventEmitter extends EventEmitter {
     });
   }
   addValueListener(experimentName, callback) {
+    if(typeof experimentName === "function") {
+      callback = experimentName;
+      return this.addListener('value', (_experimentName, variantName) => {
+        callback(_experimentName, variantName);
+      });
+    }
     return this.addListener('value', (_experimentName, variantName) => {
       if(_experimentName === experimentName) {
         callback(variantName);
@@ -25,6 +37,12 @@ class PushtellEventEmitter extends EventEmitter {
     });
   }
   addPlayListener(experimentName, callback) {
+    if(typeof experimentName === "function") {
+      callback = experimentName;
+      return this.addListener('play', (_experimentName, variantName) => {
+        callback(_experimentName, variantName);
+      });
+    }
     return this.addListener('play', (_experimentName, variantName) => {
       if(_experimentName === experimentName) {
         callback(variantName);
@@ -32,6 +50,12 @@ class PushtellEventEmitter extends EventEmitter {
     });
   }
   addWinListener(experimentName, callback) {
+    if(typeof experimentName === "function") {
+      callback = experimentName;
+      return this.addListener('win', (_experimentName, variantName) => {
+        callback(_experimentName, variantName);
+      });
+    }
     return this.addListener('win', (_experimentName, variantName) => {
       if(_experimentName === experimentName) {
         callback(variantName);

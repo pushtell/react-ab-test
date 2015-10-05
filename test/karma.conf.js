@@ -82,7 +82,7 @@ module.exports = function (karma) {
       }
     },
     reporters: ['dots', 'coverage'],
-    coverageReporter:{
+    coverageReporter: {
       type: 'lcov',
       dir: 'coverage/'
     },

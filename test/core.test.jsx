@@ -61,11 +61,18 @@ describe("Core", function() {
   }));
   it("should callback when a variant is played.", co.wrap(function *(){
     let experimentName = UUID.v4();
-    let playedVariant = null;
-    let playCallback = function(variant){
-      playedVariant = variant;
+    let playedVariantName = null;
+    let playCallback = function(variantName){
+      playedVariantName = variantName;
+    };
+    let experimentNameGlobal = null;
+    let playedVariantNameGlobal = null;
+    let playCallbackGlobal = function(expirimentName, variantName){
+      experimentNameGlobal = expirimentName;
+      playedVariantNameGlobal = variantName;
     };
     let playSubscription = emitter.addPlayListener(experimentName, playCallback);
+    let playSubscriptionGlobal = emitter.addPlayListener(playCallbackGlobal);
     let App = React.createClass({
       render: function(){
         return <Experiment name={experimentName} value="A">
@@ -77,16 +84,26 @@ describe("Core", function() {
     yield new Promise(function(resolve, reject){
       React.render(<App />, document.getElementById("react"), resolve);
     });
-    assert.equal(playedVariant, "A");
+    assert.equal(playedVariantName, "A");
+    assert.equal(experimentNameGlobal, experimentName);
+    assert.equal(playedVariantNameGlobal, "A");
     playSubscription.remove();
+    playSubscriptionGlobal.remove();
   }));
   it("should callback when a variant wins.", co.wrap(function *(){
     let experimentName = UUID.v4();
-    let winningVariant = null;
-    let winCallback = function(variant){
-      winningVariant = variant;
+    let winningVariantName = null;
+    let winCallback = function(variantName){
+      winningVariantName = variantName;
+    };
+    let experimentNameGlobal = null;
+    let winningVariantNameGlobal = null;
+    let winCallbackGlobal = function(expirimentName, variantName){
+      experimentNameGlobal = expirimentName;
+      winningVariantNameGlobal = variantName;
     };
     let winSubscription = emitter.addWinListener(experimentName, winCallback);
+    let winSubscriptionGlobal = emitter.addWinListener(winCallbackGlobal);
     let App = React.createClass({
       render: function(){
         return <Experiment name={experimentName} value="A">
@@ -99,16 +116,26 @@ describe("Core", function() {
       React.render(<App />, document.getElementById("react"), resolve);
     });
     emitter.emitWin(experimentName);
-    assert.equal(winningVariant, "A");
+    assert.equal(winningVariantName, "A");
+    assert.equal(experimentNameGlobal, experimentName);
+    assert.equal(winningVariantNameGlobal, "A");
     winSubscription.remove();
+    winSubscriptionGlobal.remove();
   }));
   it("should callback when a variant is clicked.", co.wrap(function *(){
     let experimentName = UUID.v4();
-    let winningVariant = null;
-    let winCallback = function(variant){
-      winningVariant = variant;
+    let winningVariantName = null;
+    let winCallback = function(variantName){
+      winningVariantName = variantName;
+    };
+    let experimentNameGlobal = null;
+    let winningVariantNameGlobal = null;
+    let winCallbackGlobal = function(expirimentName, variantName){
+      experimentNameGlobal = expirimentName;
+      winningVariantNameGlobal = variantName;
     };
     let winSubscription = emitter.addWinListener(experimentName, winCallback);
+    let winSubscriptionGlobal = emitter.addWinListener(winCallbackGlobal);
     let App = React.createClass({
       onClickVariant: function(e){
         this.refs.experiment.win();
@@ -125,8 +152,11 @@ describe("Core", function() {
     });
     let elementA = document.getElementById('variant-a');
     mouse.click(elementA);
-    assert.equal(winningVariant, "A");
+    assert.equal(winningVariantName, "A");
+    assert.equal(experimentNameGlobal, experimentName);
+    assert.equal(winningVariantNameGlobal, "A");
     winSubscription.remove();
+    winSubscriptionGlobal.remove();
   }));
   it("should listen for variant names.", co.wrap(function *(){
     let experimentName = UUID.v4();

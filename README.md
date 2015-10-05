@@ -7,19 +7,20 @@
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+##Table of Contents
 
-  - [Install](#install)
-  - [Basic Usage](#basic-usage)
-    - [In a single component](#in-a-single-component)
-- [Headline A](#headline-a)
-- [Headline B](#headline-b)
-    - [Across multiple components](#across-multiple-components)
-- [Headline A](#headline-a-1)
-- [Headline B](#headline-b-1)
-    - [Debugging](#debugging)
-- [Headline A](#headline-a-2)
-- [Headline B](#headline-b-2)
+- [Install](#install)
+- [Usage](#usage)
+  - [In a standalone component](#in-a-standalone-component)
+  - [Across multiple components](#across-multiple-components)
+  - [With a debugger](#with-a-debugger)
+- [API](#api)
+  - [&lt;Expiriment /&gt;](#&ltexpiriment-&gt)
+    - [Properties](#properties)
+  - [&lt;Variant /&gt;](#&ltvariant-&gt)
+    - [Properties](#properties-1)
+  - [emitter](#emitter)
+    - [Methods](#methods)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -29,9 +30,9 @@
 npm install react-ab-test
 ```
 
-## Basic Usage
+## Usage
 
-### In a single component
+### In a standalone component
 
 Try it [on JSFiddle](https://jsfiddle.net/pushtell/m14qvy7r/)
 
@@ -49,10 +50,10 @@ var App = React.createClass({
     return <div>
       <Experiment ref="experiment" name="example">
         <Variant name="A">
-          <h1>Headline A</h1>
+          <div>Section A</div>
         </Variant>
         <Variant name="B">
-          <h1>Headline B</h1>
+          <div>Section B</div>
         </Variant>
       </Experiment>
       <button onClick={this.onButtonClick}>Click to emit a win!</button>
@@ -90,10 +91,10 @@ var Component1 = React.createClass({
     return <div>
       <Experiment name="example">
         <Variant name="A">
-          <h1>Headline A</h1>
+          <div>Section A</div>
         </Variant>
         <Variant name="B">
-          <h1>Headline B</h1>
+          <div>Section B</div>
         </Variant>
       </Experiment>
     </div>;
@@ -105,13 +106,13 @@ var Component2 = React.createClass({
     return <div>
       <Experiment name="example">
         <Variant name="A">
-          <p>Section A</p>
+          <div>Subsection A</div>
         </Variant>
         <Variant name="B">
-          <p>Section B</p>
+          <div>Subsection B</div>
         </Variant>
         <Variant name="C">
-          <p>Section C</p>
+          <div>Subsection C</div>
         </Variant>
       </Experiment>
     </div>;
@@ -152,7 +153,7 @@ var winSubscription = emitter.addWinListener("example", function(variantName){
 ```
 
 
-### Debugging
+### With a debugger
 
 Try it [on JSFiddle](http://jsfiddle.net/pushtell/vs9kkxLd/)
 
@@ -209,10 +210,10 @@ var App = React.createClass({
     return <div>
       <Experiment ref="experiment" name="example">
         <Variant name="A">
-          <h1>Headline A</h1>
+          <div>Section A</div>
         </Variant>
         <Variant name="B">
-          <h1>Headline B</h1>
+          <div>Section A</div>
         </Variant>
       </Experiment>
       <button onClick={this.onButtonClick}>Click to emit a win!</button>
@@ -232,3 +233,37 @@ var winSubscription = emitter.addWinListener("example", function(variantName){
 });
 
 ```
+
+## API
+
+### &lt;Expiriment /&gt;
+
+Experiment container component. Children must be of type [Variant](#&ltvariant-&gt).
+
+#### Properties
+
+ * **name** - The name of the expiriment. (Required. String. Example: "my-test")
+ * **defaultValue** - The name of the variant to default to. (Optional. String. Example: "A")
+
+### &lt;Variant /&gt;
+
+Variant component.
+
+#### Properties
+
+ * **name** - The name of the variant. (Required. String. Example: "A")
+
+### emitter
+
+Event emitter.
+
+#### Methods
+
+ * **emitWin(experimentName)**
+ * **addVariantListener(experimentName, callback)**
+ * **addValueListener(experimentName, callback)**
+ * **addPlayListener(experimentName, callback)**
+ * **addWinListener(experimentName, callback)**
+ * **addExperimentVariants(experimentName, variantNames)**
+ * **setExperimentValue(experimentName, variantName)**
+

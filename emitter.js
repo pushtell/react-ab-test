@@ -37,6 +37,12 @@ var PushtellEventEmitter = (function (_EventEmitter) {
   }, {
     key: 'addVariantListener',
     value: function addVariantListener(experimentName, callback) {
+      if (typeof experimentName === "function") {
+        callback = experimentName;
+        return this.addListener('variant', function (_experimentName, variantName) {
+          callback(_experimentName, variantName);
+        });
+      }
       return this.addListener('variant', function (_experimentName, variantName) {
         if (_experimentName === experimentName) {
           callback(variantName);
@@ -46,6 +52,12 @@ var PushtellEventEmitter = (function (_EventEmitter) {
   }, {
     key: 'addValueListener',
     value: function addValueListener(experimentName, callback) {
+      if (typeof experimentName === "function") {
+        callback = experimentName;
+        return this.addListener('value', function (_experimentName, variantName) {
+          callback(_experimentName, variantName);
+        });
+      }
       return this.addListener('value', function (_experimentName, variantName) {
         if (_experimentName === experimentName) {
           callback(variantName);
@@ -55,6 +67,12 @@ var PushtellEventEmitter = (function (_EventEmitter) {
   }, {
     key: 'addPlayListener',
     value: function addPlayListener(experimentName, callback) {
+      if (typeof experimentName === "function") {
+        callback = experimentName;
+        return this.addListener('play', function (_experimentName, variantName) {
+          callback(_experimentName, variantName);
+        });
+      }
       return this.addListener('play', function (_experimentName, variantName) {
         if (_experimentName === experimentName) {
           callback(variantName);
@@ -64,6 +82,12 @@ var PushtellEventEmitter = (function (_EventEmitter) {
   }, {
     key: 'addWinListener',
     value: function addWinListener(experimentName, callback) {
+      if (typeof experimentName === "function") {
+        callback = experimentName;
+        return this.addListener('win', function (_experimentName, variantName) {
+          callback(_experimentName, variantName);
+        });
+      }
       return this.addListener('win', function (_experimentName, variantName) {
         if (_experimentName === experimentName) {
           callback(variantName);
