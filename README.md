@@ -19,7 +19,7 @@ npm install pushtell-react --save
 
 ### In a single component
 
-Try a single component example [on JSFiddle](https://jsfiddle.net/pushtell/m14qvy7r/)
+Try it [on JSFiddle](https://jsfiddle.net/pushtell/m14qvy7r/)
 
 ```js
 
@@ -47,20 +47,20 @@ var App = React.createClass({
 });
 
 // Executed when the experiment is run
-var playSubscription = emitter.addPlayListener("example", function(name, value){
-  alert("Displaying experiment ‘" + name + "’ variant ‘" + value + "’");
+var playSubscription = emitter.addPlayListener("example", function(value){
+  console.log("Displaying experiment ‘example’ variant ‘" + value + "’");
 });
 
 // Executed when a 'win' is emitted, in this case by this.refs.experiment.win();
-var winSubscription = emitter.addWinListener("example", function(name, value){
-  alert("Experiment experiment ‘" + name + "’ variant ‘" + value + "’ was clicked on.");
+var winSubscription = emitter.addWinListener("example", function(value){
+  console.log("Experiment ‘example’ variant ‘" + value + "’ was clicked on");
 });
 
 ```
 
 ### Across multiple components
 
-Try a multi-component example at [on JSFiddle](http://jsfiddle.net/pushtell/pcutps9q/)
+Try it [on JSFiddle](http://jsfiddle.net/pushtell/pcutps9q/)
 
 ```js
 
@@ -126,13 +126,13 @@ var App = React.createClass({
 });
 
 // Executed when the experiment is run.
-var playSubscription = emitter.addPlayListener("example", function(name, value){
-  alert("Displaying experiment ‘" + name + "’ variant ‘" + value + "’");
+var playSubscription = emitter.addPlayListener("example", function(value){
+  console.log("Displaying experiment ‘example’ variant ‘" + value + "’");
 });
 
 // Executed when a 'win' is emitted, in this case by emitter.emitWin("example")
-var winSubscription = emitter.addWinListener("example", function(name, value){
-  alert("Experiment experiment ‘" + name + "’ variant ‘" + value + "’ was clicked on.");
+var winSubscription = emitter.addWinListener("example", function(value){
+  console.log("Experiment ‘example’ variant ‘" + value + "’ was clicked on");
 });
 
 ```
