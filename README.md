@@ -70,7 +70,7 @@ emitter.addExperimentVariants("example", ["A", "B", "C"]);
 var Component1 = React.createClass({
   render: function(){
     return <div>
-      <Experiment ref="experiment" name="example">
+      <Experiment name="example">
         <Variant name="A">
           <h1>Headline A</h1>
         </Variant>
@@ -85,7 +85,7 @@ var Component1 = React.createClass({
 var Component2 = React.createClass({
   render: function(){
     return <div>
-      <Experiment ref="experiment" name="example">
+      <Experiment name="example">
         <Variant name="A">
           <p>Section A</p>
         </Variant>
