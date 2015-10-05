@@ -28,11 +28,8 @@ if(typeof window !== 'undefined' && 'localStorage' in window && window['localSto
 export default React.createClass({
   displayName: "Pushtell.LocalStorage.Experiment",
   propTypes: {
-    defaultValue: React.PropTypes.string,
-    variantNames: React.PropTypes.array,
     name: React.PropTypes.string.isRequired,
-    onPlay: React.PropTypes.func,
-    onWin: React.PropTypes.func
+    defaultValue: React.PropTypes.string
   },
   win(){
     emitter.emitWin(this.props.name);
