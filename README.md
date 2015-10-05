@@ -37,19 +37,19 @@ var App = React.createClass({
           <h1>Headline B</h1>
         </Variant>
       </Experiment>
-      <button onClick={this.onButtonClick}>Click me to record a win!</button>
+      <button onClick={this.onButtonClick}>Click to emit a win!</button>
     </div>;
   }
 });
 
 // Executed when the experiment is run
-var playSubscription = emitter.addPlayListener("example", function(value){
-  console.log("Displaying experiment ‘example’ variant ‘" + value + "’");
+var playSubscription = emitter.addPlayListener("example", function(variantName){
+  console.log("Displaying experiment ‘example’ variant ‘" + variantName + "’");
 });
 
 // Executed when a 'win' is emitted, in this case by this.refs.experiment.win();
-var winSubscription = emitter.addWinListener("example", function(value){
-  console.log("Experiment ‘example’ variant ‘" + value + "’ was clicked on");
+var winSubscription = emitter.addWinListener("example", function(variantName){
+  console.log("Experiment ‘example’ variant ‘" + variantName + "’ was clicked on");
 });
 
 ```
@@ -106,7 +106,7 @@ var Component3 = React.createClass({
   },
   render: function(){
     return <div>
-      <button onClick={this.onButtonClick}>Click me to record a win!</button>
+      <button onClick={this.onButtonClick}>Click to emit a win!</button>
     </div>;
   }
 });
@@ -121,14 +121,14 @@ var App = React.createClass({
   }
 });
 
-// Executed when the experiment is run.
-var playSubscription = emitter.addPlayListener("example", function(value){
-  console.log("Displaying experiment ‘example’ variant ‘" + value + "’");
+// Executed when the experiment is run
+var playSubscription = emitter.addPlayListener("example", function(variantName){
+  console.log("Displaying experiment ‘example’ variant ‘" + variantName + "’");
 });
 
 // Executed when a 'win' is emitted, in this case by emitter.emitWin("example")
-var winSubscription = emitter.addWinListener("example", function(value){
-  console.log("Experiment ‘example’ variant ‘" + value + "’ was clicked on");
+var winSubscription = emitter.addWinListener("example", function(variantName){
+  console.log("Experiment ‘example’ variant ‘" + variantName + "’ was clicked on");
 });
 
 ```
@@ -197,20 +197,20 @@ var App = React.createClass({
           <h1>Headline B</h1>
         </Variant>
       </Experiment>
-      <button onClick={this.onButtonClick}>Click me to record a win!</button>
+      <button onClick={this.onButtonClick}>Click to emit a win!</button>
       <VariantSelector name="example" />
     </div>;
   }
 });
 
 // Executed when the experiment is run
-var playSubscription = emitter.addPlayListener("example", function(value){
-  console.log("Displaying experiment ‘example’ variant ‘" + value + "’");
+var playSubscription = emitter.addPlayListener("example", function(variantName){
+  console.log("Displaying experiment ‘example’ variant ‘" + variantName + "’");
 });
 
 // Executed when a 'win' is emitted, in this case by this.refs.experiment.win();
-var winSubscription = emitter.addWinListener("example", function(value){
-  console.log("Experiment ‘example’ variant ‘" + value + "’ was clicked on");
+var winSubscription = emitter.addWinListener("example", function(variantName){
+  console.log("Experiment ‘example’ variant ‘" + variantName + "’ was clicked on");
 });
 
 ```
