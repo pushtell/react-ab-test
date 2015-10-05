@@ -19,6 +19,7 @@ Try it [on JSFiddle](https://jsfiddle.net/pushtell/m14qvy7r/)
 
 var Experiment = require("pushtell-react").Experiment;
 var Variant = require("pushtell-react").Variant;
+var emitter = require("pushtell-react").emitter;
 
 var App = React.createClass({
   onButtonClick: function(e){
@@ -40,12 +41,12 @@ var App = React.createClass({
 });
 
 // Executed when the component mounts.
-var playSubscription = Experiment.emitter.addListener('play', function(name, value){
+var playSubscription = emitter.addListener('play', function(name, value){
   alert("Displaying '" + name + "' variant '" + value + "'");
 });
 
 // Executed when a 'win' is recorded, in this case by this.refs.experiment.win();
-var winSubscription = Experiment.emitter.addListener('win', function(name, value){
+var winSubscription = emitter.addListener('win', function(name, value){
   alert("Experiment '" + name + "' variant '" + value + "' was clicked on.");
 });
 

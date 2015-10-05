@@ -1,10 +1,29 @@
 import React from "react";
-import Experiment from "../Experiment";
+import Experiment from "./Experiment";
+import emitter from "./emitter";
 
-const store = typeof window !== 'undefined' && 'localStorage' in window && window['localStorage'] !== null ? window.localStorage : {
+let store;
+
+let noopStore = {
   getItem: function(){},
   setItem: function(){}
 };
+
+if(typeof window !== 'undefined' && 'localStorage' in window && window['localStorage'] !== null) {
+  try {
+    let key = '__pushtell_react__';
+    window.localStorage.setItem(key, key);
+    if (window.localStorage.getItem(key) != key) {
+      store = noopStore;
+    }
+    window.localStorage.removeItem(key);
+    store = window.localStorage;
+  } catch(e) {
+    store = noopStore;
+  }
+} else {
+  store = noopStore;
+}
 
 export default React.createClass({
   displayName: "Pushtell.LocalStorage.Experiment",
@@ -15,12 +34,8 @@ export default React.createClass({
     onPlay: React.PropTypes.func,
     onWin: React.PropTypes.func
   },
-  statics: {
-    win: Experiment.win,
-    emitter: Experiment.emitter
-  },
   win(){
-    Experiment.emitter.emit("win", this.props.name, this.state.value);
+    emitter.emit("win", this.props.name, this.state.value);
   },
   getInitialState(){
     Experiment.experiments[this.props.name] = Experiment.experiments[this.props.name] || {};

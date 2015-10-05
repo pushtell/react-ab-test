@@ -12,14 +12,36 @@ var _react = require("react");
 
 var _react2 = _interopRequireDefault(_react);
 
-var _Experiment = require("../Experiment");
+var _Experiment = require("./Experiment");
 
 var _Experiment2 = _interopRequireDefault(_Experiment);
 
-var store = typeof window !== 'undefined' && 'localStorage' in window && window['localStorage'] !== null ? window.localStorage : {
+var _emitter = require("./emitter");
+
+var _emitter2 = _interopRequireDefault(_emitter);
+
+var store = undefined;
+
+var noopStore = {
   getItem: function getItem() {},
   setItem: function setItem() {}
 };
+
+if (typeof window !== 'undefined' && 'localStorage' in window && window['localStorage'] !== null) {
+  try {
+    var key = '__pushtell_react__';
+    window.localStorage.setItem(key, key);
+    if (window.localStorage.getItem(key) != key) {
+      store = noopStore;
+    }
+    window.localStorage.removeItem(key);
+    store = window.localStorage;
+  } catch (e) {
+    store = noopStore;
+  }
+} else {
+  store = noopStore;
+}
 
 exports["default"] = _react2["default"].createClass({
   displayName: "Pushtell.LocalStorage.Experiment",
@@ -30,12 +52,8 @@ exports["default"] = _react2["default"].createClass({
     onPlay: _react2["default"].PropTypes.func,
     onWin: _react2["default"].PropTypes.func
   },
-  statics: {
-    win: _Experiment2["default"].win,
-    emitter: _Experiment2["default"].emitter
-  },
   win: function win() {
-    _Experiment2["default"].emitter.emit("win", this.props.name, this.state.value);
+    _emitter2["default"].emit("win", this.props.name, this.state.value);
   },
   getInitialState: function getInitialState() {
     var _this = this;

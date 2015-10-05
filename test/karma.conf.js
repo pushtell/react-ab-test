@@ -18,6 +18,10 @@ module.exports = function (karma) {
       'tests.bundle.js': ['webpack', 'sourcemap'],
     },
     customLaunchers: {
+      Chrome_without_localstorage: {
+        base: 'Chrome',
+        flags: ['--disable-local-storage']
+      },
       bs_windows_7_ie_9: {
         base: 'BrowserStack',
         os: 'Windows',
@@ -117,7 +121,9 @@ module.exports = function (karma) {
       accessKey: process.env.BROWSERSTACK_ACCESS_KEY,
       pollingTimeout: 10000
     };
-    options.browsers = Object.keys(options.customLaunchers);
+    options.browsers = Object.keys(options.customLaunchers).filter(function(key){
+      return key.indexOf("bs_") !== -1;
+    });
   } else {
     options.browsers = ['Chrome'];
   }

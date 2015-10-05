@@ -1,6 +1,7 @@
 import React from "react";
 import Experiment from "../src/Experiment.jsx";
 import Variant from "../src/Variant.jsx";
+import emitter from "../src/emitter.jsx";
 import assert from "assert";
 import co from "co";
 import UUID from "node-uuid";
@@ -72,7 +73,7 @@ describe("Core", function() {
     yield new Promise(function(resolve, reject){
       React.render(<App />, document.getElementById("react"), resolve);
     });
-    Experiment.win(experimentName);
+    emitter.win(experimentName);
     assert.equal(winningVariant, "A");
   }));
   it("should callback when a variant is clicked.", co.wrap(function *(){
@@ -100,5 +101,4 @@ describe("Core", function() {
     assert.equal(winningVariant, "A");
   }));
 });
-
 

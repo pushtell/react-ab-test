@@ -1,5 +1,5 @@
 import React from "react";
-import Experiment from "../src/LocalStorage/Experiment.jsx";
+import Experiment from "../src/LocalStorageExperiment.jsx";
 import Variant from "../src/Variant.jsx";
 import assert from "assert";
 import co from "co";

@@ -1,9 +1,8 @@
 import React from 'react';
-import {EventEmitter} from 'fbemitter';
+import warning from "react/lib/warning";
+import emitter from "./emitter";
 
 const experiments = {};
-const values = {};
-const emitter = new EventEmitter();
 
 export default React.createClass({
   displayName: "Pushtell.Experiment",
@@ -14,17 +13,10 @@ export default React.createClass({
     onWin: React.PropTypes.func
   },
   statics: {
-    emitter: emitter,
-    experiments: experiments,
-    win(experimentName){
-      if(typeof experimentName !== 'string') {
-        throw new Error("Required argument 'experimentName' should have type 'string'");
-      }
-      emitter.emit("win", experimentName, values[experimentName]);
-    }
+    experiments: experiments
   },
   win(){
-    emitter.emit("win", this.props.name, this.props.value);
+    emitter.win(this.props.name, this.props.value);
   },
   getInitialState(){
     let children = {};
@@ -35,9 +27,8 @@ export default React.createClass({
       children[element.props.name] = element;
     });
     if(!children[this.props.value]) {
-      if("production" !== process.env.NODE_ENV) {
-        console.debug('Experiment “' + this.props.name + '” does not contain variant “' + this.props.value + '”');
-        console.trace();
+      if ("production" !== process.env.NODE_ENV) {
+        warning(true, 'Experiment “' + this.props.name + '” does not contain variant “' + this.props.value + '”');
       }
       return {
         element: null
@@ -61,7 +52,7 @@ export default React.createClass({
     }
     emitter.emit('play', this.props.name, this.props.value);
     this.emitterSubscription = emitter.addListener('win', this.winListener);
-    values[this.props.name] = this.props.value;
+    emitter.addExperimentVariant(this.props.name, this.props.value);
   },
   componentWillUnmount(){
     this.emitterSubscription.remove();

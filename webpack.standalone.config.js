@@ -2,7 +2,7 @@ var webpack = require("webpack");
 
 module.exports = {
   entry: {
-    index: './lib/standalone.js'
+    index: './index.js'
   },
   output: {
     path: './',
@@ -19,11 +19,14 @@ module.exports = {
         loader: 'regenerator-loader',
         test: /\.jsx$/
       }, {
-        test: require.resolve("./lib/LocalStorage/Experiment"),
+        test: require.resolve("./LocalStorageExperiment"),
         loader: "expose?Experiment"
       }, {
-        test: require.resolve("./lib/Variant"),
+        test: require.resolve("./Variant"),
         loader: "expose?Variant"
+      }, {
+        test: require.resolve("./emitter"),
+        loader: "expose?emitter"
       }
     ],
     postLoaders: [
