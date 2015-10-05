@@ -5,6 +5,7 @@
 [![Coverage Status](https://coveralls.io/repos/pushtell/react-ab-test/badge.svg?branch=master&service=github)](https://coveralls.io/github/pushtell/react-ab-test?branch=master)
 [![Dependency Status](https://david-dm.org/pushtell/react-ab-test.svg)](https://david-dm.org/pushtell/react-ab-test)
 
+
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 ##Table of Contents
@@ -314,12 +315,11 @@ Event emitter.
 
 ## Alternative Libraries
 
-| GitHub | Author |
-| ------ | ------ |
-| [react-ab](https://github.com/olahol/react-ab): Simple declarative and universal A/B testing component for React. | [Ola Holmström](https://github.com/olahol) |
-| [react-native-ab](https://github.com/lwansbrough/react-native-ab/): A component for rendering A/B tests in React Native. | [Loch Wansbrough](https://github.com/lwansbrough) |
-
-<iframe src="https://ghbtns.com/github-btn.html?user=twbs&repo=bootstrap&type=star&count=true" frameborder="0" scrolling="0" width="170px" height="20px"></iframe>
+| ----------- | ------ | ----- |
+| Description | Author | Stars |
+| ----------- | ------ | ----- |
+| [**react-ab:**](https://github.com/olahol/react-ab) Simple declarative and universal A/B testing component for React. | [Ola Holmström](https://github.com/olahol) | ![Stars](https://img.shields.io/github/stars/olahol/react-ab.svg?style=flat-square&label=Stars)] |
+| [**react-native-ab:**](https://github.com/lwansbrough/react-native-ab/): A component for rendering A/B tests in React Native. | [Loch Wansbrough](https://github.com/lwansbrough) | ![Stars](https://img.shields.io/github/stars/lwansbrough/react-native-ab.svg?style=flat-square&label=Stars)] |
 
 ## Resources for A/B Testing with React
 
