@@ -5,14 +5,10 @@
 [![Coverage Status](https://coveralls.io/repos/pushtell/react-ab-test/badge.svg?branch=master&service=github)](https://coveralls.io/github/pushtell/react-ab-test?branch=master)
 [![Dependency Status](https://david-dm.org/pushtell/react-ab-test.svg)](https://david-dm.org/pushtell/react-ab-test)
 
-## Notes
-
-This project is under active development and not suitable for use in production environments.
-
 ## Install
 
 ```bash
-npm install pushtell-react --save
+npm install react-ab-test
 ```
 
 ## Basic Usage
@@ -23,9 +19,9 @@ Try it [on JSFiddle](https://jsfiddle.net/pushtell/m14qvy7r/)
 
 ```js
 
-var Experiment = require("pushtell-react").Experiment;
-var Variant = require("pushtell-react").Variant;
-var emitter = require("pushtell-react").emitter;
+var Experiment = require("react-ab-test").Experiment;
+var Variant = require("react-ab-test").Variant;
+var emitter = require("react-ab-test").emitter;
 
 var App = React.createClass({
   onButtonClick: function(e){
@@ -64,9 +60,9 @@ Try it [on JSFiddle](http://jsfiddle.net/pushtell/pcutps9q/)
 
 ```js
 
-var Experiment = require("pushtell-react").Experiment;
-var Variant = require("pushtell-react").Variant;
-var emitter = require("pushtell-react").emitter;
+var Experiment = require("react-ab-test").Experiment;
+var Variant = require("react-ab-test").Variant;
+var emitter = require("react-ab-test").emitter;
 
 // Add variants in advance.
 emitter.addExperimentVariants("example", ["A", "B", "C"]);
@@ -144,9 +140,9 @@ Try it [on JSFiddle](http://jsfiddle.net/pushtell/vs9kkxLd/)
 
 ```js
 
-var Experiment = require("pushtell-react").Experiment;
-var Variant = require("pushtell-react").Variant;
-var emitter = require("pushtell-react").emitter;
+var Experiment = require("react-ab-test").Experiment;
+var Variant = require("react-ab-test").Variant;
+var emitter = require("react-ab-test").emitter;
 
 var VariantSelector = React.createClass({
   propTypes: {
