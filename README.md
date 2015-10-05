@@ -263,19 +263,11 @@ Experiment container component. Children must be of type [Variant](#variant-).
 
 #### `props.name`
 
-The name of the experiment.
-
- * **Required:** Yes
- * **Type:** `string`
- * **Example:** `"My Test"`
+The name of the experiment. Required. Type `string`. Example: `"My Test"`.
 
 #### `props.defaultValue`
 
-The name of the variant to default to.
-
- * **Required:** No
- * **Type:** `string`
- * **Example:** `"A"`
+The default variant name of the experiment. Required. Type `string`. Example: `"A"`.
 
 ---
 
@@ -315,10 +307,10 @@ Event emitter.
 
 ## Alternative Libraries
 
-| Description | Author | Stars |
-| :---------- | :----- | :---- |
-| [**react-ab**](https://github.com/olahol/react-ab) - Simple declarative and universal A/B testing component for React. | [Ola Holmström](https://github.com/olahol) | ![Stars](https://img.shields.io/github/stars/olahol/react-ab.svg?style=flat-square&label=Stars) |
-| [**react-native-ab**](https://github.com/lwansbrough/react-native-ab/) - A component for rendering A/B tests in React Native. | [Loch Wansbrough](https://github.com/lwansbrough) | ![Stars](https://img.shields.io/github/stars/lwansbrough/react-native-ab.svg?style=flat-square&label=Stars) |
+| Description | Author |
+| :---------- | :----- |
+| [**react-ab**](https://github.com/olahol/react-ab) - Simple declarative and universal A/B testing component for React. | [Ola Holmström](https://github.com/olahol) |
+| [**react-native-ab**](https://github.com/lwansbrough/react-native-ab/) - A component for rendering A/B tests in React Native. | [Loch Wansbrough](https://github.com/lwansbrough) |
 
 ## Resources for A/B Testing with React
 
