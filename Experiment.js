@@ -49,9 +49,10 @@ exports["default"] = _react2["default"].createClass({
     };
   },
   componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
-    if (nextProps.value !== this.state.value) {
+    if (nextProps.value !== this.props.value) {
+      var value = typeof nextProps.value === "function" ? nextProps.value() : nextProps.value;
       this.setState({
-        value: nextProps.value
+        value: value
       });
     }
   },

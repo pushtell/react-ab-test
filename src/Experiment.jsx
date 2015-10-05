@@ -31,9 +31,10 @@ export default React.createClass({
     };
   },
   componentWillReceiveProps(nextProps) {
-    if(nextProps.value !== this.state.value) {
+    if(nextProps.value !== this.props.value) {
+      let value = typeof nextProps.value === "function" ? nextProps.value() : nextProps.value;
       this.setState({
-        value: nextProps.value
+        value: value
       });
     }
   },
