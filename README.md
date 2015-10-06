@@ -16,19 +16,24 @@
   - [Coordinate Multiple Components](#coordinate-multiple-components)
   - [Debugging](#debugging)
 - [API](#api)
-  - [`<Experiment name="example" />`](#experiment-nameexample-)
+  - [`<Experiment name="My Example" />`](#experiment-namemy-example-)
+    - [Properties](#properties)
       - [`name`](#name)
       - [`defaultValue`](#defaultvalue)
   - [`<Variant name="A" />`](#variant-namea-)
+    - [Properties](#properties-1)
       - [`name`](#name-1)
   - [`emitter`](#emitter)
     - [`.emitWin(experimentName)`](#emitwinexperimentname)
       - [`experimentName`](#experimentname)
     - [`.addVariantListener([experimentName, ] callback)`](#addvariantlistenerexperimentname--callback)
+      - [`experimentName`](#experimentname-1)
+      - [`callback`](#callback)
     - [`.addValueListener([experimentName, ] callback)`](#addvaluelistenerexperimentname--callback)
     - [`.addPlayListener([experimentName, ] callback)`](#addplaylistenerexperimentname--callback)
     - [`.addWinListener([experimentName, ] callback)`](#addwinlistenerexperimentname--callback)
     - [`.getExperimentValue(experimentName)`](#getexperimentvalueexperimentname)
+      - [`experimentName`](#experimentname-2)
     - [`.addExperimentVariants(experimentName, variantNames)`](#addexperimentvariantsexperimentname-variantnames)
     - [`.setExperimentValue(experimentName, variantName)`](#setexperimentvalueexperimentname-variantname)
 - [Alternative Libraries](#alternative-libraries)
@@ -60,7 +65,7 @@ var App = React.createClass({
   },
   render: function(){
     return <div>
-      <Experiment ref="experiment" name="example">
+      <Experiment ref="experiment" name="My Example">
         <Variant name="A">
           <div>Section A</div>
         </Variant>
@@ -74,12 +79,12 @@ var App = React.createClass({
 });
 
 // Executed when the experiment is run
-var playSubscription = emitter.addPlayListener("example", function(variantName){
+var playSubscription = emitter.addPlayListener("My Example", function(variantName){
   console.log("Displaying experiment ‘example’ variant ‘" + variantName + "’");
 });
 
 // Executed when a 'win' is emitted, in this case by this.refs.experiment.win();
-var winSubscription = emitter.addWinListener("example", function(variantName){
+var winSubscription = emitter.addWinListener("My Example", function(variantName){
   console.log("Experiment ‘example’ variant ‘" + variantName + "’ was clicked on");
 });
 
@@ -96,12 +101,12 @@ var Variant = require("react-ab-test").Variant;
 var emitter = require("react-ab-test").emitter;
 
 // Add variants in advance.
-emitter.addExperimentVariants("example", ["A", "B", "C"]);
+emitter.addExperimentVariants("My Example", ["A", "B", "C"]);
 
 var Component1 = React.createClass({
   render: function(){
     return <div>
-      <Experiment name="example">
+      <Experiment name="My Example">
         <Variant name="A">
           <div>Section A</div>
         </Variant>
@@ -116,7 +121,7 @@ var Component1 = React.createClass({
 var Component2 = React.createClass({
   render: function(){
     return <div>
-      <Experiment name="example">
+      <Experiment name="My Example">
         <Variant name="A">
           <div>Subsection A</div>
         </Variant>
@@ -133,7 +138,7 @@ var Component2 = React.createClass({
 
 var Component3 = React.createClass({
   onButtonClick: function(e){
-    emitter.emitWin("example");
+    emitter.emitWin("My Example");
   },
   render: function(){
     return <div>
@@ -153,12 +158,12 @@ var App = React.createClass({
 });
 
 // Executed when the experiment is run
-var playSubscription = emitter.addPlayListener("example", function(variantName){
+var playSubscription = emitter.addPlayListener("My Example", function(variantName){
   console.log("Displaying experiment ‘example’ variant ‘" + variantName + "’");
 });
 
-// Executed when a 'win' is emitted, in this case by emitter.emitWin("example")
-var winSubscription = emitter.addWinListener("example", function(variantName){
+// Executed when a 'win' is emitted, in this case by emitter.emitWin("My Example")
+var winSubscription = emitter.addWinListener("My Example", function(variantName){
   console.log("Experiment ‘example’ variant ‘" + variantName + "’ was clicked on");
 });
 
@@ -227,7 +232,7 @@ var App = React.createClass({
   },
   render: function(){
     return <div>
-      <Experiment ref="experiment" name="example">
+      <Experiment ref="experiment" name="My Example">
         <Variant name="A">
           <div>Section A</div>
         </Variant>
@@ -236,18 +241,18 @@ var App = React.createClass({
         </Variant>
       </Experiment>
       <button onClick={this.onButtonClick}>Click to emit a win!</button>
-      <VariantSelector name="example" />
+      <VariantSelector name="My Example" />
     </div>;
   }
 });
 
 // Executed when the experiment is run
-var playSubscription = emitter.addPlayListener("example", function(variantName){
+var playSubscription = emitter.addPlayListener("My Example", function(variantName){
   console.log("Displaying experiment ‘example’ variant ‘" + variantName + "’");
 });
 
 // Executed when a 'win' is emitted, in this case by this.refs.experiment.win();
-var winSubscription = emitter.addWinListener("example", function(variantName){
+var winSubscription = emitter.addWinListener("My Example", function(variantName){
   console.log("Experiment ‘example’ variant ‘" + variantName + "’ was clicked on");
 });
 
@@ -255,23 +260,25 @@ var winSubscription = emitter.addWinListener("example", function(variantName){
 
 ## API
 
-### `<Experiment name="example" />`
+### `<Experiment name="My Example" />`
 
 Experiment container component. Children must be of type [Variant](#variant-).
 
+#### Properties
+
 ##### `name`
 
-<p>The name of the experiment.</p>
+The name of the experiment.
 
 <ul>
   <li><samp>Required</samp></li>
   <li><samp>Type:</samp> <code>string</code></li>
-  <li><samp>Example:</samp> <code>"My Experiment"</code></li>
+  <li><samp>Example:</samp> <code>"My Example"</code></li>
 </ul>
 
 ##### `defaultValue`
 
-<p>The name of the default variant. This property is useful for server side rendering but otherwise not recommended.</p>
+The name of the default variant. This property is useful for server side rendering but otherwise not recommended.
 
 <ul>
   <li><samp>Optional</samp></li>
@@ -283,33 +290,113 @@ Experiment container component. Children must be of type [Variant](#variant-).
 
 Variant component.
 
+#### Properties
+
 ##### `name`
-<p>The name of the variant.</p>
- * <samp>Required</samp><br />
- * <samp>Type:</samp> `string`<br />
- * <samp>Example:</samp> `"A"`
+
+The name of the variant.
+
+<ul>
+  <li><samp>Required</samp></li>
+  <li><samp>Type:</samp> <code>string</code></li>
+  <li><samp>Example:</samp> <code>"My Example"</code></li>
+</ul>
 
 ### `emitter`
 
-Event emitter.
+Event emitter responsible for coordinating and reporting usage. Extended from [facebook/emitter](https://github.com/facebook/emitter).
 
 #### `.emitWin(experimentName)`
 
-Emit a win event for Experiment `experimentName` to listeners.
+Emit a win event.
+
+<ul>
+  <li><samp>Returns:</samp> No returned value</li>
+</ul>
 
 ##### `experimentName`
-<p>The name of the experiment.</p>
- * <samp>Required</samp><br />
- * <samp>Type:</samp> `string`<br />
- * <samp>Example:</samp> `"My Experiment"`
+
+The name of the experiment.
+
+<ul>
+  <li><samp>Required</samp></li>
+  <li><samp>Type:</samp> <code>string</code></li>
+  <li><samp>Example:</samp> <code>"My Example"</code></li>
+</ul>
 
 #### `.addVariantListener([experimentName, ] callback)`
+
+Listen for variants being added to an experiment.
+
+##### `experimentName`
+
+The name of the experiment. If provided, the callback will only be called for variants of the specified experiment.
+
+<ul>
+  <li><samp>Optional</samp></li>
+  <li><samp>Type:</samp> <code>string</code></li>
+  <li><samp>Example:</samp> <code>"My Example"</code></li>
+</ul>
+
+##### `callback`
+
+A function called when a new variant is added.
+
+<ul>
+  <li><samp>Required</samp></li>
+  <li><samp>Type:</samp> <code>function</code></li>
+  <li><samp>Arguments:</samp>
+    `experimentName`
+    <ul>
+      <li><samp>Type:</samp> <code>string</code></li>
+      <li><samp>Example:</samp> <code>"My Example"</code></li>
+    </ul>
+    `variantName`
+    <ul>
+      <li><samp>Type:</samp> <code>string</code></li>
+      <li><samp>Example:</samp> <code>"A"</code></li>
+    </ul>
+  </li>
+  <li><samp>Example:</samp> <code>function</code></li>
+</ul>
+
 #### `.addValueListener([experimentName, ] callback)`
 #### `.addPlayListener([experimentName, ] callback)`
 #### `.addWinListener([experimentName, ] callback)`
 #### `.getExperimentValue(experimentName)`
+
+Returns the variant name currently displayed by the experiment.
+
+<ul>
+  <li><samp>Returns:</samp> <code>string</code></li>
+  <li><samp>Example:</samp> <code>"A"</code></li>
+</ul>
+
+##### `experimentName`
+
+The name of the experiment.
+
+<ul>
+  <li><samp>Required</samp></li>
+  <li><samp>Type:</samp> <code>string</code></li>
+  <li><samp>Example:</samp> <code>"My Example"</code></li>
+</ul>
+
 #### `.addExperimentVariants(experimentName, variantNames)`
+
+Define experiment variant names. Required when an experiment [spans multiple components](#coordinate-multiple-components).
+
+<ul>
+  <li><samp>Returns:</samp> No return value</li>
+</ul>
+
 #### `.setExperimentValue(experimentName, variantName)`
+
+Set the value of an experiment.
+
+<ul>
+  <li><samp>Returns:</samp> No return value</li>
+</ul>
 
 ## Alternative Libraries
 
