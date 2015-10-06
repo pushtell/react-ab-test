@@ -17,8 +17,8 @@
   - [Debugging](#debugging)
 - [API](#api)
   - [`<Experiment />`](#experiment-)
-    - [<code>props.name</code>](#codepropsnamecode)
-    - [<code>props.defaultValue</code>](#codepropsdefaultvaluecode)
+      - [<code>props.name</code>](#codepropsnamecode)
+      - [<code>props.defaultValue</code>](#codepropsdefaultvaluecode)
   - [`<Variant />`](#variant-)
     - [`props.name`](#propsname)
   - [`emitter`](#emitter)
@@ -258,17 +258,17 @@ var winSubscription = emitter.addWinListener("example", function(variantName){
 
 Experiment container component. Children must be of type [Variant](#variant-).
 
-#### <code>props.name</code>
-&nbsp;&nbsp;&nbsp;&nbsp;<sup>The name of the experiment.</sup><br />
-&nbsp;&nbsp;&nbsp;&nbsp;<sup>Required</sup><br />
-&nbsp;&nbsp;&nbsp;&nbsp;<sup>Type: <code>string</code></sup><br />
-&nbsp;&nbsp;&nbsp;&nbsp;<sup>Example: <code>"My Test"</code></sup>
+##### <code>props.name</code>
+&nbsp;&nbsp;&nbsp;&nbsp;The name of the experiment.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;Required<br />
+&nbsp;&nbsp;&nbsp;&nbsp;Type: `string</code>`<br />
+&nbsp;&nbsp;&nbsp;&nbsp;Example: `"My Test"`
 
-#### <code>props.defaultValue</code>
-&nbsp;&nbsp;&nbsp;&nbsp;<sup>The default value of the experiment.</sup><br />
-&nbsp;&nbsp;&nbsp;&nbsp;<sup>Required</sup><br />
-&nbsp;&nbsp;&nbsp;&nbsp;<sup>Type: <code>string</code></sup><br />
-&nbsp;&nbsp;&nbsp;&nbsp;<sup>Example: <code>"A"</code></sup>
+##### <code>props.defaultValue</code>
+&nbsp;&nbsp;&nbsp;&nbsp;The default value of the experiment.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;Required<br />
+&nbsp;&nbsp;&nbsp;&nbsp;Type: `string`<br />
+&nbsp;&nbsp;&nbsp;&nbsp;Example: `"A"`</sup>
 
 ### `<Variant />`
 
