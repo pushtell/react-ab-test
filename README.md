@@ -265,17 +265,17 @@ var winSubscription = emitter.addWinListener("example", function(variantName){
   </tr>
   <tr>
     <td size="10">
-      Required
+      <sub>Required</sub>
     </td>
   </tr>
   <tr>
     <td>
-      Type string
+      <sub>Type string</sub>
     </td>
   </tr>
   <tr>
     <td>
-      Example: "My Test"
+      <sub>Example: "My Test"</sub>
     </td>
   </tr>
   <tr>
