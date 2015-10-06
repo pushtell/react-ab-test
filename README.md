@@ -258,8 +258,53 @@ var winSubscription = emitter.addWinListener("example", function(variantName){
 
 | Property Name | Description |
 | :------------ | :---------- |
-| `name`<tt><br />&nbsp;&nbsp; — Required<br />&nbsp;&nbsp; — Type string<br />&nbsp;&nbsp; — Example: "My Test"</tt> | The name of the experiment. |
+| `name`<tt><br />&nbsp;&nbsp; — Required<br />&nbsp;&nbsp; — Type string<br />&nbsp;&nbsp; — Example: "My Test"</tt> |  |
 | `defaultValue`<tt><br />&nbsp;&nbsp; — Optional<br />&nbsp;&nbsp; — Type string<br />&nbsp;&nbsp; — Example: "A"</tt> | The default variant name of the experiment. |
+
+<table>
+  <tr>
+    <td>
+      <code>name</code>
+    </td>
+    <td rowspan="4">The name of the experiment.</td>
+  </tr>
+  <tr>
+    <td>
+      Required
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Type string
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Example: "My Test"
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <code>defaultValue</code><br />
+    </td>
+    <td rowspan="4">The default variant name of the experiment.</td>
+  </tr>
+  <tr>
+    <td>
+      Required
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Type string
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Example: "A"
+    </td>
+  </tr>
+</table>
 
 ### `<Variant />`
 
