@@ -17,9 +17,13 @@
   - [Debugging](#debugging)
 - [API](#api)
   - [`<Experiment />`](#experiment-)
+      - [`props.name`](#propsname)
+      - [`props.defaultValue`](#propsdefaultvalue)
   - [`<Variant />`](#variant-)
+      - [`props.name`](#propsname-1)
   - [`emitter`](#emitter)
     - [`.emitWin(experimentName)`](#emitwinexperimentname)
+      - [`experimentName`](#experimentname)
     - [`.addVariantListener([experimentName, ] callback)`](#addvariantlistenerexperimentname--callback)
     - [`.addValueListener([experimentName, ] callback)`](#addvaluelistenerexperimentname--callback)
     - [`.addPlayListener([experimentName, ] callback)`](#addplaylistenerexperimentname--callback)
@@ -255,13 +259,13 @@ var winSubscription = emitter.addWinListener("example", function(variantName){
 
 Experiment container component. Children must be of type [Variant](#variant-).
 
-<p><code>props.name</code></p>
+##### `props.name`
 <p>The name of the experiment.</p>
 &nbsp;&nbsp;&nbsp;&nbsp;<samp>Required</samp><br />
 &nbsp;&nbsp;&nbsp;&nbsp;<samp>Type:</samp> `string`<br />
 &nbsp;&nbsp;&nbsp;&nbsp;<samp>Example:</samp> `"My Experiment"`
 
-<p><code>props.defaultValue</code></p>
+##### `props.defaultValue`
 <p>The default value of the experiment.</p>
 &nbsp;&nbsp;&nbsp;&nbsp;<samp>Optional</samp><br />
 &nbsp;&nbsp;&nbsp;&nbsp;<samp>Type:</samp> `string`<br />
@@ -271,7 +275,7 @@ Experiment container component. Children must be of type [Variant](#variant-).
 
 Variant component.
 
-<p><code>props.name</code></p>
+##### `props.name`
 <p>The name of the variant.</p>
 &nbsp;&nbsp;&nbsp;&nbsp;<samp>Required</samp><br />
 &nbsp;&nbsp;&nbsp;&nbsp;<samp>Type:</samp> `string`<br />
@@ -285,7 +289,7 @@ Event emitter.
 
 Emit a win event for Experiment `experimentName` to listeners.
 
-<p><code>experimentName</code></p>
+##### `experimentName`
 <p>The name of the experiment.</p>
 &nbsp;&nbsp;&nbsp;&nbsp;<samp>Required</samp><br />
 &nbsp;&nbsp;&nbsp;&nbsp;<samp>Type:</samp> `string`<br />
