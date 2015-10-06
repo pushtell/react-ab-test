@@ -8,7 +8,7 @@
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-##Table of Contents
+
 
 - [Installation](#installation)
 - [Usage](#usage)
@@ -16,11 +16,11 @@
   - [Coordinate Multiple Components](#coordinate-multiple-components)
   - [Debugging](#debugging)
 - [API](#api)
-  - [`<Experiment />`](#experiment-)
-      - [`props.name`](#propsname)
-      - [`props.defaultValue`](#propsdefaultvalue)
-  - [`<Variant />`](#variant-)
-      - [`props.name`](#propsname-1)
+  - [`<Experiment name="My Experiment" defaultValue="A" />`](#experiment-namemy-experiment-defaultvaluea-)
+      - [`name`](#name)
+      - [`defaultValue`](#defaultvalue)
+  - [`<Variant name="A" />`](#variant-namea-)
+      - [`name`](#name-1)
   - [`emitter`](#emitter)
     - [`.emitWin(experimentName)`](#emitwinexperimentname)
       - [`experimentName`](#experimentname)
@@ -255,31 +255,31 @@ var winSubscription = emitter.addWinListener("example", function(variantName){
 
 ## API
 
-### `<Experiment />`
+### `<Experiment name="My Experiment" defaultValue="A" />`
 
 Experiment container component. Children must be of type [Variant](#variant-).
 
-##### `props.name`
+##### `name`
 <p>The name of the experiment.</p>
-&nbsp;&nbsp;&nbsp;&nbsp;<samp>Required</samp><br />
-&nbsp;&nbsp;&nbsp;&nbsp;<samp>Type:</samp> `string`<br />
-&nbsp;&nbsp;&nbsp;&nbsp;<samp>Example:</samp> `"My Experiment"`
+ * <samp>Required</samp><br />
+ * <samp>Type:</samp> `string`<br />
+ * <samp>Example:</samp> `"My Experiment"`
 
-##### `props.defaultValue`
+##### `defaultValue`
 <p>The default value of the experiment.</p>
-&nbsp;&nbsp;&nbsp;&nbsp;<samp>Optional</samp><br />
-&nbsp;&nbsp;&nbsp;&nbsp;<samp>Type:</samp> `string`<br />
-&nbsp;&nbsp;&nbsp;&nbsp;<samp>Example:</samp> `"A"`
+ * <samp>Optional</samp><br />
+ * <samp>Type:</samp> `string`<br />
+ * <samp>Example:</samp> `"A"`
 
-### `<Variant />`
+### `<Variant name="A" />`
 
 Variant component.
 
-##### `props.name`
+##### `name`
 <p>The name of the variant.</p>
-&nbsp;&nbsp;&nbsp;&nbsp;<samp>Required</samp><br />
-&nbsp;&nbsp;&nbsp;&nbsp;<samp>Type:</samp> `string`<br />
-&nbsp;&nbsp;&nbsp;&nbsp;<samp>Example:</samp> `"A"`
+ * <samp>Required</samp><br />
+ * <samp>Type:</samp> `string`<br />
+ * <samp>Example:</samp> `"A"`
 
 ### `emitter`
 
@@ -291,9 +291,9 @@ Emit a win event for Experiment `experimentName` to listeners.
 
 ##### `experimentName`
 <p>The name of the experiment.</p>
-&nbsp;&nbsp;&nbsp;&nbsp;<samp>Required</samp><br />
-&nbsp;&nbsp;&nbsp;&nbsp;<samp>Type:</samp> `string`<br />
-&nbsp;&nbsp;&nbsp;&nbsp;<samp>Example:</samp> `"My Experiment"`
+ * <samp>Required</samp><br />
+ * <samp>Type:</samp> `string`<br />
+ * <samp>Example:</samp> `"My Experiment"`
 
 #### `.addVariantListener([experimentName, ] callback)`
 #### `.addValueListener([experimentName, ] callback)`
