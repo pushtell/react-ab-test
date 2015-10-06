@@ -260,26 +260,22 @@ var winSubscription = emitter.addWinListener("example", function(variantName){
   <tr>
     <td>
       <code>name</code>
-      <sub>
-        <ul>
-          <li>Required</li>
-          <li>Type string</li>
-          <li>Example: "My Test"</li>
-        </ul>
-      </sub>
+      <ul>
+        <li><sub>Required</sub></li>
+        <li><sub>Type string</sub></li>
+        <li><sub>Example: "My Test"</sub></li>
+      </ul>
     </td>
     <td>The name of the experiment.</td>
   </tr>
   <tr>
     <td>
       <code>defaultValue</code>
-      <sub>
-        <ul>
-          <li>Required</li>
-          <li>Type string</li>
-          <li>Example: "My Test"</li>
-        </ul>
-      </sub>
+      <ul>
+        <li><sub>Required</sub></li>
+        <li><sub>Type string</sub></li>
+        <li><sub>Example: "My Test"</sub></li>
+      </ul>
     </td>
     <td>The default variant name of the experiment.</td>
   </tr>
