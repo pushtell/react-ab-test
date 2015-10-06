@@ -21,7 +21,6 @@
     - [`props.name`](#propsname)
   - [`emitter`](#emitter)
     - [`.emitWin(experimentName)`](#emitwinexperimentname)
-      - [`experimentName`](#experimentname)
     - [`.addVariantListener([experimentName, ] callback)`](#addvariantlistenerexperimentname--callback)
     - [`.addValueListener([experimentName, ] callback)`](#addvaluelistenerexperimentname--callback)
     - [`.addPlayListener([experimentName, ] callback)`](#addplaylistenerexperimentname--callback)
@@ -259,8 +258,8 @@ var winSubscription = emitter.addWinListener("example", function(variantName){
 
 | Property Name | Description |
 | :------------ | :---------- |
-| **name**<br />&nbsp;&nbsp;Required<br />&nbsp;&nbsp;Type `string`<br />&nbsp;&nbsp;Example: `"My Test"` | The name of the experiment. |
-| **defaultValue**<br />&nbsp;&nbsp;Optional<br />&nbsp;&nbsp;Type `string`<br />&nbsp;&nbsp;Example: `"A"` | The default variant name of the experiment. |
+| `name`<small><br />&nbsp;&nbsp;Required<br />&nbsp;&nbsp;Type `string`<br />&nbsp;&nbsp;Example: `"My Test"`</small> | The name of the experiment. |
+| `defaultValue`<small><br />&nbsp;&nbsp;Optional<br />&nbsp;&nbsp;Type `string`<br />&nbsp;&nbsp;Example: `"A"`</small> | The default variant name of the experiment. |
 
 ### `<Variant />`
 
@@ -278,14 +277,6 @@ Variant component.
 Event emitter.
 
 #### `.emitWin(experimentName)`
-
-##### `experimentName`
-
- * **Description:** The name of the experiment.
- * **Required:** Yes
- * **Type:** `string`
- * **Example:** `"My Test"`
-
 #### `.addVariantListener([experimentName, ] callback)`
 #### `.addValueListener([experimentName, ] callback)`
 #### `.addPlayListener([experimentName, ] callback)`
