@@ -17,6 +17,8 @@
   - [Debugging](#debugging)
 - [API](#api)
   - [`<Experiment />`](#experiment-)
+    - [<code>props.name</code>](#codepropsnamecode)
+    - [<code>props.defaultValue</code>](#codepropsdefaultvaluecode)
   - [`<Variant />`](#variant-)
     - [`props.name`](#propsname)
   - [`emitter`](#emitter)
@@ -254,28 +256,19 @@ var winSubscription = emitter.addWinListener("example", function(variantName){
 
 ### `<Experiment />`
 
- Experiment container component. Children must be of type [Variant](#variant-).
+Experiment container component. Children must be of type [Variant](#variant-).
 
-<table border="0">
-  <tr>
-    <td valign="top">
-      <code>name</code><br />
-      &nbsp;&nbsp;&nbsp;&nbsp;<sup>Required</sup><br />
-      &nbsp;&nbsp;&nbsp;&nbsp;<sup>Type: <code>string</code></sup><br />
-      &nbsp;&nbsp;&nbsp;&nbsp;<sup>Example: <code>"My Test"</code></sup>
-    </td>
-    <td valign="top">The name of the experiment.</td>
-  </tr>
-  <tr>
-    <td valign="top">
-      <code>name</code><br />
-      &nbsp;&nbsp;&nbsp;&nbsp;<sup>Required</sup><br />
-      &nbsp;&nbsp;&nbsp;&nbsp;<sup>Type: <code>string</code></sup><br />
-      &nbsp;&nbsp;&nbsp;&nbsp;<sup>Example: <code>"A"</code></sup>
-    </td>
-    <td valign="top">The default variant name of the experiment.</td>
-  </tr>
-</table>
+#### <code>props.name</code>
+&nbsp;&nbsp;&nbsp;&nbsp;<sup>The name of the experiment.</sup><br />
+&nbsp;&nbsp;&nbsp;&nbsp;<sup>Required</sup><br />
+&nbsp;&nbsp;&nbsp;&nbsp;<sup>Type: <code>string</code></sup><br />
+&nbsp;&nbsp;&nbsp;&nbsp;<sup>Example: <code>"My Test"</code></sup>
+
+#### <code>props.defaultValue</code>
+&nbsp;&nbsp;&nbsp;&nbsp;<sup>The default value of the experiment.</sup><br />
+&nbsp;&nbsp;&nbsp;&nbsp;<sup>Required</sup><br />
+&nbsp;&nbsp;&nbsp;&nbsp;<sup>Type: <code>string</code></sup><br />
+&nbsp;&nbsp;&nbsp;&nbsp;<sup>Example: <code>"A"</code></sup>
 
 ### `<Variant />`
 
