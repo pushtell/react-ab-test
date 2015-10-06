@@ -16,7 +16,7 @@
   - [Coordinate Multiple Components](#coordinate-multiple-components)
   - [Debugging](#debugging)
 - [API](#api)
-  - [`<Experiment name="My Experiment" defaultValue="A" />`](#experiment-namemy-experiment-defaultvaluea-)
+  - [`<Experiment name="example" />`](#experiment-nameexample-)
       - [`name`](#name)
       - [`defaultValue`](#defaultvalue)
   - [`<Variant name="A" />`](#variant-namea-)
@@ -255,21 +255,29 @@ var winSubscription = emitter.addWinListener("example", function(variantName){
 
 ## API
 
-### `<Experiment name="My Experiment" defaultValue="A" />`
+### `<Experiment name="example" />`
 
 Experiment container component. Children must be of type [Variant](#variant-).
 
 ##### `name`
+
 <p>The name of the experiment.</p>
- * <samp>Required</samp><br />
- * <samp>Type:</samp> `string`<br />
- * <samp>Example:</samp> `"My Experiment"`
+
+<ul>
+  <li><samp>Required</samp></li>
+  <li><samp>Type:</samp> <code>string</code></li>
+  <li><samp>Example:</samp> <code>"My Experiment"</code></li>
+</ul>
 
 ##### `defaultValue`
-<p>The default value of the experiment.</p>
- * <samp>Optional</samp><br />
- * <samp>Type:</samp> `string`<br />
- * <samp>Example:</samp> `"A"`
+
+<p>The name of the default variant. This property is useful for server side rendering but otherwise not recommended.</p>
+
+<ul>
+  <li><samp>Optional</samp></li>
+  <li><samp>Type:</samp> <code>string</code></li>
+  <li><samp>Example:</samp> <code>"A"</code></li>
+</ul>
 
 ### `<Variant name="A" />`
 
