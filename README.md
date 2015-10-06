@@ -17,10 +17,7 @@
   - [Debugging](#debugging)
 - [API](#api)
   - [`<Experiment />`](#experiment-)
-      - [`props.name`](#propsname)
-      - [`props.defaultValue`](#propsdefaultvalue)
   - [`<Variant />`](#variant-)
-    - [`props.name`](#propsname-1)
   - [`emitter`](#emitter)
     - [`.emitWin(experimentName)`](#emitwinexperimentname)
     - [`.addVariantListener([experimentName, ] callback)`](#addvariantlistenerexperimentname--callback)
@@ -258,13 +255,13 @@ var winSubscription = emitter.addWinListener("example", function(variantName){
 
 Experiment container component. Children must be of type [Variant](#variant-).
 
-##### `props.name`
+<p><code>props.name</code></p>
 <p>The name of the experiment.</p>
 &nbsp;&nbsp;&nbsp;&nbsp;<samp>Required</samp><br />
 &nbsp;&nbsp;&nbsp;&nbsp;<samp>Type:</samp> `string`<br />
-&nbsp;&nbsp;&nbsp;&nbsp;<samp>Example:</samp> `"My Test"`
+&nbsp;&nbsp;&nbsp;&nbsp;<samp>Example:</samp> `"My Experiment"`
 
-##### `props.defaultValue`
+<p><code>props.defaultValue</code></p>
 <p>The default value of the experiment.</p>
 &nbsp;&nbsp;&nbsp;&nbsp;<samp>Optional</samp><br />
 &nbsp;&nbsp;&nbsp;&nbsp;<samp>Type:</samp> `string`<br />
@@ -274,18 +271,26 @@ Experiment container component. Children must be of type [Variant](#variant-).
 
 Variant component.
 
-#### `props.name`
-
- * **Description:** The name of the variant.
- * **Required:** Yes
- * **Type:** `string`
- * **Example:** `"My Test"`
+<p><code>props.name</code></p>
+<p>The name of the variant.</p>
+&nbsp;&nbsp;&nbsp;&nbsp;<samp>Required</samp><br />
+&nbsp;&nbsp;&nbsp;&nbsp;<samp>Type:</samp> `string`<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<samp>Example:</samp> `"A"`
 
 ### `emitter`
 
 Event emitter.
 
 #### `.emitWin(experimentName)`
+
+Emit a win event for Experiment `experimentName` to listeners.
+
+<p><code>experimentName</code></p>
+<p>The name of the experiment.</p>
+&nbsp;&nbsp;&nbsp;&nbsp;<samp>Required</samp><br />
+&nbsp;&nbsp;&nbsp;&nbsp;<samp>Type:</samp> `string`<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<samp>Example:</samp> `"My Experiment"`
+
 #### `.addVariantListener([experimentName, ] callback)`
 #### `.addValueListener([experimentName, ] callback)`
 #### `.addPlayListener([experimentName, ] callback)`
