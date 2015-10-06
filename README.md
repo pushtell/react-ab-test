@@ -261,14 +261,14 @@ Experiment container component. Children must be of type [Variant](#variant-).
 ##### 'props.name'
 &nbsp;&nbsp;&nbsp;&nbsp;The name of the experiment.<br />
 &nbsp;&nbsp;&nbsp;&nbsp;<samp>Required</samp><br />
-&nbsp;&nbsp;&nbsp;&nbsp;Type `string`<br />
-&nbsp;&nbsp;&nbsp;&nbsp;Example: `"My Test"`
+&nbsp;&nbsp;&nbsp;&nbsp;<samp>Type:</samp> `string`<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<samp>Example:</samp> `"My Test"`
 
 ##### 'props.defaultValue'
 &nbsp;&nbsp;&nbsp;&nbsp;The default value of the experiment.<br />
-&nbsp;&nbsp;&nbsp;&nbsp;Optional<br />
-&nbsp;&nbsp;&nbsp;&nbsp;Type: `string`<br />
-&nbsp;&nbsp;&nbsp;&nbsp;Example: `"A"`
+&nbsp;&nbsp;&nbsp;&nbsp;<samp>Optional</samp><br />
+&nbsp;&nbsp;&nbsp;&nbsp;<samp>Type:</samp> `string`<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<samp>Example:</samp> `"A"`
 
 ### `<Variant />`
 
