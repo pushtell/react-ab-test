@@ -1,4 +1,4 @@
-# Pushtell A/B Testing React Component
+# A/B Testing React Component
 
 [![NPM Version](https://badge.fury.io/js/react-ab-test.svg)](https://www.npmjs.com/package/react-ab-test)
 ![Test Passing Status](https://circleci.com/gh/pushtell/react-ab-test.svg?style=shield&circle-token=:circle-token)
@@ -15,29 +15,31 @@
   - [Standalone Component](#standalone-component)
   - [Coordinate Multiple Components](#coordinate-multiple-components)
   - [Debugging](#debugging)
-- [API](#api)
-  - [`<Experiment name="My Example" />`](#experiment-namemy-example-)
+- [Alternative Libraries](#alternative-libraries)
+- [Resources for A/B Testing with React](#resources-for-ab-testing-with-react)
+- [API Reference](#api-reference)
+  - [`<Experiment />`](#experiment-)
     - [Properties](#properties)
       - [`name`](#name)
       - [`defaultValue`](#defaultvalue)
-  - [`<Variant name="A" />`](#variant-namea-)
+- [](#)
+  - [`<Variant />`](#variant-)
     - [Properties](#properties-1)
       - [`name`](#name-1)
+- [](#-1)
   - [`emitter`](#emitter)
-    - [`.emitWin(experimentName)`](#emitwinexperimentname)
-      - [`experimentName`](#experimentname)
-    - [`.addVariantListener([experimentName, ] callback)`](#addvariantlistenerexperimentname--callback)
+    - [`emitter.emitWin(experimentName)`](#emitteremitwinexperimentname)
+        - [`experimentName`](#experimentname)
+    - [`emitter.addVariantListener([experimentName, ] callback)`](#emitteraddvariantlistenerexperimentname--callback)
       - [`experimentName`](#experimentname-1)
       - [`callback`](#callback)
-    - [`.addValueListener([experimentName, ] callback)`](#addvaluelistenerexperimentname--callback)
-    - [`.addPlayListener([experimentName, ] callback)`](#addplaylistenerexperimentname--callback)
-    - [`.addWinListener([experimentName, ] callback)`](#addwinlistenerexperimentname--callback)
-    - [`.getExperimentValue(experimentName)`](#getexperimentvalueexperimentname)
+    - [`emitter.addValueListener([experimentName, ] callback)`](#emitteraddvaluelistenerexperimentname--callback)
+    - [`emitter.addPlayListener([experimentName, ] callback)`](#emitteraddplaylistenerexperimentname--callback)
+    - [`emitter.addWinListener([experimentName, ] callback)`](#emitteraddwinlistenerexperimentname--callback)
+    - [`emitter.getExperimentValue(experimentName)`](#emittergetexperimentvalueexperimentname)
       - [`experimentName`](#experimentname-2)
     - [`.addExperimentVariants(experimentName, variantNames)`](#addexperimentvariantsexperimentname-variantnames)
     - [`.setExperimentValue(experimentName, variantName)`](#setexperimentvalueexperimentname-variantname)
-- [Alternative Libraries](#alternative-libraries)
-- [Resources for A/B Testing with React](#resources-for-ab-testing-with-react)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -258,9 +260,20 @@ var winSubscription = emitter.addWinListener("My Example", function(experimentNa
 
 ```
 
-## API
+## Alternative Libraries
 
-### `<Experiment name="My Example" />`
+| Description | Author |
+| :---------- | :----- |
+| [**react-ab**](https://github.com/olahol/react-ab) - Simple declarative and universal A/B testing component for React. | [Ola Holmström](https://github.com/olahol) |
+| [**react-native-ab**](https://github.com/lwansbrough/react-native-ab/) - A component for rendering A/B tests in React Native. | [Loch Wansbrough](https://github.com/lwansbrough) |
+
+## Resources for A/B Testing with React
+
+* [Roll Your Own A/B Tests With Optimizely and React](http://engineering.tilt.com/roll-your-own-ab-tests-with-optimizely-and-react/) on the [Tilt Engineering Blog](http://engineering.tilt.com/)
+
+## API Reference
+
+### `<Experiment />`
 
 Experiment container component. Children must be of type [Variant](#variant-).
 
@@ -286,7 +299,9 @@ The name of the default variant. This property is useful for server side renderi
   <li><samp>Example:</samp> <code>"A"</code></li>
 </ul>
 
-### `<Variant name="A" />`
+---
+
+### `<Variant />`
 
 Variant component.
 
@@ -302,11 +317,13 @@ The name of the variant.
   <li><samp>Example:</samp> <code>"My Example"</code></li>
 </ul>
 
+---
+
 ### `emitter`
 
 Event emitter responsible for coordinating and reporting usage. Extended from [facebook/emitter](https://github.com/facebook/emitter).
 
-#### `.emitWin(experimentName)`
+#### `emitter.emitWin(experimentName)`
 
 Emit a win event.
 
@@ -314,7 +331,9 @@ Emit a win event.
   <li><samp>Returns:</samp> No returned value</li>
 </ul>
 
-##### `experimentName`
+
+
+###### `experimentName`
 
 The name of the experiment.
 
@@ -324,7 +343,7 @@ The name of the experiment.
   <li><samp>Example:</samp> <code>"My Example"</code></li>
 </ul>
 
-#### `.addVariantListener([experimentName, ] callback)`
+#### `emitter.addVariantListener([experimentName, ] callback)`
 
 Listen for variants being added to an experiment.
 
@@ -346,13 +365,13 @@ A function called when a new variant is added.
   <li><samp>Required</samp></li>
   <li><samp>Type:</samp> <code>function</code></li>
   <li><samp>Arguments:</samp>
-    `experimentName`<br />
+    <code>experimentName</code><br />
     The name of the experiment the variant is being added to.
     <ul>
       <li><samp>Type:</samp> <code>string</code></li>
       <li><samp>Example:</samp> <code>"My Example"</code></li>
     </ul>
-    `variantName`<br />
+    <code>variantName</code><br />
     The name of the variant being added.
     <ul>
       <li><samp>Type:</samp> <code>string</code></li>
@@ -362,10 +381,10 @@ A function called when a new variant is added.
   <li><samp>Example:</samp> <code>function</code></li>
 </ul>
 
-#### `.addValueListener([experimentName, ] callback)`
-#### `.addPlayListener([experimentName, ] callback)`
-#### `.addWinListener([experimentName, ] callback)`
-#### `.getExperimentValue(experimentName)`
+#### `emitter.addValueListener([experimentName, ] callback)`
+#### `emitter.addPlayListener([experimentName, ] callback)`
+#### `emitter.addWinListener([experimentName, ] callback)`
+#### `emitter.getExperimentValue(experimentName)`
 
 Returns the variant name currently displayed by the experiment.
 
@@ -400,13 +419,3 @@ Set the value of an experiment.
   <li><samp>Returns:</samp> No return value</li>
 </ul>
 
-## Alternative Libraries
-
-| Description | Author |
-| :---------- | :----- |
-| [**react-ab**](https://github.com/olahol/react-ab) - Simple declarative and universal A/B testing component for React. | [Ola Holmström](https://github.com/olahol) |
-| [**react-native-ab**](https://github.com/lwansbrough/react-native-ab/) - A component for rendering A/B tests in React Native. | [Loch Wansbrough](https://github.com/lwansbrough) |
-
-## Resources for A/B Testing with React
-
-* [Roll Your Own A/B Tests With Optimizely and React](http://engineering.tilt.com/roll-your-own-ab-tests-with-optimizely-and-react/) on the [Tilt Engineering Blog](http://engineering.tilt.com/)
