@@ -19,13 +19,13 @@ module.exports = {
         loader: 'regenerator-loader',
         test: /\.jsx$/
       }, {
-        test: require.resolve("./LocalStorageExperiment"),
+        test: require.resolve("./lib/LocalStorageExperiment"),
         loader: "expose?Experiment"
       }, {
-        test: require.resolve("./Variant"),
+        test: require.resolve("./lib/Variant"),
         loader: "expose?Variant"
       }, {
-        test: require.resolve("./emitter"),
+        test: require.resolve("./lib/emitter"),
         loader: "expose?emitter"
       }
     ],
