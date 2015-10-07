@@ -78,7 +78,6 @@ emitter.addPlayListener(function(experimentName, variantName){
         - [`experimentName`](#experimentname-6)
         - [`variantName`](#variantname-1)
     - [`emitter.getExperimentValue(experimentName)`](#emittergetexperimentvalueexperimentname)
-      - [Arguments](#arguments-8)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -560,30 +559,32 @@ The name of the variant.
 
 #### `emitter.getExperimentValue(experimentName)`
 
-Returns the variant name currently displayed by the experiment.
-
-<ul>
-  <li><samp>Returns:</samp> <code>string</code></li>
-  <li><samp>Example:</samp> <code>"A"</code></li>
-</ul>
-
-##### Arguments
-
 <table>
-  <tbody width="100%">
-    <tr>
-      <td colspan="2" valign="top"><code>experimentName</code> - The name of the experiment.</td>
-    </tr>
-    <tr>
-      <td align="center">
-        <samp>Required</samp>
-      </td>
-      <td align="center">
-        <samp>Type </samp><code>string</code>
-      </td>
-      <td align="center">
-        <samp>Example: </samp><code>"My Example"</code>
-      </td>
-    </tr>
-  </tbody>
+  <tr>
+    <td colspan="2" valign="top">Returns the variant name currently displayed by the experiment.</td>
+  </tr>
+  <tr>
+    <td align="center">
+      <samp>Returns:</samp> <code>string</code>
+    </td>
+    <td align="center">
+      <samp>Example:</samp> <code>"A"</code>
+    </td>
+  </tr>
+</table>
+<table>
+  <tr>
+    <td colspan="3" valign="top"><code>experimentName</code> - The name of the experiment.</td>
+  </tr>
+  <tr>
+    <td align="center">
+      <samp>Required</samp>
+    </td>
+    <td align="center">
+      <samp>Type </samp><code>string</code>
+    </td>
+    <td align="center">
+      <samp>Example: </samp><code>"My Example"</code>
+    </td>
+  </tr>
 </table>
