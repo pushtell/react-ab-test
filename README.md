@@ -48,9 +48,10 @@ emitter.addPlayListener(function(experimentName, variantName){
     - [`emitter.addPlayListener([experimentName, ] callback)`](#emitteraddplaylistenerexperimentname--callback)
     - [`emitter.addWinListener([experimentName, ] callback)`](#emitteraddwinlistenerexperimentname--callback)
     - [`emitter.addExperimentVariants(experimentName, variantNames)`](#emitteraddexperimentvariantsexperimentname-variantnames)
-      - [Arguments](#arguments)
     - [`emitter.setExperimentValue(experimentName, variantName)`](#emittersetexperimentvalueexperimentname-variantname)
     - [`emitter.getExperimentValue(experimentName)`](#emittergetexperimentvalueexperimentname)
+  - [`Subscription`](#subscription)
+    - [`subscription.remove()`](#subscriptionremove)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -313,7 +314,7 @@ Event emitter responsible for coordinating and reporting usage. Extended from [f
 
 Emit a win event.
 
-* **Return Type:** `Subscription`
+* **Return Type:** No return value
 * **Parameters:**
   * `experimentName` - The name of an experiment.
     * **Required**
@@ -324,7 +325,7 @@ Emit a win event.
 
 Listen for variants being added to an experiment.
 
-* **Return Type:** `Subscription`
+* **Return Type:** [`Subscription`](#subscription)
 * **Parameters:**
   * `experimentName` - The name of an experiment. If provided, the callback will only be called for the specified experiment.
     * **Optional**
@@ -338,7 +339,7 @@ Listen for variants being added to an experiment.
 
 Listen for the chosen value of an experiment.
 
-* **Return Type:** `Subscription`
+* **Return Type:** [`Subscription`](#subscription)
 * **Parameters:**
   * `experimentName` - The name of an experiment. If provided, the callback will only be called for the specified experiment.
     * **Optional**
@@ -352,7 +353,7 @@ Listen for the chosen value of an experiment.
 
 Listen for an experiment being displayed to the user. Trigged by the [React componentWillMount lifecycle method](https://facebook.github.io/react/docs/component-specs.html#mounting-componentwillmount).
 
-* **Return Type:** `Subscription`
+* **Return Type:** [`Subscription`](#subscription)
 * **Parameters:**
   * `experimentName` - The name of an experiment. If provided, the callback will only be called for the specified experiment.
     * **Optional**
@@ -366,7 +367,7 @@ Listen for an experiment being displayed to the user. Trigged by the [React comp
 
 Listen for a successful outcome from the experiment. Trigged by the [emitter.emitWin(experimentName)](#emitteremitwinexperimentname) method.
 
-* **Return Type:** `Subscription`
+* **Return Type:** [`Subscription`](#subscription)
 * **Parameters:**
   * `experimentName` - The name of an experiment. If provided, the callback will only be called for the specified experiment.
     * **Optional**
@@ -390,8 +391,6 @@ Define experiment variant names. Required when an experiment [spans multiple com
     * **Required**
     * **Type:** `Array.<string>`
     * **Example:** `"A"`
-
-##### Arguments
 
 #### `emitter.setExperimentValue(experimentName, variantName)`
 
@@ -419,3 +418,12 @@ Returns the variant name currently displayed by the experiment.
     * **Type:** `string`
     * **Example:** `"My Example"`
 
+### `Subscription`
+
+Returned by the emitter's add listener methods. More information available in the [facebook/emitter documentation.](https://github.com/facebook/emitter#api-concepts)
+
+#### `subscription.remove()`
+
+Removes the listener subscription and prevents future callbacks.
+
+* **Parameters:** No parameters
