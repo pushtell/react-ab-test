@@ -166,4 +166,40 @@ describe("LocalStorage", function() {
       React.render(<App />, reactElement, resolve);
     });
   }));
+  it("should emit when a variant is clicked.", co.wrap(function *(){
+    let experimentName = UUID.v4();
+    let winningVariantName = null;
+    let winCallback = function(experimentName, variantName){
+      winningVariantName = variantName;
+    };
+    let experimentNameGlobal = null;
+    let winningVariantNameGlobal = null;
+    let winCallbackGlobal = function(expirimentName, variantName){
+      experimentNameGlobal = expirimentName;
+      winningVariantNameGlobal = variantName;
+    };
+    let winSubscription = emitter.addWinListener(experimentName, winCallback);
+    let winSubscriptionGlobal = emitter.addWinListener(winCallbackGlobal);
+    let App = React.createClass({
+      onClickVariant: function(e){
+        this.refs.experiment.win();
+      },
+      render: function(){
+        return <Experiment ref="experiment" name={experimentName} value="A">
+          <Variant name="A"><a id="variant-a" href="#A" onClick={this.onClickVariant}>A</a></Variant>
+          <Variant name="B"><a id="variant-b" href="#B" onClick={this.onClickVariant}>B</a></Variant>
+        </Experiment>;
+      }
+    });
+    yield new Promise(function(resolve, reject){
+      React.render(<App />, document.getElementById("react"), resolve);
+    });
+    let elementA = document.getElementById('variant-a');
+    mouse.click(elementA);
+    assert.equal(winningVariantName, "A");
+    assert.equal(experimentNameGlobal, experimentName);
+    assert.equal(winningVariantNameGlobal, "A");
+    winSubscription.remove();
+    winSubscriptionGlobal.remove();
+  }));
 });

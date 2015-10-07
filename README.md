@@ -4,6 +4,7 @@
 [![Circle CI](https://circleci.com/gh/pushtell/react-ab-test.svg?style=shield)](https://circleci.com/gh/pushtell/react-ab-test)
 [![Coverage Status](https://coveralls.io/repos/pushtell/react-ab-test/badge.svg?branch=master&service=github)](https://coveralls.io/github/pushtell/react-ab-test?branch=master)
 [![Dependency Status](https://david-dm.org/pushtell/react-ab-test.svg)](https://david-dm.org/pushtell/react-ab-test)
+[![Star on Github](https://img.shields.io/github/stars/pushtell/react-ab-test.svg?style=social&label=%E2%98%85+Star)](https://github.com/pushtell/react-ab-test)
 
 Wrap test versions in `<Variant />` and nest in `<Experiment />`. A version is chosen randomly and saved to local storage.
 
@@ -296,14 +297,17 @@ emitter.addWinListener(function(experimentName, variantName){
 
 ## Alternative Libraries
 
-| Description | Author |
-| :---------- | :----- |
-| [**react-ab**](https://github.com/olahol/react-ab) - Simple declarative and universal A/B testing component for React. | [Ola Holmström](https://github.com/olahol) |
-| [**react-native-ab**](https://github.com/lwansbrough/react-native-ab/) - A component for rendering A/B tests in React Native. | [Loch Wansbrough](https://github.com/lwansbrough) |
+
+* [**react-ab**](https://github.com/olahol/react-ab) - “Simple declarative and universal A/B testing component for React” by [Ola Holmström](https://github.com/olahol)
+* [**react-native-ab**](https://github.com/lwansbrough/react-native-ab/) - “A component for rendering A/B tests in React Native“ by [Loch Wansbrough](https://github.com/lwansbrough)
+
+Please [let us know](https://github.com/pushtell/react-ab-test/issues/new) about alternate libraries not included here.
 
 ## Resources for A/B Testing with React
 
 * [Roll Your Own A/B Tests With Optimizely and React](http://engineering.tilt.com/roll-your-own-ab-tests-with-optimizely-and-react/) on the [Tilt Engineering Blog](http://engineering.tilt.com/)
+
+Please [let us know](https://github.com/pushtell/react-ab-test/issues/new) about React A/B testing resources not included here.
 
 ## API Reference
 
@@ -575,3 +579,19 @@ The name of the experiment.
   <li><samp>Type:</samp> <code>string</code></li>
   <li><samp>Example:</samp> <code>"My Example"</code></li>
 </ul>
+
+<table width="100%">
+  <tr>
+    <td><h6><code>experimentName</code></h6></td>
+    <td colspan="4" valign="top">The name of the experiment.</td>
+  </tr>
+  <tr>
+    <td><samp>Required</samp></td>
+  </tr>
+  <tr>
+    <td><samp>Type </samp><code>string</code></td>
+  </tr>
+  <tr>
+    <td><samp>Example: </samp><code>"My Example"</code></td>
+  </tr>
+</table>
