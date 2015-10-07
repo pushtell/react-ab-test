@@ -286,11 +286,11 @@ Please [let us know](https://github.com/pushtell/react-ab-test/issues/new) about
 Experiment container component. Children must be of type [`Variant`](#variant-).
 
 * **Properties:**
-  * `name` - The name of the experiment.
+  * `name` - Name of the experiment.
     * **Required**
     * **Type:** `string`
     * **Example:** `"My Example"`
-  * `defaultValue` - The name of the default variant. This property is useful for server side rendering but otherwise not recommended.
+  * `defaultValue` - Name of the default variant. This property is useful for server side rendering but otherwise not recommended.
     * **Optional**
     * **Type:** `string`
     * **Example:** `"A"`
@@ -300,7 +300,7 @@ Experiment container component. Children must be of type [`Variant`](#variant-).
 Variant component.
 
 * **Properties:**
-  * `name` - The name of the variant.
+  * `name` - Name of the variant.
     * **Required**
     * **Type:** `string`
     * **Example:** `"A"`
@@ -315,7 +315,7 @@ Emit a win event.
 
 * **Return Type:** No return value
 * **Parameters:**
-  * `experimentName` - The name of an experiment.
+  * `experimentName` - Name of an experiment.
     * **Required**
     * **Type:** `string`
     * **Example:** `"My Example"`
@@ -326,13 +326,18 @@ Listen for variants being added to an experiment.
 
 * **Return Type:** [`Subscription`](#subscription)
 * **Parameters:**
-  * `experimentName` - The name of an experiment. If provided, the callback will only be called for the specified experiment.
+  * `experimentName` - Name of an experiment. If provided, the callback will only be called for the specified experiment.
     * **Optional**
     * **Type:** `string`
     * **Example:** `"My Example"`
   * `callback` - Function to be called when a variant is added to an experiment.
     * **Required**
     * **Type:** `function`
+    * **Callback Arguments:**
+      * `experimentName` - Name of the experiment.
+        * **Type:** `string`
+      * `variantName` - Name of the variant.
+        * **Type:** `string`
 
 #### `emitter.addValueListener([experimentName, ] callback)`
 
@@ -340,13 +345,18 @@ Listen for the chosen value of an experiment.
 
 * **Return Type:** [`Subscription`](#subscription)
 * **Parameters:**
-  * `experimentName` - The name of an experiment. If provided, the callback will only be called for the specified experiment.
+  * `experimentName` - Name of an experiment. If provided, the callback will only be called for the specified experiment.
     * **Optional**
     * **Type:** `string`
     * **Example:** `"My Example"`
   * `callback` - Function to be called when a variant is chosen.
     * **Required**
     * **Type:** `function`
+    * **Callback Arguments:**
+      * `experimentName` - Name of the experiment.
+        * **Type:** `string`
+      * `variantName` - Name of the variant.
+        * **Type:** `string`
 
 #### `emitter.addPlayListener([experimentName, ] callback)`
 
@@ -354,13 +364,18 @@ Listen for an experiment being displayed to the user. Trigged by the [React comp
 
 * **Return Type:** [`Subscription`](#subscription)
 * **Parameters:**
-  * `experimentName` - The name of an experiment. If provided, the callback will only be called for the specified experiment.
+  * `experimentName` - Name of an experiment. If provided, the callback will only be called for the specified experiment.
     * **Optional**
     * **Type:** `string`
     * **Example:** `"My Example"`
   * `callback` - Function to be called when an experiment is displayed to the user.
     * **Required**
     * **Type:** `function`
+    * **Callback Arguments:**
+      * `experimentName` - Name of the experiment.
+        * **Type:** `string`
+      * `variantName` - Name of the variant.
+        * **Type:** `string`
 
 #### `emitter.addWinListener([experimentName, ] callback)`
 
@@ -368,13 +383,18 @@ Listen for a successful outcome from the experiment. Trigged by the [emitter.emi
 
 * **Return Type:** [`Subscription`](#subscription)
 * **Parameters:**
-  * `experimentName` - The name of an experiment. If provided, the callback will only be called for the specified experiment.
+  * `experimentName` - Name of an experiment. If provided, the callback will only be called for the specified experiment.
     * **Optional**
     * **Type:** `string`
     * **Example:** `"My Example"`
   * `callback` - Function to be called when a win is emitted.
     * **Required**
     * **Type:** `function`
+    * **Callback Arguments:**
+      * `experimentName` - Name of the experiment.
+        * **Type:** `string`
+      * `variantName` - Name of the variant.
+        * **Type:** `string`
 
 #### `emitter.addExperimentVariants(experimentName, variantNames)`
 
@@ -382,14 +402,14 @@ Define experiment variant names. Required when an experiment [spans multiple com
 
 * **Return Type:** No return value
 * **Parameters:**
-  * `experimentName` - The name of the experiment.
+  * `experimentName` - Name of the experiment.
     * **Required**
     * **Type:** `string`
     * **Example:** `"My Example"`
   * `variantNames` - Array of variant names.
     * **Required**
     * **Type:** `Array.<string>`
-    * **Example:** `"A"`
+    * **Example:** `["A", "B", "C"]`
 
 #### `emitter.setExperimentValue(experimentName, variantName)`
 
@@ -397,11 +417,11 @@ Set the active variant of an experiment.
 
 * **Return Type:** No return value
 * **Parameters:**
-  * `experimentName` - The name of the experiment.
+  * `experimentName` - Name of the experiment.
     * **Required**
     * **Type:** `string`
     * **Example:** `"My Example"`
-  * `variantName` - The name of the variant.
+  * `variantName` - Name of the variant.
     * **Required**
     * **Type:** `string`
     * **Example:** `"A"`
@@ -412,7 +432,7 @@ Returns the variant name currently displayed by the experiment.
 
 * **Return Type:** `string`
 * **Parameters:**
-  * `experimentName` - The name of the experiment.
+  * `experimentName` - Name of the experiment.
     * **Required**
     * **Type:** `string`
     * **Example:** `"My Example"`
