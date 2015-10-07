@@ -15,9 +15,10 @@ if(typeof window !== 'undefined' && 'localStorage' in window && window['localSto
     window.localStorage.setItem(key, key);
     if (window.localStorage.getItem(key) != key) {
       store = noopStore;
+    } else {
+      window.localStorage.removeItem(key);
+      store = window.localStorage;
     }
-    window.localStorage.removeItem(key);
-    store = window.localStorage;
   } catch(e) {
     store = noopStore;
   }

@@ -185,7 +185,7 @@ describe("LocalStorage", function() {
         this.refs.experiment.win();
       },
       render: function(){
-        return <Experiment ref="experiment" name={experimentName} value="A">
+        return <Experiment ref="experiment" name={experimentName} defaultValue="A">
           <Variant name="A"><a id="variant-a" href="#A" onClick={this.onClickVariant}>A</a></Variant>
           <Variant name="B"><a id="variant-b" href="#B" onClick={this.onClickVariant}>B</a></Variant>
         </Experiment>;

@@ -4,7 +4,7 @@
 [![Circle CI](https://circleci.com/gh/pushtell/react-ab-test.svg?style=shield)](https://circleci.com/gh/pushtell/react-ab-test)
 [![Coverage Status](https://coveralls.io/repos/pushtell/react-ab-test/badge.svg?branch=master&service=github)](https://coveralls.io/github/pushtell/react-ab-test?branch=master)
 [![Dependency Status](https://david-dm.org/pushtell/react-ab-test.svg)](https://david-dm.org/pushtell/react-ab-test)
-[![Star on Github](https://img.shields.io/github/stars/pushtell/react-ab-test.svg?style=social&label=%E2%98%85+Star)](https://github.com/pushtell/react-ab-test)
+[![Star on Github](https://img.shields.io/github/stars/pushtell/react-ab-test.svg?style=flat&label=%E2%98%85+Star)](https://github.com/pushtell/react-ab-test)
 
 Wrap test versions in `<Variant />` and nest in `<Experiment />`. A version is chosen randomly and saved to local storage.
 

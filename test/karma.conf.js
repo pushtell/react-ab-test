@@ -17,7 +17,7 @@ module.exports = function (karma) {
       'karma-browserstack-launcher'
     ],
     preprocessors: {
-      'tests.bundle.js': ['webpack', 'sourcemap'],
+      'tests.bundle.js': ['webpack', 'sourcemap']
     },
     customLaunchers: {
       Chrome_without_localstorage: {
