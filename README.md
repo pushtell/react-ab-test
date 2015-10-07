@@ -40,9 +40,7 @@ emitter.addPlayListener(function(experimentName, variantName){
 - [Resources for A/B Testing with React](#resources-for-ab-testing-with-react)
 - [API Reference](#api-reference)
   - [`<Experiment />`](#experiment-)
-- [](#)
   - [`<Variant />`](#variant-)
-- [](#-1)
   - [`emitter`](#emitter)
     - [`emitter.emitWin(experimentName)`](#emitteremitwinexperimentname)
     - [`emitter.addVariantListener([experimentName, ] callback)`](#emitteraddvariantlistenerexperimentname--callback)
@@ -270,7 +268,6 @@ emitter.addWinListener(function(experimentName, variantName){
 
 ## Alternative Libraries
 
-
 * [**react-ab**](https://github.com/olahol/react-ab) - “Simple declarative and universal A/B testing component for React” by [Ola Holmström](https://github.com/olahol)
 * [**react-native-ab**](https://github.com/lwansbrough/react-native-ab/) - “A component for rendering A/B tests in React Native“ by [Loch Wansbrough](https://github.com/lwansbrough)
 
@@ -286,7 +283,7 @@ Please [let us know](https://github.com/pushtell/react-ab-test/issues/new) about
 
 ### `<Experiment />`
 
-Experiment container component. Children must be of type [Variant](#variant-).
+Experiment container component. Children must be of type [`Variant`](#variant-).
 
 * **Properties:**
   * `name` - The name of the experiment.
@@ -298,8 +295,6 @@ Experiment container component. Children must be of type [Variant](#variant-).
     * **Type:** `string`
     * **Example:** `"A"`
 
----
-
 ### `<Variant />`
 
 Variant component.
@@ -309,8 +304,6 @@ Variant component.
     * **Required**
     * **Type:** `string`
     * **Example:** `"A"`
-
----
 
 ### `emitter`
 
