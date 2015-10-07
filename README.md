@@ -572,16 +572,17 @@ Returns the variant name currently displayed by the experiment.
 <table>
   <tbody width="100%">
     <tr>
-      <td><code>experimentName</code></td>
-      <td rowspan="2" valign="top">The name of the experiment.</td>
+      <td colspan="2" valign="top"><code>experimentName</code> - The name of the experiment.</td>
     </tr>
     <tr>
-      <td>
-        <ul>
-          <li><samp>Required</samp></li>
-          <li><samp>Type </samp><code>string</code></li>
-          <li><samp>Example: </samp><code>"My Example"</code></li>
-        </ul>
+      <td align="center">
+        <samp>Required</samp>
+      </td>
+      <td align="center">
+        <samp>Type </samp><code>string</code>
+      </td>
+      <td align="center">
+        <samp>Example: </samp><code>"My Example"</code>
       </td>
     </tr>
   </tbody>
