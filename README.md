@@ -572,7 +572,7 @@ Returns the variant name currently displayed by the experiment.
 <table>
   <tbody width="100%">
     <tr>
-      <td><h6><code>experimentName</code></h6></td>
+      <td><code>experimentName</code></td>
       <td rowspan="4" valign="top">The name of the experiment.</td>
     </tr>
     <tr>
