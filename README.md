@@ -559,32 +559,11 @@ The name of the variant.
 
 #### `emitter.getExperimentValue(experimentName)`
 
-<table>
-  <tr>
-    <td colspan="2" valign="top">Returns the variant name currently displayed by the experiment.</td>
-  </tr>
-  <tr>
-    <td align="center">
-      <samp>Returns:</samp> <code>string</code>
-    </td>
-    <td align="center">
-      <samp>Example:</samp> <code>"A"</code>
-    </td>
-  </tr>
-</table>
-<table>
-  <tr>
-    <td colspan="3" valign="top"><code>experimentName</code> - The name of the experiment.</td>
-  </tr>
-  <tr>
-    <td align="center">
-      <samp>Required</samp>
-    </td>
-    <td align="center">
-      <samp>Type </samp><code>string</code>
-    </td>
-    <td align="center">
-      <samp>Example: </samp><code>"My Example"</code>
-    </td>
-  </tr>
-</table>
+  * Returns the variant name currently displayed by the experiment.</li>
+    * Parameters
+      * experimentName
+        * The name of the experiment.
+        * Required
+        * Type `string`
+        * Example: `"My Example"`
+
