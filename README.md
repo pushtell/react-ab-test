@@ -5,11 +5,30 @@
 [![Coverage Status](https://coveralls.io/repos/pushtell/react-ab-test/badge.svg?branch=master&service=github)](https://coveralls.io/github/pushtell/react-ab-test?branch=master)
 [![Dependency Status](https://david-dm.org/pushtell/react-ab-test.svg)](https://david-dm.org/pushtell/react-ab-test)
 
-Wrap A/B test versions in the `<Variant />` component then nest within an `<Experiment />` component. The `<Experiment />` chooses a random variant, and saves to `window.localStorage`. Information like the variant being displayed is provided through the event `emitter` object.
+Wrap test versions in the `<Variant />` component and nest in an `<Experiment />` component. Results are saved to local storage.
+
+```js
+<Experiment name="Example">
+  <Variant name="A">
+    <p>Version A</p>
+  </Variant>
+  <Variant name="B">
+    <p>Version B</p>
+  </Variant>
+</Experiment>
+```
+
+Save results to your favorite analytics provider using the `emitter` object.
+
+```js
+emitter.addPlayListener("Example", function(experimentName, variantName){
+  mixpanel.track("Start Experiment", {name: experimentName, variant: variantName});
+});
+```
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-
+## Table of Contents
 
 - [Installation](#installation)
 - [Usage](#usage)
@@ -48,12 +67,12 @@ Wrap A/B test versions in the `<Variant />` component then nest within an `<Expe
       - [Arguments](#arguments-4)
         - [`experimentName`](#experimentname-4)
         - [`callback`](#callback-3)
-    - [`.addExperimentVariants(experimentName, variantNames)`](#addexperimentvariantsexperimentname-variantnames)
+    - [`emitter.addExperimentVariants(experimentName, variantNames)`](#emitteraddexperimentvariantsexperimentname-variantnames)
       - [Arguments](#arguments-5)
         - [`experimentName`](#experimentname-5)
         - [`variantName`](#variantname)
       - [Arguments](#arguments-6)
-    - [`.setExperimentValue(experimentName, variantName)`](#setexperimentvalueexperimentname-variantname)
+    - [`emitter.setExperimentValue(experimentName, variantName)`](#emittersetexperimentvalueexperimentname-variantname)
       - [Arguments](#arguments-7)
         - [`experimentName`](#experimentname-6)
         - [`variantName`](#variantname-1)
@@ -479,7 +498,7 @@ Called when successful outcome is emitted by the [emitter.emitWin(experimentName
   <li><samp>Type:</samp> <code>function</code></li>
 </ul>
 
-#### `.addExperimentVariants(experimentName, variantNames)`
+#### `emitter.addExperimentVariants(experimentName, variantNames)`
 
 Define experiment variant names. Required when an experiment [spans multiple components](#coordinate-multiple-components).
 
@@ -511,7 +530,7 @@ The name of the variant.
 
 ##### Arguments
 
-#### `.setExperimentValue(experimentName, variantName)`
+#### `emitter.setExperimentValue(experimentName, variantName)`
 
 Set the active variant of an experiment.
 
