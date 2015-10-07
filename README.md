@@ -528,25 +528,25 @@ The name of the variant.
 
 Set the active variant of an experiment.
 
-* Return Type: No return value
-* Parameters:
+* **Return Type:** No return value
+* **Parameters:**
   * `experimentName` - The name of the experiment.
-    * Required
-    * Type: `string`
-    * Example: `"My Example"`
+    * **Required**
+    * **Type:** `string`
+    * **Example:** `"My Example"`
   * `variantName` - The name of the variant.
-    * Required
-    * Type: `string`
-    * Example: `"A"`
+    * **Required**
+    * **Type:** `string`
+    * **Example:** `"A"`
 
 #### `emitter.getExperimentValue(experimentName)`
 
 Returns the variant name currently displayed by the experiment.
 
-* Return Type: No return value
-* Parameters:
+* **Return Type:** No return value
+* **Parameters:**
   * `experimentName` - The name of the experiment.
-    * Required
-    * Type `string`
-    * Example: `"My Example"`
+    * **Required**
+    * **Type:** `string`
+    * **Example:** `"My Example"`
 
