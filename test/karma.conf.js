@@ -130,7 +130,6 @@ module.exports = function (karma) {
     options.browsers = ['Chrome'];
   }
   if(process.env.COVERALLS_REPO_TOKEN) {
-    console.log("COVERALLS");
     options.reporters.push('coveralls');
   }
   karma.set(options);
