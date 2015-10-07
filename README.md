@@ -5,23 +5,23 @@
 [![Coverage Status](https://coveralls.io/repos/pushtell/react-ab-test/badge.svg?branch=master&service=github)](https://coveralls.io/github/pushtell/react-ab-test?branch=master)
 [![Dependency Status](https://david-dm.org/pushtell/react-ab-test.svg)](https://david-dm.org/pushtell/react-ab-test)
 
-Wrap test versions in the `<Variant />` component and nest in an `<Experiment />` component. Results are saved to local storage.
+Wrap test versions in `<Variant />` and nest in `<Experiment />`. The version is chosen randomly and saved to local storage.
 
 ```js
-<Experiment name="Example">
+<Experiment name="My Example">
   <Variant name="A">
-    <p>Version A</p>
+    <div>Version A</div>
   </Variant>
   <Variant name="B">
-    <p>Version B</p>
+    <div>Version B</div>
   </Variant>
 </Experiment>
 ```
 
-Save results to your favorite analytics provider using the `emitter` object.
+Report to your analytics provider using the `emitter` object.
 
 ```js
-emitter.addPlayListener("Example", function(experimentName, variantName){
+emitter.addPlayListener(function(experimentName, variantName){
   mixpanel.track("Start Experiment", {name: experimentName, variant: variantName});
 });
 ```
