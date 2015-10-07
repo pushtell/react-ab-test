@@ -559,11 +559,12 @@ The name of the variant.
 
 #### `emitter.getExperimentValue(experimentName)`
 
-  * Returns the variant name currently displayed by the experiment.</li>
-    * Parameters
-      * experimentName
-        * The name of the experiment.
-        * Required
-        * Type `string`
-        * Example: `"My Example"`
+Returns the variant name currently displayed by the experiment.</li>
+
+**Parameters**
+
+* `experimentName` - The name of the experiment.
+  * Required
+  * Type `string`
+  * Example: `"My Example"`
 
