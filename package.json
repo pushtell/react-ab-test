@@ -2,8 +2,8 @@
   "name": "react-ab-test",
   "keywords": ["react", "testing", "test", "A/B", "ab", "A/B testing", "A/B test"],
   "main": "index.js",
-  "version": "0.7.0",
-  "description": "A/B testing React components. Simple, universal interface with extensive documentation. Tested in popular browsers.",
+  "version": "0.7.1",
+  "description": "A/B testing React components. Simple, universal interface. Well documented and tested in popular browsers.",
   "directories": {
     "test": "test"
   },
@@ -36,7 +36,7 @@
   },
   "scripts": {
     "test": "./node_modules/karma/bin/karma start test/karma.conf.js",
-    "build": "doctoc . --github --title '## Table of Contents'; ./node_modules/babel/bin/babel.js ./src --out-dir ./; ./node_modules/webpack/bin/webpack.js --config webpack.standalone.config.js"
+    "build": "doctoc . --github --title '<h1>Table of Contents</h1>'; ./node_modules/babel/bin/babel.js ./src --out-dir ./lib; ./node_modules/webpack/bin/webpack.js --config webpack.standalone.config.js"
   },
   "repository": {
     "type": "git",
