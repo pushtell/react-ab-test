@@ -561,10 +561,9 @@ The name of the variant.
 
 Returns the variant name currently displayed by the experiment.</li>
 
-**Parameters**
-
-* `experimentName` - The name of the experiment.
-  * Required
-  * Type `string`
-  * Example: `"My Example"`
+* **Parameters**
+  * `experimentName` - The name of the experiment.
+    * Required
+    * Type `string`
+    * Example: `"My Example"`
 
