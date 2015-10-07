@@ -543,9 +543,9 @@ Set the active variant of an experiment.
 
 Returns the variant name currently displayed by the experiment.
 
-* **Return Type:** No return value
+* **Return Type:** `string`
 * **Parameters:**
-  * `experimentName` - The name of the experiment.
+  * `experimentName`: The name of the experiment.
     * **Required**
     * **Type:** `string`
     * **Example:** `"My Example"`
