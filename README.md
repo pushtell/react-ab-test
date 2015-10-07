@@ -146,34 +146,30 @@ emitter.addExperimentVariants("My Example", ["A", "B", "C"]);
 
 var Component1 = React.createClass({
   render: function(){
-    return <div>
-      <Experiment name="My Example">
-        <Variant name="A">
-          <div>Section A</div>
-        </Variant>
-        <Variant name="B">
-          <div>Section B</div>
-        </Variant>
-      </Experiment>
-    </div>;
+    return <Experiment name="My Example">
+      <Variant name="A">
+        <div>Section A</div>
+      </Variant>
+      <Variant name="B">
+        <div>Section B</div>
+      </Variant>
+    </Experiment>;
   }
 });
 
 var Component2 = React.createClass({
   render: function(){
-    return <div>
-      <Experiment name="My Example">
-        <Variant name="A">
-          <div>Subsection A</div>
-        </Variant>
-        <Variant name="B">
-          <div>Subsection B</div>
-        </Variant>
-        <Variant name="C">
-          <div>Subsection C</div>
-        </Variant>
-      </Experiment>
-    </div>;
+    return <Experiment name="My Example">
+      <Variant name="A">
+        <div>Subsection A</div>
+      </Variant>
+      <Variant name="B">
+        <div>Subsection B</div>
+      </Variant>
+      <Variant name="C">
+        <div>Subsection C</div>
+      </Variant>
+    </Experiment>;
   }
 });
 
@@ -182,9 +178,7 @@ var Component3 = React.createClass({
     emitter.emitWin("My Example");
   },
   render: function(){
-    return <div>
-      <button onClick={this.onButtonClick}>Emit a win</button>
-    </div>;
+    return <button onClick={this.onButtonClick}>Emit a win</button>;
   }
 });
 
