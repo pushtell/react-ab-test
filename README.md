@@ -5,6 +5,7 @@
 [![Coverage Status](https://coveralls.io/repos/pushtell/react-ab-test/badge.svg?branch=master&service=github)](https://coveralls.io/github/pushtell/react-ab-test?branch=master)
 [![Dependency Status](https://david-dm.org/pushtell/react-ab-test.svg)](https://david-dm.org/pushtell/react-ab-test)
 
+Wrap A/B test versions in the `<Variant />` component then nest within an `<Experiment />` component. The `<Experiment />` chooses a random variant, and saves to `window.localStorage`. Information like the variant being displayed is provided through the event `emitter` object.
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -29,17 +30,36 @@
 - [](#-1)
   - [`emitter`](#emitter)
     - [`emitter.emitWin(experimentName)`](#emitteremitwinexperimentname)
+      - [Arguments](#arguments)
         - [`experimentName`](#experimentname)
     - [`emitter.addVariantListener([experimentName, ] callback)`](#emitteraddvariantlistenerexperimentname--callback)
-      - [`experimentName`](#experimentname-1)
-      - [`callback`](#callback)
+      - [Arguments](#arguments-1)
+        - [`experimentName`](#experimentname-1)
+        - [`callback`](#callback)
     - [`emitter.addValueListener([experimentName, ] callback)`](#emitteraddvaluelistenerexperimentname--callback)
+      - [Arguments](#arguments-2)
+        - [`experimentName`](#experimentname-2)
+        - [`callback`](#callback-1)
     - [`emitter.addPlayListener([experimentName, ] callback)`](#emitteraddplaylistenerexperimentname--callback)
+      - [Arguments](#arguments-3)
+        - [`experimentName`](#experimentname-3)
+        - [`callback`](#callback-2)
     - [`emitter.addWinListener([experimentName, ] callback)`](#emitteraddwinlistenerexperimentname--callback)
-    - [`emitter.getExperimentValue(experimentName)`](#emittergetexperimentvalueexperimentname)
-      - [`experimentName`](#experimentname-2)
+      - [Arguments](#arguments-4)
+        - [`experimentName`](#experimentname-4)
+        - [`callback`](#callback-3)
     - [`.addExperimentVariants(experimentName, variantNames)`](#addexperimentvariantsexperimentname-variantnames)
+      - [Arguments](#arguments-5)
+        - [`experimentName`](#experimentname-5)
+        - [`variantName`](#variantname)
+      - [Arguments](#arguments-6)
     - [`.setExperimentValue(experimentName, variantName)`](#setexperimentvalueexperimentname-variantname)
+      - [Arguments](#arguments-7)
+        - [`experimentName`](#experimentname-6)
+        - [`variantName`](#variantname-1)
+    - [`emitter.getExperimentValue(experimentName)`](#emittergetexperimentvalueexperimentname)
+      - [Arguments](#arguments-8)
+        - [`experimentName`](#experimentname-7)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -331,7 +351,7 @@ Emit a win event.
   <li><samp>Returns:</samp> No returned value</li>
 </ul>
 
-
+##### Arguments
 
 ###### `experimentName`
 
@@ -347,9 +367,15 @@ The name of the experiment.
 
 Listen for variants being added to an experiment.
 
-##### `experimentName`
+<ul>
+  <li><samp>Returns:</samp> <code>Subscription</code> object</li>
+</ul>
 
-The name of the experiment. If provided, the callback will only be called for variants of the specified experiment.
+##### Arguments
+
+###### `experimentName`
+
+The name of the experiment. If provided, the callback will only be called for specified experiment.
 
 <ul>
   <li><samp>Optional</samp></li>
@@ -357,50 +383,100 @@ The name of the experiment. If provided, the callback will only be called for va
   <li><samp>Example:</samp> <code>"My Example"</code></li>
 </ul>
 
-##### `callback`
+###### `callback`
 
-A function called when a new variant is added.
+Called when a new variant is added.
 
 <ul>
   <li><samp>Required</samp></li>
   <li><samp>Type:</samp> <code>function</code></li>
-  <li><samp>Arguments:</samp>
-    <code>experimentName</code><br />
-    The name of the experiment the variant is being added to.
-    <ul>
-      <li><samp>Type:</samp> <code>string</code></li>
-      <li><samp>Example:</samp> <code>"My Example"</code></li>
-    </ul>
-    <code>variantName</code><br />
-    The name of the variant being added.
-    <ul>
-      <li><samp>Type:</samp> <code>string</code></li>
-      <li><samp>Example:</samp> <code>"A"</code></li>
-    </ul>
-  </li>
-  <li><samp>Example:</samp> <code>function</code></li>
 </ul>
 
 #### `emitter.addValueListener([experimentName, ] callback)`
-#### `emitter.addPlayListener([experimentName, ] callback)`
-#### `emitter.addWinListener([experimentName, ] callback)`
-#### `emitter.getExperimentValue(experimentName)`
 
-Returns the variant name currently displayed by the experiment.
+Listen for the chosen value of an experiment.
 
 <ul>
-  <li><samp>Returns:</samp> <code>string</code></li>
-  <li><samp>Example:</samp> <code>"A"</code></li>
+  <li><samp>Returns:</samp> <code>Subscription</code> object</li>
 </ul>
 
-##### `experimentName`
+##### Arguments
 
-The name of the experiment.
+###### `experimentName`
+
+The name of the experiment. If provided, the callback will only be called for specified experiment.
+
+<ul>
+  <li><samp>Optional</samp></li>
+  <li><samp>Type:</samp> <code>string</code></li>
+  <li><samp>Example:</samp> <code>"My Example"</code></li>
+</ul>
+
+###### `callback`
+
+Called when a new variant is added.
 
 <ul>
   <li><samp>Required</samp></li>
+  <li><samp>Type:</samp> <code>function</code></li>
+</ul>
+
+#### `emitter.addPlayListener([experimentName, ] callback)`
+
+Listen for an experiment being displayed to the user. Trigged by the [React componentWillMount lifecycle method](https://facebook.github.io/react/docs/component-specs.html#mounting-componentwillmount).
+
+<ul>
+  <li><samp>Returns:</samp> <code>Subscription</code> object</li>
+</ul>
+
+##### Arguments
+
+###### `experimentName`
+
+The name of the experiment. If provided, the callback will only be called for specified experiment.
+
+<ul>
+  <li><samp>Optional</samp></li>
   <li><samp>Type:</samp> <code>string</code></li>
   <li><samp>Example:</samp> <code>"My Example"</code></li>
+</ul>
+
+###### `callback`
+
+Called when a new variant is added.
+
+<ul>
+  <li><samp>Required</samp></li>
+  <li><samp>Type:</samp> <code>function</code></li>
+</ul>
+
+#### `emitter.addWinListener([experimentName, ] callback)`
+
+Listen for a successful outcome from the experiment. Trigged by the [emitter.emitWin(experimentName)](#emitteremitwinexperimentname) method.
+
+<ul>
+  <li><samp>Returns:</samp> <code>Subscription</code> object</li>
+</ul>
+
+##### Arguments
+
+###### `experimentName`
+
+The name of the experiment. If provided, the callback will only be called for specified experiment.
+
+<ul>
+  <li><samp>Optional</samp></li>
+  <li><samp>Type:</samp> <code>string</code></li>
+  <li><samp>Example:</samp> <code>"My Example"</code></li>
+</ul>
+
+###### `callback`
+
+Called when successful outcome is emitted by the [emitter.emitWin(experimentName)](#emitteremitwinexperimentname) method.
+
+<ul>
+  <li><samp>Required</samp></li>
+  <li><samp>Type:</samp> <code>function</code></li>
 </ul>
 
 #### `.addExperimentVariants(experimentName, variantNames)`
@@ -411,11 +487,77 @@ Define experiment variant names. Required when an experiment [spans multiple com
   <li><samp>Returns:</samp> No return value</li>
 </ul>
 
+##### Arguments
+
+###### `experimentName`
+
+The name of the experiment.
+
+<ul>
+  <li><samp>Required</samp></li>
+  <li><samp>Type:</samp> <code>string</code></li>
+  <li><samp>Example:</samp> <code>"My Example"</code></li>
+</ul>
+
+###### `variantName`
+
+The name of the variant.
+
+<ul>
+  <li><samp>Required</samp></li>
+  <li><samp>Type:</samp> <code>string</code></li>
+  <li><samp>Example:</samp> <code>"A"</code></li>
+</ul>
+
+##### Arguments
+
 #### `.setExperimentValue(experimentName, variantName)`
 
-Set the value of an experiment.
+Set the active variant of an experiment.
 
 <ul>
   <li><samp>Returns:</samp> No return value</li>
 </ul>
 
+##### Arguments
+
+###### `experimentName`
+
+The name of the experiment.
+
+<ul>
+  <li><samp>Required</samp></li>
+  <li><samp>Type:</samp> <code>string</code></li>
+  <li><samp>Example:</samp> <code>"My Example"</code></li>
+</ul>
+
+###### `variantName`
+
+The name of the variant.
+
+<ul>
+  <li><samp>Required</samp></li>
+  <li><samp>Type:</samp> <code>string</code></li>
+  <li><samp>Example:</samp> <code>"A"</code></li>
+</ul>
+
+#### `emitter.getExperimentValue(experimentName)`
+
+Returns the variant name currently displayed by the experiment.
+
+<ul>
+  <li><samp>Returns:</samp> <code>string</code></li>
+  <li><samp>Example:</samp> <code>"A"</code></li>
+</ul>
+
+##### Arguments
+
+###### `experimentName`
+
+The name of the experiment.
+
+<ul>
+  <li><samp>Required</samp></li>
+  <li><samp>Type:</samp> <code>string</code></li>
+  <li><samp>Example:</samp> <code>"My Example"</code></li>
+</ul>
