@@ -97,11 +97,11 @@ module.exports = function (karma) {
       module: {
         preLoaders: [
           {
-            exclude: /node_modules/,
+            exclude: /(node_modules|lib)/,
             loader: 'babel-loader',
             test: /\.jsx?$/
           }, {
-            exclude: /node_modules/,
+            exclude: /(node_modules|lib)/,
             loader: 'regenerator-loader',
             test: /\.jsx$/
           },
