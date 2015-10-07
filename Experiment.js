@@ -70,9 +70,9 @@ exports["default"] = _react2["default"].createClass({
     this.setState({
       value: value
     });
-    this.valueSubscription = _emitter2["default"].addValueListener(this.props.name, function (value) {
+    this.valueSubscription = _emitter2["default"].addValueListener(this.props.name, function (experimentName, variantName) {
       _this2.setState({
-        value: value
+        value: variantName
       });
     });
   },

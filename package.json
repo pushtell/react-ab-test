@@ -1,8 +1,9 @@
 {
   "name": "react-ab-test",
+  "keywords": ["react", "testing", "test", "A/B", "ab", "A/B testing", "A/B test"],
   "main": "index.js",
-  "version": "0.6.7",
-  "description": "A/B Testing React Components",
+  "version": "0.7.0",
+  "description": "A/B testing React components. Simple universal interface with extensive documentation. Tested in most browsers.",
   "directories": {
     "test": "test"
   },

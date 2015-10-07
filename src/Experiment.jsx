@@ -50,9 +50,9 @@ export default React.createClass({
     this.setState({
       value: value
     });
-    this.valueSubscription = emitter.addValueListener(this.props.name, value => {
+    this.valueSubscription = emitter.addValueListener(this.props.name, (experimentName, variantName) => {
       this.setState({
-        value: value
+        value: variantName
       });
     });
   },

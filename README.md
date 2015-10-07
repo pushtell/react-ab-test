@@ -79,12 +79,12 @@ var App = React.createClass({
 });
 
 // Executed when the experiment is run
-var playSubscription = emitter.addPlayListener("My Example", function(variantName){
+var playSubscription = emitter.addPlayListener("My Example", function(experimentName, variantName){
   console.log("Displaying experiment ‘example’ variant ‘" + variantName + "’");
 });
 
 // Executed when a 'win' is emitted, in this case by this.refs.experiment.win();
-var winSubscription = emitter.addWinListener("My Example", function(variantName){
+var winSubscription = emitter.addWinListener("My Example", function(experimentName, variantName){
   console.log("Experiment ‘example’ variant ‘" + variantName + "’ was clicked on");
 });
 
@@ -158,12 +158,12 @@ var App = React.createClass({
 });
 
 // Executed when the experiment is run
-var playSubscription = emitter.addPlayListener("My Example", function(variantName){
+var playSubscription = emitter.addPlayListener("My Example", function(experimentName, variantName){
   console.log("Displaying experiment ‘example’ variant ‘" + variantName + "’");
 });
 
 // Executed when a 'win' is emitted, in this case by emitter.emitWin("My Example")
-var winSubscription = emitter.addWinListener("My Example", function(variantName){
+var winSubscription = emitter.addWinListener("My Example", function(experimentName, variantName){
   console.log("Experiment ‘example’ variant ‘" + variantName + "’ was clicked on");
 });
 
@@ -188,9 +188,9 @@ var VariantSelector = React.createClass({
       variants: []
     }
   },
-  addVariant: function(name) {
+  addVariant: function(experimentName, variantName) {
     var variants = this.state.variants;
-    variants.push(name);
+    variants.push(variantName);
     this.setState({
       variants: variants
     });
@@ -247,12 +247,12 @@ var App = React.createClass({
 });
 
 // Executed when the experiment is run
-var playSubscription = emitter.addPlayListener("My Example", function(variantName){
+var playSubscription = emitter.addPlayListener("My Example", function(experimentName, variantName){
   console.log("Displaying experiment ‘example’ variant ‘" + variantName + "’");
 });
 
 // Executed when a 'win' is emitted, in this case by this.refs.experiment.win();
-var winSubscription = emitter.addWinListener("My Example", function(variantName){
+var winSubscription = emitter.addWinListener("My Example", function(experimentName, variantName){
   console.log("Experiment ‘example’ variant ‘" + variantName + "’ was clicked on");
 });
 
@@ -346,12 +346,14 @@ A function called when a new variant is added.
   <li><samp>Required</samp></li>
   <li><samp>Type:</samp> <code>function</code></li>
   <li><samp>Arguments:</samp>
-    `experimentName`
+    `experimentName`<br />
+    The name of the experiment the variant is being added to.
     <ul>
       <li><samp>Type:</samp> <code>string</code></li>
       <li><samp>Example:</samp> <code>"My Example"</code></li>
     </ul>
-    `variantName`
+    `variantName`<br />
+    The name of the variant being added.
     <ul>
       <li><samp>Type:</samp> <code>string</code></li>
       <li><samp>Example:</samp> <code>"A"</code></li>

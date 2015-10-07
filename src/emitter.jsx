@@ -19,7 +19,7 @@ class PushtellEventEmitter extends EventEmitter {
     }
     return this.addListener('variant', (_experimentName, variantName) => {
       if(_experimentName === experimentName) {
-        callback(variantName);
+        callback(_experimentName, variantName);
       }
     });
   }
@@ -32,7 +32,7 @@ class PushtellEventEmitter extends EventEmitter {
     }
     return this.addListener('value', (_experimentName, variantName) => {
       if(_experimentName === experimentName) {
-        callback(variantName);
+        callback(_experimentName, variantName);
       }
     });
   }
@@ -45,7 +45,7 @@ class PushtellEventEmitter extends EventEmitter {
     }
     return this.addListener('play', (_experimentName, variantName) => {
       if(_experimentName === experimentName) {
-        callback(variantName);
+        callback(_experimentName, variantName);
       }
     });
   }
@@ -58,7 +58,7 @@ class PushtellEventEmitter extends EventEmitter {
     }
     return this.addListener('win', (_experimentName, variantName) => {
       if(_experimentName === experimentName) {
-        callback(variantName);
+        callback(_experimentName, variantName);
       }
     });
   }

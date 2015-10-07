@@ -45,7 +45,7 @@ var PushtellEventEmitter = (function (_EventEmitter) {
       }
       return this.addListener('variant', function (_experimentName, variantName) {
         if (_experimentName === experimentName) {
-          callback(variantName);
+          callback(_experimentName, variantName);
         }
       });
     }
@@ -60,7 +60,7 @@ var PushtellEventEmitter = (function (_EventEmitter) {
       }
       return this.addListener('value', function (_experimentName, variantName) {
         if (_experimentName === experimentName) {
-          callback(variantName);
+          callback(_experimentName, variantName);
         }
       });
     }
@@ -75,7 +75,7 @@ var PushtellEventEmitter = (function (_EventEmitter) {
       }
       return this.addListener('play', function (_experimentName, variantName) {
         if (_experimentName === experimentName) {
-          callback(variantName);
+          callback(_experimentName, variantName);
         }
       });
     }
@@ -90,7 +90,7 @@ var PushtellEventEmitter = (function (_EventEmitter) {
       }
       return this.addListener('win', function (_experimentName, variantName) {
         if (_experimentName === experimentName) {
-          callback(variantName);
+          callback(_experimentName, variantName);
         }
       });
     }

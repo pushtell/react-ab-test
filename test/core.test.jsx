@@ -62,7 +62,7 @@ describe("Core", function() {
   it("should callback when a variant is played.", co.wrap(function *(){
     let experimentName = UUID.v4();
     let playedVariantName = null;
-    let playCallback = function(variantName){
+    let playCallback = function(experimentName, variantName){
       playedVariantName = variantName;
     };
     let experimentNameGlobal = null;
@@ -93,7 +93,7 @@ describe("Core", function() {
   it("should callback when a variant wins.", co.wrap(function *(){
     let experimentName = UUID.v4();
     let winningVariantName = null;
-    let winCallback = function(variantName){
+    let winCallback = function(experimentName, variantName){
       winningVariantName = variantName;
     };
     let experimentNameGlobal = null;
@@ -125,7 +125,7 @@ describe("Core", function() {
   it("should callback when a variant is clicked.", co.wrap(function *(){
     let experimentName = UUID.v4();
     let winningVariantName = null;
-    let winCallback = function(variantName){
+    let winCallback = function(experimentName, variantName){
       winningVariantName = variantName;
     };
     let experimentNameGlobal = null;
@@ -161,7 +161,7 @@ describe("Core", function() {
   it("should listen for variant names.", co.wrap(function *(){
     let experimentName = UUID.v4();
     let variants = [];
-    let variantSubscription = emitter.addVariantListener(experimentName, variantName => {
+    let variantSubscription = emitter.addVariantListener(experimentName, (_experimentName, variantName) => {
       variants.push(variantName);
     });
     let App = React.createClass({
