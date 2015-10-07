@@ -528,8 +528,8 @@ The name of the variant.
 
 Set the active variant of an experiment.
 
-* **Return Type** - No return value
-* **Parameters**
+* Return Type: No return value
+* Parameters:
   * `experimentName` - The name of the experiment.
     * Required
     * Type: `string`
@@ -541,9 +541,10 @@ Set the active variant of an experiment.
 
 #### `emitter.getExperimentValue(experimentName)`
 
-Returns the variant name currently displayed by the experiment.</li>
+Returns the variant name currently displayed by the experiment.
 
-* **Parameters**
+* Return Type: No return value
+* Parameters:
   * `experimentName` - The name of the experiment.
     * Required
     * Type `string`
