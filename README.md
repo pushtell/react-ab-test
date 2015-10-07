@@ -1,11 +1,11 @@
-# A/B Testing React Component
+# A/B Testing React Components
 
 [![NPM Version](https://badge.fury.io/js/react-ab-test.svg)](https://www.npmjs.com/package/react-ab-test)
 ![Test Passing Status](https://circleci.com/gh/pushtell/react-ab-test.svg?style=shield&circle-token=:circle-token)
 [![Coverage Status](https://coveralls.io/repos/pushtell/react-ab-test/badge.svg?branch=master&service=github)](https://coveralls.io/github/pushtell/react-ab-test?branch=master)
 [![Dependency Status](https://david-dm.org/pushtell/react-ab-test.svg)](https://david-dm.org/pushtell/react-ab-test)
 
-Wrap test versions in `<Variant />` and nest in `<Experiment />`. The version is chosen randomly and saved to local storage.
+Wrap test versions in `<Variant />` and nest in `<Experiment />`. A version is chosen randomly and saved to local storage.
 
 ```js
 <Experiment name="My Example">
@@ -18,7 +18,7 @@ Wrap test versions in `<Variant />` and nest in `<Experiment />`. The version is
 </Experiment>
 ```
 
-Report to your analytics provider using the `emitter` object.
+Report to your analytics provider using the `emitter`.
 
 ```js
 emitter.addPlayListener(function(experimentName, variantName){
