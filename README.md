@@ -74,9 +74,6 @@ emitter.addPlayListener(function(experimentName, variantName){
         - [`variantName`](#variantname)
       - [Arguments](#arguments-6)
     - [`emitter.setExperimentValue(experimentName, variantName)`](#emittersetexperimentvalueexperimentname-variantname)
-      - [Arguments](#arguments-7)
-        - [`experimentName`](#experimentname-6)
-        - [`variantName`](#variantname-1)
     - [`emitter.getExperimentValue(experimentName)`](#emittergetexperimentvalueexperimentname)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -531,31 +528,16 @@ The name of the variant.
 
 Set the active variant of an experiment.
 
-<ul>
-  <li><samp>Returns:</samp> No return value</li>
-</ul>
-
-##### Arguments
-
-###### `experimentName`
-
-The name of the experiment.
-
-<ul>
-  <li><samp>Required</samp></li>
-  <li><samp>Type:</samp> <code>string</code></li>
-  <li><samp>Example:</samp> <code>"My Example"</code></li>
-</ul>
-
-###### `variantName`
-
-The name of the variant.
-
-<ul>
-  <li><samp>Required</samp></li>
-  <li><samp>Type:</samp> <code>string</code></li>
-  <li><samp>Example:</samp> <code>"A"</code></li>
-</ul>
+* **Return Type** - No return value
+* **Parameters**
+  * `experimentName` - The name of the experiment.
+    * Required
+    * Type: `string`
+    * Example: `"My Example"`
+  * `variantName` - The name of the variant.
+    * Required
+    * Type: `string`
+    * Example: `"A"`
 
 #### `emitter.getExperimentValue(experimentName)`
 
