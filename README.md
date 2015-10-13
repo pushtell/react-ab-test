@@ -401,9 +401,11 @@ Returns the variant name currently displayed by the experiment.
 
 ### `experimentDebugger`
 
-Debugging tool. Attaches a fixed-position panel to the bottom of the `&lt;body&gt;` element that displays active experiments and enables the user to change active variants in real-time.
+Debugging tool. Attaches a fixed-position panel to the bottom of the `<body>` element that displays active experiments and enables the user to change active variants in real-time.
 
 The debugger is wrapped in a conditional `if(process.env.NODE_ENV === "production") {...}` and will not display on production builds using [envify](https://github.com/hughsk/envify).
+
+![Debugger](https://cdn.rawgit.com/pushtell/react-ab-test/master/documentation-images/debugger.gif)
 
 #### `experimentDebugger.enable()`
 
