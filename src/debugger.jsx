@@ -56,7 +56,9 @@ if(process.env.NODE_ENV === "production" || !canUseDOM) {
     color: "#000000",
     padding: "5px 10px 5px 10px",
     boxShadow: "0px 0 5px rgba(0, 0, 0, 0.1)",
-    border: "1px solid #b3b3b3",
+    borderTop: "1px solid #b3b3b3",
+    borderLeft: "1px solid #b3b3b3",
+    borderRight: "1px solid #b3b3b3",
     borderTopLeftRadius: "2px",
     borderTopRightRadius: "2px"
   }
