@@ -1,7 +1,8 @@
 import React from 'react';
 import emitter from "./emitter";
+import {canUseDOM} from 'react/lib/ExecutionEnvironment';
 
-if(process.env.NODE_ENV === "production") {
+if(process.env.NODE_ENV === "production" || !canUseDOM) {
   module.exports = {
     enable() {},
     disable() {}
