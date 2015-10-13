@@ -26,7 +26,7 @@ if(typeof window !== 'undefined' && 'localStorage' in window && window['localSto
   store = noopStore;
 }
 
-emitter.addValueListener((experimentName, variantName, skipSave) => {
+emitter.addValueListener(function(experimentName, variantName, skipSave){
   if(skipSave) {
     return;
   }

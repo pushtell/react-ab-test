@@ -39,13 +39,13 @@ class PushtellEventEmitter extends EventEmitter {
   addValueListener(experimentName, callback) {
     if(typeof experimentName === "function") {
       callback = experimentName;
-      return this.addListener('value', (_experimentName, variantName) => {
-        callback(_experimentName, variantName);
+      return this.addListener('value', (_experimentName, variantName, passthrough) => {
+        callback(_experimentName, variantName, passthrough);
       });
     }
-    return this.addListener('value', (_experimentName, variantName) => {
+    return this.addListener('value', (_experimentName, variantName, passthrough) => {
       if(_experimentName === experimentName) {
-        callback(_experimentName, variantName);
+        callback(_experimentName, variantName, passthrough);
       }
     });
   }
