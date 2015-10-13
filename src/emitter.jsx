@@ -2,6 +2,7 @@ import {EventEmitter} from 'fbemitter';
 
 const values = {};
 const experiments = {};
+const activeExperiments = {};
 
 class PushtellEventEmitter extends EventEmitter {
   emitWin(experimentName){
@@ -9,6 +10,18 @@ class PushtellEventEmitter extends EventEmitter {
       throw new Error("Required argument 'experimentName' should have type 'string'");
     }
     this.emit("win", experimentName, values[experimentName]);
+  }
+  incrementActiveExperiments(experimentName) {
+    activeExperiments[experimentName] = activeExperiments[experimentName] || 0;
+    activeExperiments[experimentName] += 1;
+    this.emit("active", experimentName);
+  }
+  decrementActiveExperiments(experimentName) {
+    if(typeof activeExperiments[experimentName] === "undefined") {
+      throw new Error("Experiment " + experimentName + " was not active and can not be decremented.");
+    }
+    activeExperiments[experimentName] -= 1;
+    this.emit("inactive", experimentName);
   }
   addVariantListener(experimentName, callback) {
     if(typeof experimentName === "function") {
@@ -76,12 +89,27 @@ class PushtellEventEmitter extends EventEmitter {
     names.sort();
     return names;
   }
+  getActiveExperiments(){
+    let response = {};
+    Object.keys(activeExperiments).forEach(experimentName => {
+      response[experimentName] = {};
+      if(activeExperiments[experimentName] === 0) {
+        return;
+      }
+      Object.keys(experiments[experimentName]).forEach(variantName => {
+        response[experimentName][variantName] = values[experimentName] === variantName;
+      });
+    });
+    return response;
+  }
   getExperimentValue(experimentName){
     return values[experimentName];
   }
-  setExperimentValue(experimentName, variantName){
+  setExperimentValue(experimentName, variantName, emit){
     values[experimentName] = variantName;
-    this.emit("value", experimentName, variantName);
+    if(emit !== false) {
+      this.emit("value", experimentName, variantName);
+    }
   }
   addExperimentVariant(experimentName, variantName){
     experiments[experimentName] = experiments[experimentName] || {};
@@ -91,9 +119,11 @@ class PushtellEventEmitter extends EventEmitter {
         error.type = "PUSHTELL_INVALID_VARIANT";
         throw error;
       }
+      experiments[experimentName][variantName] = true;
       this.emit("variant", experimentName, variantName);
+    } else {
+      experiments[experimentName][variantName] = true;
     }
-    experiments[experimentName][variantName] = true;
   }
 }
 

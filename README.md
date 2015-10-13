@@ -47,8 +47,12 @@ emitter.addPlayListener(function(experimentName, variantName){
     - [`emitter.addPlayListener([experimentName, ] callback)`](#emitteraddplaylistenerexperimentname--callback)
     - [`emitter.addWinListener([experimentName, ] callback)`](#emitteraddwinlistenerexperimentname--callback)
     - [`emitter.addExperimentVariants(experimentName, variantNames)`](#emitteraddexperimentvariantsexperimentname-variantnames)
-    - [`emitter.setExperimentValue(experimentName, variantName)`](#emittersetexperimentvalueexperimentname-variantname)
+    - [`emitter.setExperimentValue(experimentName, variantName [, emit])`](#emittersetexperimentvalueexperimentname-variantname--emit)
     - [`emitter.getExperimentValue(experimentName)`](#emittergetexperimentvalueexperimentname)
+  - [`experimentDebugger`](#experimentdebugger)
+    - [Usage](#usage-1)
+    - [`experimentDebugger.enable()`](#experimentdebuggerenable)
+    - [`experimentDebugger.disable()`](#experimentdebuggerdisable)
   - [`Subscription`](#subscription)
     - [`subscription.remove()`](#subscriptionremove)
 
@@ -411,7 +415,7 @@ Define experiment variant names. Required when an experiment [spans multiple com
     * **Type:** `Array.<string>`
     * **Example:** `["A", "B", "C"]`
 
-#### `emitter.setExperimentValue(experimentName, variantName)`
+#### `emitter.setExperimentValue(experimentName, variantName [, emit])`
 
 Set the active variant of an experiment.
 
@@ -425,6 +429,11 @@ Set the active variant of an experiment.
     * **Required**
     * **Type:** `string`
     * **Example:** `"A"`
+  * `emit` - Emit a value event to [attached listeners](#emitteraddvaluelistenerexperimentname--callback)
+    * **Optional**
+    * **Type:** `boolean`
+    * **Default:** `true`
+    * **Example:** `false`
 
 #### `emitter.getExperimentValue(experimentName)`
 
@@ -436,6 +445,53 @@ Returns the variant name currently displayed by the experiment.
     * **Required**
     * **Type:** `string`
     * **Example:** `"My Example"`
+
+### `experimentDebugger`
+
+Debugging tool. Attaches a fixed-position panel to the bottom of the `&lt;body&gt;` element that displays active experiments and enables the user to change active variants in real-time.
+
+The debugger is wrapped in a conditional `if(process.env.NODE_ENV === "production") {...}` and will not display on production builds using [envify](https://github.com/hughsk/envify).
+
+#### Usage
+
+Try it [on JSFiddle](http://jsfiddle.net/pushtell/c83she39/)
+
+```js
+
+var Experiment = require("react-ab-test").Experiment;
+var Variant = require("react-ab-test").Variant;
+var experimentDebugger = require("react-ab-test").experimentDebugger;
+
+experimentDebugger.enable();
+
+var App = React.createClass({
+  render: function(){
+    return <div>
+      <Experiment ref="experiment" name="My Example">
+        <Variant name="A">
+          <div>Section A</div>
+        </Variant>
+        <Variant name="B">
+          <div>Section B</div>
+        </Variant>
+      </Experiment>
+    </div>;
+  }
+});
+
+```
+
+#### `experimentDebugger.enable()`
+
+Attaches the debugging panel to the `&lt;body&gt;` element.
+
+* **Return Type:** No return value
+
+#### `experimentDebugger.disable()`
+
+Removes the debugging panel from the `&lt;body&gt;` element.
+
+* **Return Type:** No return value
 
 ### `Subscription`
 

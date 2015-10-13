@@ -2,7 +2,7 @@
   "name": "react-ab-test",
   "keywords": ["react", "react-component", "testing", "test", "A/B", "ab", "A/B testing", "A/B test"],
   "main": "index.js",
-  "version": "0.7.8",
+  "version": "0.8.0",
   "description": "A/B testing React components. Simple, universal interface. Well documented and tested in popular browsers.",
   "directories": {
     "test": "test"
@@ -35,9 +35,11 @@
     "node-uuid": "*",
     "karma-coveralls": "*",
     "karma-coverage": "*",
-    "effroi":"*"
+    "effroi":"*",
+    "webpack-dev-server": "*"
   },
   "scripts": {
+    "example": "echo 'Visit http://localhost:8080 in your browser to view the example.'; ./node_modules/webpack-dev-server/bin/webpack-dev-server.js --config ./example/webpack.example.config.js --content-base ./example",
     "test": "./node_modules/karma/bin/karma start test/karma.conf.js",
     "build": "doctoc . --github --title '<h1>Table of Contents</h1>'; ./node_modules/babel/bin/babel.js ./src --out-dir ./lib; ./node_modules/webpack/bin/webpack.js --config webpack.standalone.config.js"
   },

@@ -26,6 +26,10 @@ if(typeof window !== 'undefined' && 'localStorage' in window && window['localSto
   store = noopStore;
 }
 
+emitter.addValueListener((experimentName, variantName) => {
+  store.setItem('PUSHTELL-' + experimentName, variantName);
+});
+
 export default React.createClass({
   displayName: "Pushtell.LocalStorage.Experiment",
   propTypes: {
@@ -38,15 +42,16 @@ export default React.createClass({
   getLocalStorageValue() {
     let storedValue = store.getItem('PUSHTELL-' + this.props.name);
     if(typeof storedValue === "string") {
+      emitter.setExperimentValue(this.props.name, storedValue, false);
       return storedValue;
     }
     if(typeof this.props.defaultValue === 'string') {
-      store.setItem('PUSHTELL-' + this.props.name, this.props.defaultValue);
+      emitter.setExperimentValue(this.props.name, this.props.defaultValue);
       return this.props.defaultValue;
     }
     let variants = emitter.getSortedVariants(this.props.name);
     let randomValue = variants[Math.floor(Math.random() * variants.length)];
-    store.setItem('PUSHTELL-' + this.props.name, randomValue);
+    emitter.setExperimentValue(this.props.name, randomValue);
     return randomValue;
   },
   render() {
