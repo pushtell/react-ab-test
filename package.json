@@ -2,7 +2,7 @@
   "name": "react-ab-test",
   "keywords": ["react", "react-component", "testing", "test", "A/B", "ab", "A/B testing", "A/B test"],
   "main": "index.js",
-  "version": "0.8.2",
+  "version": "0.8.3",
   "description": "A/B testing React components and debug tools. Simple, universal interface. Well documented and tested in popular browsers.",
   "directories": {
     "test": "test"
