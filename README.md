@@ -187,15 +187,11 @@ Try it [on JSFiddle](http://jsfiddle.net/pushtell/vs9kkxLd/)
 
 var Experiment = require("react-ab-test").Experiment;
 var Variant = require("react-ab-test").Variant;
-var emitter = require("react-ab-test").emitter;
 var experimentDebugger = require("react-ab-test").experimentDebugger;
 
 experimentDebugger.enable();
 
 var App = React.createClass({
-  onButtonClick: function(e){
-    this.refs.experiment.win();
-  },
   render: function(){
     return <div>
       <Experiment ref="experiment" name="My Example">
@@ -206,19 +202,8 @@ var App = React.createClass({
           <div>Section B</div>
         </Variant>
       </Experiment>
-      <button onClick={this.onButtonClick}>Emit a win</button>
     </div>;
   }
-});
-
-// Called when the experiment is displayed to the user.
-emitter.addPlayListener(function(experimentName, variantName){
-  console.log("Displaying experiment ‘" + experimentName + "’ variant ‘" + variantName + "’");
-});
-
-// Called when a 'win' is emitted, in this case by this.refs.experiment.win()
-emitter.addWinListener(function(experimentName, variantName){
-  console.log("Variant ‘" + variantName + "’ of experiment ‘" + experimentName + "’ was clicked");
 });
 
 ```
@@ -406,7 +391,7 @@ Debugging tool. Attaches a fixed-position panel to the bottom of the `<body>` el
 The debugger is wrapped in a conditional `if(process.env.NODE_ENV === "production") {...}` and will not display on production builds using [envify](https://github.com/hughsk/envify).
 
 
-<img src="https://cdn.rawgit.com/pushtell/react-ab-test/master/documentation-images/debugger.gif" width="300" height="300" />
+<img src="https://cdn.rawgit.com/pushtell/react-ab-test/master/documentation-images/debugger-animated.gif" width="300" height="300" />
 
 #### `experimentDebugger.enable()`
 
