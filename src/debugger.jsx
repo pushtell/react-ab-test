@@ -1,6 +1,7 @@
 import React from 'react';
 import emitter from "./emitter";
 import {canUseDOM} from 'react/lib/ExecutionEnvironment';
+import assign from 'react/lib/Object.assign';
 
 if(process.env.NODE_ENV === "production" || !canUseDOM) {
   module.exports = {
@@ -15,7 +16,9 @@ if(process.env.NODE_ENV === "production" || !canUseDOM) {
 
   const list_item_style = {
     margin:"0",
-    padding:"0"
+    padding:"0",
+    fontSize: "14px",
+    lineHeight: "14px"
   };
 
   const input_style = {
@@ -26,14 +29,13 @@ if(process.env.NODE_ENV === "production" || !canUseDOM) {
   };
 
   const experiment_name_style = {
-    fontSize: "14px",
-    color: "#666666",
+    fontSize: "16px",
+    color: "#000000",
     margin: "0 0 10px 0"
   };
 
   const variant_name_style = {
-    fontSize: "12px",
-    color: "#666666",
+    color: "#000000",
     margin: "0 0 10px 0",
     cursor: "pointer",
     fontWeight: "normal"
@@ -48,16 +50,31 @@ if(process.env.NODE_ENV === "production" || !canUseDOM) {
     right: "7px"
   }
 
-  const debugger_style = {
-    padding: "10px 30px 0 0"
+  const container_style = {
+    fontSize: "12px",
+    backgroundColor: "#ebebeb",
+    color: "#000000",
+    padding: "5px 10px 5px 10px",
+    boxShadow: "0px 0 5px rgba(0, 0, 0, 0.1)",
+    border: "1px solid #b3b3b3",
+    borderTopLeftRadius: "2px",
+    borderTopRightRadius: "2px"
   }
+
+  const debugger_style = assign({}, container_style, {
+    padding: "15px 40px 5px 10px"
+  });
+
+  const handle_style = assign({}, container_style, {
+    cursor: "pointer"
+  });
 
   const note_style = {
     fontSize: "10px",
     color: "#999999",
     textAlign: "center",
     margin: "10px -40px 0 -10px",
-    borderTop: "1px solid #AAAAAA",
+    borderTop: "1px solid #b3b3b3",
     padding: "10px 10px 5px 10px"
   }
 
@@ -121,7 +138,7 @@ if(process.env.NODE_ENV === "production" || !canUseDOM) {
           <div style={note_style}>This panel is hidden on production builds.</div>
         </div>;
       } else if(experimentNames.length > 0){
-        return <div style={{cursor:"pointer"}} onClick={this.toggleVisibility}>
+        return <div style={handle_style} onClick={this.toggleVisibility}>
           {experimentNames.length} Experiment{experimentNames.length > 1 ? "s" : ""} ▲
         </div>;
       } else {
@@ -135,16 +152,11 @@ if(process.env.NODE_ENV === "production" || !canUseDOM) {
       let body = document.getElementsByTagName('body')[0];
       let container = document.createElement('div');
       container.id = 'pushtell-react-ab-test-debugger';
+      container.style.zIndex = "25000";
       container.style.position = "fixed";
-      container.style.backgroundColor = "#FFFFFF";
-      container.style.color = "#666666";
+      container.style.transform = "translateX(-50%)";
       container.style.bottom = "0";
       container.style.left = "50%";
-      container.style.transform = "translateX(-50%)";
-      container.style.padding = "5px 10px 5px 10px";
-      container.style.boxShadow = "0px 0 5px #000000";
-      container.style.borderTopLeftRadius = "3px";
-      container.style.borderTopRightRadius = "3px";
       body.appendChild(container);
       React.render(<Debugger />, container);
     },
