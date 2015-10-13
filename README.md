@@ -392,13 +392,13 @@ The debugger is wrapped in a conditional `if(process.env.NODE_ENV === "productio
 
 #### `experimentDebugger.enable()`
 
-Attaches the debugging panel to the `&lt;body&gt;` element.
+Attaches the debugging panel to the `<body>` element.
 
 * **Return Type:** No return value
 
 #### `experimentDebugger.disable()`
 
-Removes the debugging panel from the `&lt;body&gt;` element.
+Removes the debugging panel from the `<body>` element.
 
 * **Return Type:** No return value
 
