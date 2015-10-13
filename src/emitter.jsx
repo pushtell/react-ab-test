@@ -11,15 +11,12 @@ class PushtellEventEmitter extends EventEmitter {
     }
     this.emit("win", experimentName, values[experimentName]);
   }
-  incrementActiveExperiments(experimentName) {
+  _incrementActiveExperiments(experimentName) {
     activeExperiments[experimentName] = activeExperiments[experimentName] || 0;
     activeExperiments[experimentName] += 1;
     this.emit("active", experimentName);
   }
-  decrementActiveExperiments(experimentName) {
-    if(typeof activeExperiments[experimentName] === "undefined") {
-      throw new Error("Experiment " + experimentName + " was not active and can not be decremented.");
-    }
+  _decrementActiveExperiments(experimentName) {
     activeExperiments[experimentName] -= 1;
     this.emit("inactive", experimentName);
   }
@@ -92,10 +89,10 @@ class PushtellEventEmitter extends EventEmitter {
   getActiveExperiments(){
     let response = {};
     Object.keys(activeExperiments).forEach(experimentName => {
-      response[experimentName] = {};
       if(activeExperiments[experimentName] === 0) {
         return;
       }
+      response[experimentName] = {};
       Object.keys(experiments[experimentName]).forEach(variantName => {
         response[experimentName][variantName] = values[experimentName] === variantName;
       });

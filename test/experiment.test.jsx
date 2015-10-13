@@ -8,13 +8,13 @@ import ES6Promise from 'es6-promise';
 ES6Promise.polyfill();
 
 describe("Experiment", function() {
+  let container;
   before(function(){
-    let container = document.createElement("div");
+    container = document.createElement("div");
     container.id = "react";
     document.getElementsByTagName('body')[0].appendChild(container);
   });
   after(function(){
-    let container = document.getElementById("react");
     document.getElementsByTagName('body')[0].removeChild(container);
   });
   it("should render the correct variant.", co.wrap(function *(){
@@ -28,7 +28,7 @@ describe("Experiment", function() {
       }
     });
     yield new Promise(function(resolve, reject){
-      React.render(<App />, document.getElementById("react"), resolve);
+      React.render(<App />, container, resolve);
     });
     let elementA = document.getElementById('variant-a');
     let elementB = document.getElementById('variant-b');
@@ -47,7 +47,7 @@ describe("Experiment", function() {
     });
     try {
       yield new Promise(function(resolve, reject){
-        React.render(<App />, document.getElementById("react"), resolve);
+        React.render(<App />, container, resolve);
       });
     } catch(error) {
       if(error.type !== "PUSHTELL_INVALID_CHILD") {
@@ -83,7 +83,7 @@ describe("Experiment", function() {
       }
     });
     yield new Promise(function(resolve, reject){
-      React.render(<App />, document.getElementById("react"), resolve);
+      React.render(<App />, container, resolve);
     });
     let elementA = document.getElementById('variant-a');
     let elementB = document.getElementById('variant-b');

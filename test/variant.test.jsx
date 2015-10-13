@@ -8,13 +8,13 @@ import ES6Promise from 'es6-promise';
 ES6Promise.polyfill();
 
 describe("Variant", function() {
+  let container;
   before(function(){
-    let container = document.createElement("div");
+    container = document.createElement("div");
     container.id = "react";
     document.getElementsByTagName('body')[0].appendChild(container);
   });
   after(function(){
-    let container = document.getElementById("react");
     document.getElementsByTagName('body')[0].removeChild(container);
   });
   it("should render text nodes.", co.wrap(function *(){
@@ -30,10 +30,9 @@ describe("Variant", function() {
       }
     });
     yield new Promise(function(resolve, reject){
-      React.render(<App />, document.getElementById("react"), resolve);
+      React.render(<App />, container, resolve);
     });
-    let element = document.getElementById('react');
-    assert.notEqual(element.innerHTML.indexOf(variantTextA), null);
+    assert.notEqual(container.innerHTML.indexOf(variantTextA), null);
   }));
   it("should render components.", co.wrap(function *(){
     let experimentName = UUID.v4();
@@ -46,12 +45,13 @@ describe("Variant", function() {
       }
     });
     yield new Promise(function(resolve, reject){
-      React.render(<App />, document.getElementById("react"), resolve);
+      React.render(<App />, container, resolve);
     });
     let elementA = document.getElementById('variant-a');
     let elementB = document.getElementById('variant-b');
     assert.notEqual(elementA, null);
     assert.equal(elementB, null);
+    React.unmountComponentAtNode(container);
   }));
   it("should render arrays of components.", co.wrap(function *(){
     let experimentName = UUID.v4();
@@ -70,12 +70,13 @@ describe("Variant", function() {
       }
     });
     yield new Promise(function(resolve, reject){
-      React.render(<App />, document.getElementById("react"), resolve);
+      React.render(<App />, container, resolve);
     });
     let elementA = document.getElementById('variant-a');
     let elementB = document.getElementById('variant-b');
     assert.notEqual(elementA, null);
     assert.equal(elementB, null);
+    React.unmountComponentAtNode(container);
   }));
 });
 

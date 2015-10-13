@@ -45,7 +45,7 @@ export default React.createClass({
         warning(true, 'Experiment “' + this.props.name + '” does not contain variant “' + value + '”');
       }
     }
-    emitter.incrementActiveExperiments(this.props.name);
+    emitter._incrementActiveExperiments(this.props.name);
     emitter.setExperimentValue(this.props.name, value);
     emitter.emit('play', this.props.name, value);
     this.setState({
@@ -58,7 +58,7 @@ export default React.createClass({
     });
   },
   componentWillUnmount(){
-    emitter.decrementActiveExperiments(this.props.name);
+    emitter._decrementActiveExperiments(this.props.name);
     this.valueSubscription.remove();
   },
   render(){

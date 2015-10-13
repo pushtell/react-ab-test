@@ -10,13 +10,13 @@ import ES6Promise from 'es6-promise';
 ES6Promise.polyfill();
 
 describe("Emitter", function() {
+  let container;
   before(function(){
-    let container = document.createElement("div");
+    container = document.createElement("div");
     container.id = "react";
     document.getElementsByTagName('body')[0].appendChild(container);
   });
   after(function(){
-    let container = document.getElementById("react");
     document.getElementsByTagName('body')[0].removeChild(container);
   });
   it("should throw an error when passed an invalid name argument.", function (){
@@ -45,13 +45,14 @@ describe("Emitter", function() {
       }
     });
     yield new Promise(function(resolve, reject){
-      React.render(<App />, document.getElementById("react"), resolve);
+      React.render(<App />, container, resolve);
     });
     assert.equal(playedVariantName, "A");
     assert.equal(experimentNameGlobal, experimentName);
     assert.equal(playedVariantNameGlobal, "A");
     playSubscription.remove();
     playSubscriptionGlobal.remove();
+    React.unmountComponentAtNode(container);
   }));
   it("should emit when a variant wins.", co.wrap(function *(){
     let experimentName = UUID.v4();
@@ -76,7 +77,7 @@ describe("Emitter", function() {
       }
     });
     yield new Promise(function(resolve, reject){
-      React.render(<App />, document.getElementById("react"), resolve);
+      React.render(<App />, container, resolve);
     });
     emitter.emitWin(experimentName);
     assert.equal(winningVariantName, "A");
@@ -84,6 +85,7 @@ describe("Emitter", function() {
     assert.equal(winningVariantNameGlobal, "A");
     winSubscription.remove();
     winSubscriptionGlobal.remove();
+    React.unmountComponentAtNode(container);
   }));
   it("should emit when a variant is clicked.", co.wrap(function *(){
     let experimentName = UUID.v4();
@@ -111,7 +113,7 @@ describe("Emitter", function() {
       }
     });
     yield new Promise(function(resolve, reject){
-      React.render(<App />, document.getElementById("react"), resolve);
+      React.render(<App />, container, resolve);
     });
     let elementA = document.getElementById('variant-a');
     mouse.click(elementA);
@@ -120,6 +122,7 @@ describe("Emitter", function() {
     assert.equal(winningVariantNameGlobal, "A");
     winSubscription.remove();
     winSubscriptionGlobal.remove();
+    React.unmountComponentAtNode(container);
   }));
   it("should emit when variants are added.", co.wrap(function *(){
     let experimentName = UUID.v4();
@@ -140,12 +143,13 @@ describe("Emitter", function() {
       }
     });
     yield new Promise(function(resolve, reject){
-      React.render(<App />, document.getElementById("react"), resolve);
+      React.render(<App />, container, resolve);
     });
     assert.deepEqual(variants, ["A", "B"]);
     variantSubscription.remove();
     assert.deepEqual(variantsGlobal, ["A", "B"]);
     variantSubscriptionGlobal.remove();
+    React.unmountComponentAtNode(container);
   }));
   it("should emit when a variant is chosen.", co.wrap(function *(){
     let experimentName = UUID.v4();
@@ -170,13 +174,14 @@ describe("Emitter", function() {
       }
     });
     yield new Promise(function(resolve, reject){
-      React.render(<App />, document.getElementById("react"), resolve);
+      React.render(<App />, container, resolve);
     });
     assert.equal(valueName, "A");
     assert.equal(experimentNameGlobal, experimentName);
     assert.equal(valueNameGlobal, "A");
     valueSubscription.remove();
     valueSubscriptionGlobal.remove();
+    React.unmountComponentAtNode(container);
   }));
   it("should get the experiment value.", co.wrap(function *(){
     let experimentName = UUID.v4();
@@ -189,9 +194,10 @@ describe("Emitter", function() {
       }
     });
     yield new Promise(function(resolve, reject){
-      React.render(<App />, document.getElementById("react"), resolve);
+      React.render(<App />, container, resolve);
     });
     assert.equal(emitter.getExperimentValue(experimentName), "A");
+    React.unmountComponentAtNode(container);
   }));
   it("should update the rendered component.", co.wrap(function *(){
     let experimentName = UUID.v4();
@@ -204,7 +210,7 @@ describe("Emitter", function() {
       }
     });
     yield new Promise(function(resolve, reject){
-      React.render(<App />, document.getElementById("react"), resolve);
+      React.render(<App />, container, resolve);
     });
     let elementA = document.getElementById('variant-a');
     let elementB = document.getElementById('variant-b');
@@ -215,6 +221,69 @@ describe("Emitter", function() {
     elementB = document.getElementById('variant-b');
     assert.equal(elementA, null);
     assert.notEqual(elementB, null);
+    React.unmountComponentAtNode(container);
+  }));
+  it("should report active components.", co.wrap(function *(){
+    let experimentNameA = UUID.v4();
+    let experimentNameB = UUID.v4();
+    let AppA = React.createClass({
+      render: function(){
+        return <Experiment name={experimentNameA} value="A">
+          <Variant name="A"><div id="variant-a" /></Variant>
+          <Variant name="B"><div id="variant-b" /></Variant>
+        </Experiment>;
+      }
+    });
+    let AppB = React.createClass({
+      render: function(){
+        return <Experiment name={experimentNameB} value="C">
+          <Variant name="C"><div id="variant-c" /></Variant>
+          <Variant name="D"><div id="variant-d" /></Variant>
+        </Experiment>;
+      }
+    });
+    let AppCombined = React.createClass({
+      render: function(){
+        return <div>
+          <AppA />
+          <AppB />
+        </div>;
+      }
+    });
+    yield new Promise(function(resolve, reject){
+      React.render(<AppA />, container, resolve);
+    });
+    let activeExperiments = {};
+    activeExperiments[experimentNameA] = {
+      "A": true,
+      "B": false
+    };
+    assert.deepEqual(emitter.getActiveExperiments(), activeExperiments);
+    React.unmountComponentAtNode(container);
+    yield new Promise(function(resolve, reject){
+      React.render(<AppB />, container, resolve);
+    });
+    activeExperiments = {};
+    activeExperiments[experimentNameB] = {
+      "C": true,
+      "D": false
+    };
+    assert.deepEqual(emitter.getActiveExperiments(), activeExperiments);
+    React.unmountComponentAtNode(container);
+    yield new Promise(function(resolve, reject){
+      React.render(<AppCombined />, container, resolve);
+    });
+    activeExperiments = {};
+    activeExperiments[experimentNameA] = {
+      "A": true,
+      "B": false
+    };
+    activeExperiments[experimentNameB] = {
+      "C": true,
+      "D": false
+    };
+    assert.deepEqual(emitter.getActiveExperiments(), activeExperiments);
+    React.unmountComponentAtNode(container);
   }));
 });
 
