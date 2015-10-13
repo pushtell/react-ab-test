@@ -27,6 +27,9 @@ module.exports = {
       }, {
         test: require.resolve("./lib/emitter"),
         loader: "expose?emitter"
+      }, {
+        test: require.resolve("./lib/debugger"),
+        loader: "expose?experimentDebugger"
       }
     ],
     postLoaders: [

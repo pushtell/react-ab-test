@@ -50,7 +50,6 @@ emitter.addPlayListener(function(experimentName, variantName){
     - [`emitter.setExperimentValue(experimentName, variantName [, emit])`](#emittersetexperimentvalueexperimentname-variantname--emit)
     - [`emitter.getExperimentValue(experimentName)`](#emittergetexperimentvalueexperimentname)
   - [`experimentDebugger`](#experimentdebugger)
-    - [Usage](#usage-1)
     - [`experimentDebugger.enable()`](#experimentdebuggerenable)
     - [`experimentDebugger.disable()`](#experimentdebuggerdisable)
   - [`Subscription`](#subscription)
@@ -189,54 +188,9 @@ Try it [on JSFiddle](http://jsfiddle.net/pushtell/vs9kkxLd/)
 var Experiment = require("react-ab-test").Experiment;
 var Variant = require("react-ab-test").Variant;
 var emitter = require("react-ab-test").emitter;
+var experimentDebugger = require("react-ab-test").experimentDebugger;
 
-var VariantSelector = React.createClass({
-  propTypes: {
-    name: React.PropTypes.string.isRequired
-  },
-  getInitialState: function(){
-    return {
-      value: null,
-      variants: []
-    }
-  },
-  addVariant: function(experimentName, variantName) {
-    var variants = this.state.variants;
-    variants.push(variantName);
-    this.setState({
-      variants: variants
-    });
-  },
-  componentWillMount: function(){
-    this.setState({
-      variants: emitter.getSortedVariants(this.props.name)
-    });
-    this.variantSubscription = emitter.addVariantListener(this.props.name, this.addVariant);
-  },
-  componentWillUnmount: function(){
-    this.variantSubscription.remove();
-  },
-  changeVariant: function(variantName, e) {
-    emitter.setExperimentValue(this.props.name, variantName);
-  },
-  render: function(){
-    return <div>
-      {this.state.variants.map(variantName => {
-        return <div className="radio" key={variantName}>
-          <label>
-            <input
-              type="radio"
-              name="variant"
-              value={variantName}
-              onClick={this.changeVariant.bind(this, variantName)}
-              defaultChecked={this.state.value === variantName} />
-            Variant {variantName}
-          </label>
-        </div>
-      })}
-    </div>;
-  }
-});
+experimentDebugger.enable();
 
 var App = React.createClass({
   onButtonClick: function(e){
@@ -253,7 +207,6 @@ var App = React.createClass({
         </Variant>
       </Experiment>
       <button onClick={this.onButtonClick}>Emit a win</button>
-      <VariantSelector name="My Example" />
     </div>;
   }
 });
@@ -451,35 +404,6 @@ Returns the variant name currently displayed by the experiment.
 Debugging tool. Attaches a fixed-position panel to the bottom of the `&lt;body&gt;` element that displays active experiments and enables the user to change active variants in real-time.
 
 The debugger is wrapped in a conditional `if(process.env.NODE_ENV === "production") {...}` and will not display on production builds using [envify](https://github.com/hughsk/envify).
-
-#### Usage
-
-Try it [on JSFiddle](http://jsfiddle.net/pushtell/c83she39/)
-
-```js
-
-var Experiment = require("react-ab-test").Experiment;
-var Variant = require("react-ab-test").Variant;
-var experimentDebugger = require("react-ab-test").experimentDebugger;
-
-experimentDebugger.enable();
-
-var App = React.createClass({
-  render: function(){
-    return <div>
-      <Experiment ref="experiment" name="My Example">
-        <Variant name="A">
-          <div>Section A</div>
-        </Variant>
-        <Variant name="B">
-          <div>Section B</div>
-        </Variant>
-      </Experiment>
-    </div>;
-  }
-});
-
-```
 
 #### `experimentDebugger.enable()`
 
