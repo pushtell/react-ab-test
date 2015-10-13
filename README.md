@@ -405,7 +405,8 @@ Debugging tool. Attaches a fixed-position panel to the bottom of the `<body>` el
 
 The debugger is wrapped in a conditional `if(process.env.NODE_ENV === "production") {...}` and will not display on production builds using [envify](https://github.com/hughsk/envify).
 
-![Debugger](https://cdn.rawgit.com/pushtell/react-ab-test/master/documentation-images/debugger.gif)
+
+<img src="https://cdn.rawgit.com/pushtell/react-ab-test/master/documentation-images/debugger.gif" width="300" height="300" />
 
 #### `experimentDebugger.enable()`
 
