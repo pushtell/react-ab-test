@@ -1,9 +1,8 @@
 import React from 'react';
-//import {Experiment, Variant, experimentDebugger} from '../index.js';
-import Experiment from "../src/LocalStorageExperiment";
-import Variant from "../src/Variant";
-import experimentDebugger from "../src/debugger";
-
+import {Experiment, Variant, experimentDebugger} from '../index.js';
+//import Experiment from "../src/LocalStorageExperiment";
+//import Variant from "../src/Variant";
+//import experimentDebugger from "../src/debugger";
 
 experimentDebugger.enable();
 
