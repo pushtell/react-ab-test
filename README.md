@@ -181,7 +181,10 @@ emitter.addWinListener(function(experimentName, variantName){
 
 ### Debugging
 
+<img src="https://cdn.rawgit.com/pushtell/react-ab-test/master/documentation-images/debugger-animated.gif" width="300" height="300" />
+
 Try it [on JSFiddle](http://jsfiddle.net/pushtell/vs9kkxLd/)
+
 
 ```js
 
@@ -389,7 +392,6 @@ Returns the variant name currently displayed by the experiment.
 Debugging tool. Attaches a fixed-position panel to the bottom of the `<body>` element that displays active experiments and enables the user to change active variants in real-time.
 
 The debugger is wrapped in a conditional `if(process.env.NODE_ENV === "production") {...}` and will not display on production builds using [envify](https://github.com/hughsk/envify).
-
 
 <img src="https://cdn.rawgit.com/pushtell/react-ab-test/master/documentation-images/debugger-animated.gif" width="300" height="300" />
 
