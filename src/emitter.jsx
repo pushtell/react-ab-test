@@ -105,11 +105,9 @@ class PushtellEventEmitter extends EventEmitter {
   getExperimentValue(experimentName){
     return values[experimentName];
   }
-  setExperimentValue(experimentName, variantName, emit){
+  setExperimentValue(experimentName, variantName, passthrough){
     values[experimentName] = variantName;
-    if(emit !== false) {
-      this.emit("value", experimentName, variantName);
-    }
+    this.emit("value", experimentName, variantName, passthrough);
   }
   addExperimentVariant(experimentName, variantName){
     experiments[experimentName] = experiments[experimentName] || {};

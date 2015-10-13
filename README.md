@@ -47,7 +47,7 @@ emitter.addPlayListener(function(experimentName, variantName){
     - [`emitter.addPlayListener([experimentName, ] callback)`](#emitteraddplaylistenerexperimentname--callback)
     - [`emitter.addWinListener([experimentName, ] callback)`](#emitteraddwinlistenerexperimentname--callback)
     - [`emitter.addExperimentVariants(experimentName, variantNames)`](#emitteraddexperimentvariantsexperimentname-variantnames)
-    - [`emitter.setExperimentValue(experimentName, variantName [, emit])`](#emittersetexperimentvalueexperimentname-variantname--emit)
+    - [`emitter.setExperimentValue(experimentName, variantName)`](#emittersetexperimentvalueexperimentname-variantname)
     - [`emitter.getExperimentValue(experimentName)`](#emittergetexperimentvalueexperimentname)
   - [`experimentDebugger`](#experimentdebugger)
     - [`experimentDebugger.enable()`](#experimentdebuggerenable)
@@ -356,7 +356,7 @@ Define experiment variant names. Required when an experiment [spans multiple com
     * **Type:** `Array.<string>`
     * **Example:** `["A", "B", "C"]`
 
-#### `emitter.setExperimentValue(experimentName, variantName [, emit])`
+#### `emitter.setExperimentValue(experimentName, variantName)`
 
 Set the active variant of an experiment.
 
@@ -370,11 +370,6 @@ Set the active variant of an experiment.
     * **Required**
     * **Type:** `string`
     * **Example:** `"A"`
-  * `emit` - Emit a value event to [attached listeners](#emitteraddvaluelistenerexperimentname--callback)
-    * **Optional**
-    * **Type:** `boolean`
-    * **Default:** `true`
-    * **Example:** `false`
 
 #### `emitter.getExperimentValue(experimentName)`
 
