@@ -3,6 +3,8 @@ import warning from "react/lib/warning";
 import emitter from "./emitter";
 import Variant from "./Variant";
 
+const playedExperiments = {};
+
 export default React.createClass({
   displayName: "Pushtell.Experiment",
   propTypes: {
@@ -47,7 +49,10 @@ export default React.createClass({
     }
     emitter._incrementActiveExperiments(this.props.name);
     emitter.setExperimentValue(this.props.name, value);
-    emitter.emit('play', this.props.name, value);
+    if(!playedExperiments[this.props.name]) {
+      emitter.emit('play', this.props.name, value);
+      playedExperiments[this.props.name] = true;
+    }
     this.setState({
       value: value
     });
