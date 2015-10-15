@@ -221,6 +221,8 @@ Please [let us know](https://github.com/pushtell/react-ab-test/issues/new) about
 ## Resources for A/B Testing with React
 
 * [Roll Your Own A/B Tests With Optimizely and React](http://engineering.tilt.com/roll-your-own-ab-tests-with-optimizely-and-react/) on the [Tilt Engineering Blog](http://engineering.tilt.com/)
+* [Simple Sequential A/B Testing](http://www.evanmiller.org/sequential-ab-testing.html)
+* [A/B Testing Rigorously (without losing your job)](http://elem.com/~btilly/ab-testing-multiple-looks/part1-rigorous.html)
 
 Please [let us know](https://github.com/pushtell/react-ab-test/issues/new) about React A/B testing resources not included here.
 

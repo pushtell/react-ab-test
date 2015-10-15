@@ -5,7 +5,7 @@ import emitter from "../src/emitter.jsx";
 import assert from "assert";
 import co from "co";
 import UUID from "node-uuid";
-import {mouse} from 'effroi/src/effroi';
+import TestUtils from 'react/lib/ReactTestUtils'
 import ES6Promise from 'es6-promise';
 ES6Promise.polyfill();
 
@@ -198,7 +198,7 @@ describe("LocalStorage", function() {
       React.render(<App />, container, resolve);
     });
     let elementA = document.getElementById('variant-a');
-    mouse.click(elementA);
+    TestUtils.Simulate.click(elementA);
     assert.equal(winningVariantName, "A");
     assert.equal(experimentNameGlobal, experimentName);
     assert.equal(winningVariantNameGlobal, "A");

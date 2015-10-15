@@ -95,17 +95,16 @@ module.exports = function (karma) {
       },
       devtool: 'inline-source-map',
       module: {
-        preLoaders: [
+        loaders: [
           {
-            exclude: /(node_modules|lib)/,
+            exclude: /(node_modules|lib|example)/,
             loader: 'babel-loader',
             test: /\.jsx?$/
           }, {
-            exclude: /(node_modules|lib)/,
+            exclude: /(node_modules|lib|example)/,
             loader: 'regenerator-loader',
-            test: /\.jsx$/
-          },
-          {
+            test: /\.jsx?$/
+          }, {
             include: path.resolve('src'),
             loader: 'isparta',
             test: /\.jsx?$/

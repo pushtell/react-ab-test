@@ -125,8 +125,8 @@ if(process.env.NODE_ENV === "production" || !canUseDOM) {
               <div className="pushtell-experiment-name">{experimentName}</div>
               <ul>
                 {variantNames.map(variantName => {
-                  return <li key={variantName}>
-                    <label onClick={this.setExperimentValue.bind(this, experimentName, variantName)} className={this.state.experiments[experimentName][variantName] ? "active" : null}>
+                  return <li key={variantName} onClick={this.setExperimentValue.bind(this, experimentName, variantName)}>
+                    <label className={this.state.experiments[experimentName][variantName] ? "active" : null}>
                       <input type="radio" name={experimentName} value={variantName} defaultChecked={this.state.experiments[experimentName][variantName]} />
                       {variantName}
                     </label>

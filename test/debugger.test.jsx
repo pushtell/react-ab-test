@@ -5,7 +5,7 @@ import experimentDebugger from "../src/debugger.jsx";
 import assert from "assert";
 import co from "co";
 import UUID from "node-uuid";
-import {mouse} from 'effroi/src/effroi';
+import TestUtils from 'react/lib/ReactTestUtils';
 import ES6Promise from 'es6-promise';
 ES6Promise.polyfill();
 
@@ -85,12 +85,12 @@ describe("Debugger", function() {
     let elementB = document.getElementById('variant-b');
     assert.notEqual(elementA, null);
     assert.equal(elementB, null);
-    let handle = document.querySelector("#pushtell-debugger .pushtell-handle");
-    mouse.click(handle);
+    let handle = document.querySelector("#pushtell-debugger div.pushtell-handle");
+    TestUtils.Simulate.click(handle);
     let radio_button_a = document.querySelector("#pushtell-debugger input[value='A']");
     let radio_button_b = document.querySelector("#pushtell-debugger input[value='B']");
     assert.equal(radio_button_a.checked, true);
-    mouse.click(radio_button_b);
+    TestUtils.Simulate.click(radio_button_b);
     elementA = document.getElementById('variant-a');
     elementB = document.getElementById('variant-b');
     assert.equal(elementA, null);
