@@ -101,14 +101,10 @@ if(process.env.NODE_ENV === "production" || !canUseDOM) {
       emitter.setExperimentValue(experimentName, variantName);
     },
     componentWillMount(){
-      this.variantSubscription = emitter.addVariantListener(this.updateExperiments);
-      this.valueSubscription = emitter.addValueListener(this.updateExperiments);
       this.activeSubscription = emitter.addListener("active", this.updateExperiments);
       this.inactiveSubscription = emitter.addListener("inactive", this.updateExperiments);
     },
     componentWillUnmount(){
-      this.variantSubscription.remove();
-      this.valueSubscription.remove();
       this.activeSubscription.remove();
       this.inactiveSubscription.remove();
     },
@@ -126,8 +122,8 @@ if(process.env.NODE_ENV === "production" || !canUseDOM) {
               <div className="pushtell-experiment-name">{experimentName}</div>
               <ul>
                 {variantNames.map(variantName => {
-                  return <li key={variantName} onClick={this.setExperimentValue.bind(this, experimentName, variantName)}>
-                    <label className={this.state.experiments[experimentName][variantName] ? "active" : null}>
+                  return <li key={variantName}>
+                    <label className={this.state.experiments[experimentName][variantName] ? "active" : null} onClick={this.setExperimentValue.bind(this, experimentName, variantName)}>
                       <input type="radio" name={experimentName} value={variantName} defaultChecked={this.state.experiments[experimentName][variantName]} />
                       {variantName}
                     </label>

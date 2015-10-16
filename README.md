@@ -32,10 +32,12 @@ emitter.addPlayListener(function(experimentName, variantName){
 <h1>Table of Contents</h1>
 
 - [Installation](#installation)
+  - [`react` and `react-dom` Peer Dependencies](#react-and-react-dom-peer-dependencies)
 - [Usage](#usage)
   - [Standalone Component](#standalone-component)
   - [Coordinate Multiple Components](#coordinate-multiple-components)
   - [Debugging](#debugging)
+  - [With Babel](#with-babel)
 - [Alternative Libraries](#alternative-libraries)
 - [Resources for A/B Testing with React](#resources-for-ab-testing-with-react)
 - [API Reference](#api-reference)
@@ -67,6 +69,14 @@ emitter.addPlayListener(function(experimentName, variantName){
 npm install react-ab-test
 ```
 
+### `react` and `react-dom` Peer Dependencies
+
+If not already present in your project, install the `react` and `react-dom` peer dependencies.
+
+```bash
+npm install react react-dom
+```
+
 ## Usage
 
 ### Standalone Component
@@ -75,9 +85,9 @@ Try it [on JSFiddle](https://jsfiddle.net/pushtell/m14qvy7r/)
 
 ```js
 
-var Experiment = require("react-ab-test").Experiment;
-var Variant = require("react-ab-test").Variant;
-var emitter = require("react-ab-test").emitter;
+var Experiment = require("react-ab-test/lib/Experiment");
+var Variant = require("react-ab-test/lib/Variant");
+var emitter = require("react-ab-test/lib/emitter");
 
 var App = React.createClass({
   onButtonClick: function(e){
@@ -116,9 +126,9 @@ Try it [on JSFiddle](http://jsfiddle.net/pushtell/pcutps9q/)
 
 ```js
 
-var Experiment = require("react-ab-test").Experiment;
-var Variant = require("react-ab-test").Variant;
-var emitter = require("react-ab-test").emitter;
+var Experiment = require("react-ab-test/lib/Experiment");
+var Variant = require("react-ab-test/lib/Variant");
+var emitter = require("react-ab-test/lib/emitter");
 
 // Define variants in advance.
 emitter.addExperimentVariants("My Example", ["A", "B", "C"]);
@@ -192,9 +202,9 @@ Try it [on JSFiddle](http://jsfiddle.net/pushtell/vs9kkxLd/)
 
 ```js
 
-var Experiment = require("react-ab-test").Experiment;
-var Variant = require("react-ab-test").Variant;
-var experimentDebugger = require("react-ab-test").experimentDebugger;
+var Experiment = require("react-ab-test/lib/Experiment");
+var Variant = require("react-ab-test/lib/Variant");
+var experimentDebugger = require("react-ab-test/lib/debugger");
 
 experimentDebugger.enable();
 
@@ -214,6 +224,10 @@ var App = React.createClass({
 });
 
 ```
+
+### With Babel
+
+Code from the [`./src`](https://github.com/pushtell/react-ab-test/tree/master/src) directory is written in [JSX](https://facebook.github.io/jsx/) and transpiled into the [`./lib`](https://github.com/pushtell/react-ab-test/tree/master/lib) using [Babel](https://babeljs.io/). If your project uses Babel you may want to include these files directly.
 
 ## Alternative Libraries
 
@@ -429,9 +443,10 @@ Removes the listener subscription and prevents future callbacks.
 * IE 11, Windows 7
 * Opera (latest version), Windows 7
 * Firefox (latest version), Windows 7
+* Chrome (latest version), Windows 7
 * Safari (latest version), OSX Yosemite
-* Android Browser, Google Nexus 7, Android 4.1
-* Safari, iPhone 6, iOS 8.3
+* Android Browser (latest version), Google Nexus 7, Android 4.1
+* Mobile Safari (latest version), iPhone 6, iOS 8.3
 
 Please [let us know](https://github.com/pushtell/react-ab-test/issues/new) if a different browser configuration should be included here.
 

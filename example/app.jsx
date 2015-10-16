@@ -1,8 +1,9 @@
 import React from 'react';
-import {Experiment, Variant, experimentDebugger} from '../index.js';
-//import Experiment from "../src/LocalStorageExperiment";
-//import Variant from "../src/Variant";
-//import experimentDebugger from "../src/debugger";
+import ReactDOM from 'react-dom';
+
+import Experiment from "../lib/Experiment";
+import Variant from "../lib/Variant";
+import experimentDebugger from "../lib/debugger";
 
 experimentDebugger.enable();
 
@@ -31,6 +32,6 @@ const App = React.createClass({
   }
 });
 
-React.render(<App/>, document.getElementById('react'));
+ReactDOM.render(<App/>, document.getElementById('react'));
 
 

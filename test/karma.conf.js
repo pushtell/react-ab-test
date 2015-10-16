@@ -59,6 +59,13 @@ module.exports = function (karma) {
         browser: 'firefox',
         browser_version : 'latest'
       },
+      bs_windows_7_chrome_latest: {
+        base: 'BrowserStack',
+        os: 'Windows',
+        os_version: '7',
+        browser: 'chrome',
+        browser_version : 'latest'
+      },
       bs_osx_yosemite_safari: {
         base: 'BrowserStack',
         os: 'OS X',

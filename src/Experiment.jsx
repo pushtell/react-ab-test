@@ -1,72 +1,63 @@
-import React from 'react';
-import warning from 'fbjs/lib/warning';
+import React from "react";
+import CoreExperiment from "./CoreExperiment";
 import emitter from "./emitter";
-import Variant from "./Variant";
 
-const playedExperiments = {};
+let store;
+
+let noopStore = {
+  getItem: function(){},
+  setItem: function(){}
+};
+
+if(typeof window !== 'undefined' && 'localStorage' in window && window['localStorage'] !== null) {
+  try {
+    let key = '__pushtell_react__';
+    window.localStorage.setItem(key, key);
+    if (window.localStorage.getItem(key) !== key) {
+      store = noopStore;
+    } else {
+      window.localStorage.removeItem(key);
+      store = window.localStorage;
+    }
+  } catch(e) {
+    store = noopStore;
+  }
+} else {
+  store = noopStore;
+}
+
+emitter.addValueListener(function(experimentName, variantName, skipSave){
+  if(skipSave) {
+    return;
+  }
+  store.setItem('PUSHTELL-' + experimentName, variantName);
+});
 
 export default React.createClass({
   displayName: "Pushtell.Experiment",
   propTypes: {
     name: React.PropTypes.string.isRequired,
-    value: React.PropTypes.oneOfType([
-      React.PropTypes.string,
-      React.PropTypes.func
-    ]).isRequired
+    defaultValue: React.PropTypes.string
   },
   win(){
     emitter.emitWin(this.props.name);
   },
-  getInitialState(){
-    let children = {};
-    React.Children.forEach(this.props.children, element => {
-      if(!React.isValidElement(element) || element.type.displayName !== "Pushtell.Variant"){
-        let error = new Error("Pushtell Experiment children must be Pushtell Variant components.");
-        error.type = "PUSHTELL_INVALID_CHILD";
-        throw error;
-      }
-      children[element.props.name] = element;
-      emitter.addExperimentVariant(this.props.name, element.props.name);
-    });
-    return {
-      variants: children
-    };
-  },
-  componentWillReceiveProps(nextProps) {
-    if(nextProps.value !== this.props.value) {
-      let value = typeof nextProps.value === "function" ? nextProps.value() : nextProps.value;
-      this.setState({
-        value: value
-      });
+  getLocalStorageValue() {
+    let storedValue = store.getItem('PUSHTELL-' + this.props.name);
+    if(typeof storedValue === "string") {
+      emitter.setExperimentValue(this.props.name, storedValue, true);
+      return storedValue;
     }
-  },
-  componentWillMount(){
-    let value = typeof this.props.value === "function" ? this.props.value() : this.props.value;
-    if(!this.state.variants[value]) {
-      if ("production" !== process.env.NODE_ENV) {
-        warning(true, 'Experiment “' + this.props.name + '” does not contain variant “' + value + '”');
-      }
+    if(typeof this.props.defaultValue === 'string') {
+      emitter.setExperimentValue(this.props.name, this.props.defaultValue);
+      return this.props.defaultValue;
     }
-    emitter._incrementActiveExperiments(this.props.name);
-    emitter.setExperimentValue(this.props.name, value);
-    if(!playedExperiments[this.props.name]) {
-      emitter.emit('play', this.props.name, value);
-      playedExperiments[this.props.name] = true;
-    }
-    this.setState({
-      value: value
-    });
-    this.valueSubscription = emitter.addValueListener(this.props.name, (experimentName, variantName) => {
-      this.setState({
-        value: variantName
-      });
-    });
+    let variants = emitter.getSortedVariants(this.props.name);
+    let randomValue = variants[Math.floor(Math.random() * variants.length)];
+    emitter.setExperimentValue(this.props.name, randomValue);
+    return randomValue;
   },
-  componentWillUnmount(){
-    emitter._decrementActiveExperiments(this.props.name);
-    this.valueSubscription.remove();
-  },
-  render(){
-    return this.state.variants[this.state.value] || null;
+  render() {
+    return <CoreExperiment {...this.props} value={this.getLocalStorageValue} />;
   }
 });

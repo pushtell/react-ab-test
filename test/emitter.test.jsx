@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import Experiment from "../src/Experiment.jsx";
+import Experiment from "../src/CoreExperiment.jsx";
 import Variant from "../src/Variant.jsx";
 import emitter from "../src/emitter.jsx";
 import assert from "assert";
