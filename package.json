@@ -2,7 +2,7 @@
   "name": "react-ab-test",
   "keywords": ["react", "react-component", "testing", "test", "A/B", "ab", "A/B testing", "A/B test"],
   "main": "index.js",
-  "version": "1.1.1",
+  "version": "1.1.3",
   "description": "A/B testing React components and debug tools. Simple, universal interface. Well documented, lightweight, and tested in popular browsers.",
   "directories": {
     "test": "test"
@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "fbemitter": "^2.0.0",
-    "fbjs": "^0.3.1"
+    "fbjs": "^0.4.0"
   },
   "devDependencies": {
     "react": "^0.14.0",
