@@ -4,6 +4,7 @@
 [![Circle CI](https://circleci.com/gh/pushtell/react-ab-test.svg?style=shield)](https://circleci.com/gh/pushtell/react-ab-test)
 [![Coverage Status](https://coveralls.io/repos/pushtell/react-ab-test/badge.svg?branch=master&service=github)](https://coveralls.io/github/pushtell/react-ab-test?branch=master)
 [![Dependency Status](https://david-dm.org/pushtell/react-ab-test.svg)](https://david-dm.org/pushtell/react-ab-test)
+[![NPM Downloads](https://img.shields.io/npm/dm/react-ab-test.svg?style=flat)](https://www.npmjs.com/package/react-ab-test)
 
 Wrap components in [`<Variant />`](#variant-) and nest in [`<Experiment />`](#experiment-). A variant is chosen randomly and saved to local storage.
 
