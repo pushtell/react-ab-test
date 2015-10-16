@@ -194,7 +194,17 @@ emitter.addWinListener(function(experimentName, variantName){
 
 ### Debugging
 
-<img src="https://cdn.rawgit.com/pushtell/react-ab-test/master/documentation-images/debugger-animated-2.gif" width="325" height="325" />
+<table>
+  <tr>
+    <td>
+      <img src="https://cdn.rawgit.com/pushtell/react-ab-test/master/documentation-images/debugger-animated-2.gif" width="325" height="325" />
+    </td>
+    <td>
+      <p>The <a href="#experimentdebugger">debugger</a> attaches a fixed-position panel to the bottom of the <code>&lt;body&gt;</code> element that displays mounted experiments and enables the user to change active variants in real-time.</p>
+      <p>The debugger is wrapped in a conditional <code>if(process.env.NODE_ENV === "production") {...}</code> and will not display on production builds using <a href="https://github.com/hughsk/envify">envify</a>.</p>
+    </td>
+  </tr>
+</table>
 
 Try it [on JSFiddle](http://jsfiddle.net/pushtell/vs9kkxLd/)
 
@@ -226,7 +236,7 @@ var App = React.createClass({
 
 ### With Babel
 
-Code from the [`./src`](https://github.com/pushtell/react-ab-test/tree/master/src) directory is written in [JSX](https://facebook.github.io/jsx/) and transpiled into the [`./lib`](https://github.com/pushtell/react-ab-test/tree/master/lib) using [Babel](https://babeljs.io/). If your project uses Babel you may want to include these files directly.
+Code from the [`./src`](https://github.com/pushtell/react-ab-test/tree/master/src) directory is written in [JSX](https://facebook.github.io/jsx/) and transpiled into the [`./lib`](https://github.com/pushtell/react-ab-test/tree/master/lib) directory using [Babel](https://babeljs.io/). If your project uses Babel you may want to include files from [`./src`](https://github.com/pushtell/react-ab-test/tree/master/src) directly.
 
 ## Alternative Libraries
 
@@ -384,7 +394,7 @@ Returns the variant name currently displayed by the experiment.
 
 ### `experimentDebugger`
 
-Debugging tool. Attaches a fixed-position panel to the bottom of the `<body>` element that displays active experiments and enables the user to change active variants in real-time.
+Debugging tool. Attaches a fixed-position panel to the bottom of the `<body>` element that displays mounted experiments and enables the user to change active variants in real-time.
 
 The debugger is wrapped in a conditional `if(process.env.NODE_ENV === "production") {...}` and will not display on production builds using [envify](https://github.com/hughsk/envify).
 
