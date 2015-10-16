@@ -1,8 +1,18 @@
 import React from 'react';
-import ReactDOM from "react-dom";
 import emitter from "./emitter";
 import {canUseDOM} from 'fbjs/lib/ExecutionEnvironment';
 import assign from 'react/lib/Object.assign';
+
+let render, unmountComponentAtNode;
+
+try {
+  let ReactDOM = require("react-dom");
+  render = ReactDOM.render;
+  unmountComponentAtNode = ReactDOM.unmountComponentAtNode;
+} catch(e) {
+  render = React.render;
+  unmountComponentAtNode = React.unmountComponentAtNode;
+}
 
 if(process.env.NODE_ENV === "production" || !canUseDOM) {
   module.exports = {
