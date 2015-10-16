@@ -119,10 +119,9 @@ describe("Experiment", function() {
     }
     throw new Error("New variant was added after variant was selected.");
   }));
-  it("should not error if variants are added to a experiment after a variant was selected if variants were declared.", co.wrap(function *(){
-
+  it("should not error if variants are added to a experiment after a variant was selected if variants were defined.", co.wrap(function *(){
     let experimentName = UUID.v4();
-    emitter.addExperimentVariants(experimentName, ["A", "B", "C", "D"]);
+    emitter.defineExperimentVariants(experimentName, ["A", "B", "C", "D"]);
     let AppPart1 = React.createClass({
       onClickVariant: function(e){
         this.refs.experiment.win();
@@ -153,6 +152,48 @@ describe("Experiment", function() {
       ReactDOM.render(<AppPart2 />, container, resolve);
     });
     ReactDOM.unmountComponentAtNode(container);
+  }));
+  it("should error if a variant is added to an experiment after variants were defined.", co.wrap(function *(){
+    let experimentName = UUID.v4();
+    emitter.defineExperimentVariants(experimentName, ["A", "B", "C"]);
+    let AppPart1 = React.createClass({
+      onClickVariant: function(e){
+        this.refs.experiment.win();
+      },
+      render: function(){
+        return <Experiment ref="experiment" name={experimentName}>
+          <Variant name="A"><a id="variant-a" href="#A">A</a></Variant>
+          <Variant name="B"><a id="variant-b" href="#B">B</a></Variant>
+        </Experiment>;
+      }
+    });
+    let AppPart2 = React.createClass({
+      onClickVariant: function(e){
+        this.refs.experiment.win();
+      },
+      render: function(){
+        return <Experiment ref="experiment" name={experimentName}>
+          <Variant name="C"><a id="variant-c" href="#C">C</a></Variant>
+          <Variant name="D"><a id="variant-d" href="#D">D</a></Variant>
+        </Experiment>;
+      }
+    });
+    yield new Promise(function(resolve, reject){
+      ReactDOM.render(<AppPart1 />, container, resolve);
+    });
+    ReactDOM.unmountComponentAtNode(container);
+    try {
+      yield new Promise(function(resolve, reject){
+        ReactDOM.render(<AppPart2 />, container, resolve);
+      });
+    } catch(error) {
+      if(error.type !== "PUSHTELL_INVALID_VARIANT") {
+        throw error;
+      }
+      ReactDOM.unmountComponentAtNode(container);
+      return;
+    }
+    throw new Error("New variant was added after variants were defined.");
   }));
   it("should not error if an older test variant is set.", co.wrap(function *(){
     let experimentName = UUID.v4();

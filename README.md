@@ -19,7 +19,7 @@ Wrap components in [`<Variant />`](#variant-) and nest in [`<Experiment />`](#ex
 </Experiment>
 ```
 
-Report to your analytics provider using the `emitter`.
+Report to your analytics provider using the [`emitter`](#emitter).
 
 ```js
 emitter.addPlayListener(function(experimentName, variantName){
@@ -48,7 +48,7 @@ emitter.addPlayListener(function(experimentName, variantName){
     - [`emitter.addActiveVariantListener([experimentName, ] callback)`](#emitteraddactivevariantlistenerexperimentname--callback)
     - [`emitter.addPlayListener([experimentName, ] callback)`](#emitteraddplaylistenerexperimentname--callback)
     - [`emitter.addWinListener([experimentName, ] callback)`](#emitteraddwinlistenerexperimentname--callback)
-    - [`emitter.addExperimentVariants(experimentName, variantNames)`](#emitteraddexperimentvariantsexperimentname-variantnames)
+    - [`emitter.defineExperimentVariants(experimentName, variantNames)`](#emitterdefineexperimentvariantsexperimentname-variantnames)
     - [`emitter.setActiveVariant(experimentName, variantName)`](#emittersetactivevariantexperimentname-variantname)
     - [`emitter.getActiveVariant(experimentName)`](#emittergetactivevariantexperimentname)
   - [`experimentDebugger`](#experimentdebugger)
@@ -58,7 +58,7 @@ emitter.addPlayListener(function(experimentName, variantName){
     - [`subscription.remove()`](#subscriptionremove)
 - [Tests](#tests)
   - [Browser Coverage](#browser-coverage)
-  - [Running tests](#running-tests)
+  - [Running Tests](#running-tests)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -130,7 +130,7 @@ var Variant = require("react-ab-test/lib/Variant");
 var emitter = require("react-ab-test/lib/emitter");
 
 // Define variants in advance.
-emitter.addExperimentVariants("My Example", ["A", "B", "C"]);
+emitter.defineExperimentVariants("My Example", ["A", "B", "C"]);
 
 var Component1 = React.createClass({
   render: function(){
@@ -264,7 +264,7 @@ Experiment container component. Children must be of type [`Variant`](#variant-).
 
 ### `<Variant />`
 
-Variant component.
+Variant container component.
 
 * **Properties:**
   * `name` - Name of the variant.
@@ -289,7 +289,7 @@ Emit a win event.
 
 #### `emitter.addActiveVariantListener([experimentName, ] callback)`
 
-Listen for the chosen active variant of an experiment.
+Listen for the active variant specified by an experiment.
 
 * **Return Type:** [`Subscription`](#subscription)
 * **Parameters:**
@@ -344,9 +344,9 @@ Listen for a successful outcome from the experiment. Trigged by the [emitter.emi
       * `variantName` - Name of the variant.
         * **Type:** `string`
 
-#### `emitter.addExperimentVariants(experimentName, variantNames)`
+#### `emitter.defineExperimentVariants(experimentName, variantNames)`
 
-Define experiment variant names. Required when an experiment [spans multiple components](#coordinate-multiple-components).
+Define experiment variant names. Required when an experiment [spans multiple components](#coordinate-multiple-components) containing different sets of variants.
 
 * **Return Type:** No return value
 * **Parameters:**
@@ -433,7 +433,7 @@ Removes the listener subscription and prevents future callbacks.
 
 Please [let us know](https://github.com/pushtell/react-ab-test/issues/new) if a different browser configuration should be included here.
 
-### Running tests
+### Running Tests
 
 Locally:
 

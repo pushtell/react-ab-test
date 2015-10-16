@@ -3,6 +3,7 @@ import {EventEmitter} from 'fbemitter';
 const values = {};
 const experiments = {};
 const activeExperiments = {};
+const experimentsWithDefinedVariants = {};
 
 class PushtellEventEmitter extends EventEmitter {
   emitWin(experimentName){
@@ -59,14 +60,13 @@ class PushtellEventEmitter extends EventEmitter {
       }
     });
   }
-  addExperimentVariants(experimentName, variantNames){
-    experiments[experimentName] = experiments[experimentName] || {};
+  defineExperimentVariants(experimentName, variantNames){
+    let variants = {}
     variantNames.forEach(variantName => {
-      if(experiments[experimentName][variantName] !== true) {
-        this.emit("variant", experimentName, variantName);
-      }
-      experiments[experimentName][variantName] = true;
+      variants[variantName] = true;
     });
+    experiments[experimentName] = variants;
+    experimentsWithDefinedVariants[experimentName] = true;
   }
   getSortedVariants(experimentName) {
     let names = Object.keys(experiments[experimentName]);
@@ -96,13 +96,17 @@ class PushtellEventEmitter extends EventEmitter {
   addExperimentVariant(experimentName, variantName){
     experiments[experimentName] = experiments[experimentName] || {};
     if(experiments[experimentName][variantName] !== true) {
+      if(experimentsWithDefinedVariants[experimentName]) {
+        const error = new Error("Expiriment “" + experimentName + "” added new variants after variants were defined.");
+        error.type = "PUSHTELL_INVALID_VARIANT";
+        throw error;
+      }
       if(values[experimentName]) {
         const error = new Error("Expiriment “" + experimentName + "” added new variants after a variant was selected. Declare the variant names using emitter.addExpirimentVariants(expirimentName, variantNames).");
         error.type = "PUSHTELL_INVALID_VARIANT";
         throw error;
       }
       experiments[experimentName][variantName] = true;
-      this.emit("variant", experimentName, variantName);
     } else {
       experiments[experimentName][variantName] = true;
     }
