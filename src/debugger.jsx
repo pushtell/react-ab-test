@@ -97,8 +97,8 @@ if(process.env.NODE_ENV === "production" || !canUseDOM) {
         experiments: emitter.getActiveExperiments()
       });
     },
-    setExperimentValue(experimentName, variantName) {
-      emitter.setExperimentValue(experimentName, variantName);
+    setActiveVariant(experimentName, variantName) {
+      emitter.setActiveVariant(experimentName, variantName);
     },
     componentWillMount(){
       this.activeSubscription = emitter.addListener("active", this.updateExperiments);
@@ -123,7 +123,7 @@ if(process.env.NODE_ENV === "production" || !canUseDOM) {
               <ul>
                 {variantNames.map(variantName => {
                   return <li key={variantName}>
-                    <label className={this.state.experiments[experimentName][variantName] ? "active" : null} onClick={this.setExperimentValue.bind(this, experimentName, variantName)}>
+                    <label className={this.state.experiments[experimentName][variantName] ? "active" : null} onClick={this.setActiveVariant.bind(this, experimentName, variantName)}>
                       <input type="radio" name={experimentName} value={variantName} defaultChecked={this.state.experiments[experimentName][variantName]} />
                       {variantName}
                     </label>

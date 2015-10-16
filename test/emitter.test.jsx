@@ -127,18 +127,18 @@ describe("Emitter", function() {
   }));
   it("should emit when a variant is chosen.", co.wrap(function *(){
     let experimentName = UUID.v4();
-    let valueName = null;
-    let valueCallback = function(experimentName, variantName){
-      valueName = variantName;
+    let activeVariantName = null;
+    let activeVariantCallback = function(experimentName, variantName){
+      activeVariantName = variantName;
     };
     let experimentNameGlobal = null;
-    let valueNameGlobal = null;
-    let valueCallbackGlobal = function(expirimentName, variantName){
+    let activeVariantNameGlobal = null;
+    let activeVariantCallbackGlobal = function(expirimentName, variantName){
       experimentNameGlobal = expirimentName;
-      valueNameGlobal = variantName;
+      activeVariantNameGlobal = variantName;
     };
-    let valueSubscription = emitter.addValueListener(experimentName, valueCallback);
-    let valueSubscriptionGlobal = emitter.addValueListener(valueCallbackGlobal);
+    let activeVariantSubscription = emitter.addActiveVariantListener(experimentName, activeVariantCallback);
+    let activeVariantSubscriptionGlobal = emitter.addActiveVariantListener(activeVariantCallbackGlobal);
     let App = React.createClass({
       render: function(){
         return <Experiment ref="experiment" name={experimentName} value="A">
@@ -150,11 +150,11 @@ describe("Emitter", function() {
     yield new Promise(function(resolve, reject){
       ReactDOM.render(<App />, container, resolve);
     });
-    assert.equal(valueName, "A");
+    assert.equal(activeVariantName, "A");
     assert.equal(experimentNameGlobal, experimentName);
-    assert.equal(valueNameGlobal, "A");
-    valueSubscription.remove();
-    valueSubscriptionGlobal.remove();
+    assert.equal(activeVariantNameGlobal, "A");
+    activeVariantSubscription.remove();
+    activeVariantSubscriptionGlobal.remove();
     ReactDOM.unmountComponentAtNode(container);
   }));
   it("should get the experiment value.", co.wrap(function *(){
@@ -170,7 +170,7 @@ describe("Emitter", function() {
     yield new Promise(function(resolve, reject){
       ReactDOM.render(<App />, container, resolve);
     });
-    assert.equal(emitter.getExperimentValue(experimentName), "A");
+    assert.equal(emitter.getActiveVariant(experimentName), "A");
     ReactDOM.unmountComponentAtNode(container);
   }));
   it("should update the rendered component.", co.wrap(function *(){
@@ -190,7 +190,7 @@ describe("Emitter", function() {
     let elementB = document.getElementById('variant-b');
     assert.notEqual(elementA, null);
     assert.equal(elementB, null);
-    emitter.setExperimentValue(experimentName, "B");
+    emitter.setActiveVariant(experimentName, "B");
     elementA = document.getElementById('variant-a');
     elementB = document.getElementById('variant-b');
     assert.equal(elementA, null);

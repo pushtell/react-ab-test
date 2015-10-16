@@ -20,14 +20,14 @@ class PushtellEventEmitter extends EventEmitter {
     activeExperiments[experimentName] -= 1;
     this.emit("inactive", experimentName);
   }
-  addValueListener(experimentName, callback) {
+  addActiveVariantListener(experimentName, callback) {
     if(typeof experimentName === "function") {
       callback = experimentName;
-      return this.addListener('value', (_experimentName, variantName, passthrough) => {
+      return this.addListener("active-variant", (_experimentName, variantName, passthrough) => {
         callback(_experimentName, variantName, passthrough);
       });
     }
-    return this.addListener('value', (_experimentName, variantName, passthrough) => {
+    return this.addListener("active-variant", (_experimentName, variantName, passthrough) => {
       if(_experimentName === experimentName) {
         callback(_experimentName, variantName, passthrough);
       }
@@ -86,12 +86,12 @@ class PushtellEventEmitter extends EventEmitter {
     });
     return response;
   }
-  getExperimentValue(experimentName){
+  getActiveVariant(experimentName){
     return values[experimentName];
   }
-  setExperimentValue(experimentName, variantName, passthrough){
+  setActiveVariant(experimentName, variantName, passthrough){
     values[experimentName] = variantName;
-    this.emit("value", experimentName, variantName, passthrough);
+    this.emit("active-variant", experimentName, variantName, passthrough);
   }
   addExperimentVariant(experimentName, variantName){
     experiments[experimentName] = experiments[experimentName] || {};

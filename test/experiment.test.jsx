@@ -46,17 +46,17 @@ describe("Experiment", function() {
     for(let i = 0; i < 100; i++) {
       variantNames.push(UUID.v4());
     }
-    let defaultValue = variantNames[Math.floor(Math.random() * variantNames.length)];
-    let AppWithDefaultValue = React.createClass({
+    let defaultVariantName = variantNames[Math.floor(Math.random() * variantNames.length)];
+    let AppWithdefaultVariantName = React.createClass({
       render: function(){
-        return <Experiment name={experimentName} defaultValue={defaultValue}>
+        return <Experiment name={experimentName} defaultVariantName={defaultVariantName}>
           {variantNames.map(name => {
             return <Variant key={name} name={name}><div id={'experiment-' + name}></div></Variant>
           })}
         </Experiment>;
       }
     });
-    let AppWithoutDefaultValue = React.createClass({
+    let AppWithoutdefaultVariantName = React.createClass({
       render: function(){
         return <Experiment name={experimentName}>
           {variantNames.map(name => {
@@ -66,16 +66,16 @@ describe("Experiment", function() {
       }
     });
     yield new Promise(function(resolve, reject){
-      ReactDOM.render(<AppWithDefaultValue />, container, resolve);
+      ReactDOM.render(<AppWithdefaultVariantName />, container, resolve);
     });
-    let elementWithDefaultValue = document.getElementById('experiment-' + defaultValue);
-    assert.notEqual(elementWithDefaultValue, null);
+    let elementWithdefaultVariantName = document.getElementById('experiment-' + defaultVariantName);
+    assert.notEqual(elementWithdefaultVariantName, null);
     ReactDOM.unmountComponentAtNode(container);
     yield new Promise(function(resolve, reject){
-      ReactDOM.render(<AppWithoutDefaultValue />, container, resolve);
+      ReactDOM.render(<AppWithoutdefaultVariantName />, container, resolve);
     });
-    let elementWithoutDefaultValue = document.getElementById('experiment-' + defaultValue);
-    assert.notEqual(elementWithoutDefaultValue, null);
+    let elementWithoutdefaultVariantName = document.getElementById('experiment-' + defaultVariantName);
+    assert.notEqual(elementWithoutdefaultVariantName, null);
     ReactDOM.unmountComponentAtNode(container);
   }));
   it("should error if variants are added to a experiment after a variant was selected.", co.wrap(function *(){
@@ -189,7 +189,7 @@ describe("Experiment", function() {
         this.refs.experiment.win();
       },
       render: function(){
-        return <Experiment ref="experiment" name={experimentName} defaultValue="A">
+        return <Experiment ref="experiment" name={experimentName} defaultVariantName="A">
           <Variant name="A"><a id="variant-a" href="#A" onClick={this.onClickVariant}>A</a></Variant>
           <Variant name="B"><a id="variant-b" href="#B" onClick={this.onClickVariant}>B</a></Variant>
         </Experiment>;

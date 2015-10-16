@@ -45,12 +45,12 @@ emitter.addPlayListener(function(experimentName, variantName){
   - [`<Variant />`](#variant-)
   - [`emitter`](#emitter)
     - [`emitter.emitWin(experimentName)`](#emitteremitwinexperimentname)
-    - [`emitter.addValueListener([experimentName, ] callback)`](#emitteraddvaluelistenerexperimentname--callback)
+    - [`emitter.addActiveVariantListener([experimentName, ] callback)`](#emitteraddactivevariantlistenerexperimentname--callback)
     - [`emitter.addPlayListener([experimentName, ] callback)`](#emitteraddplaylistenerexperimentname--callback)
     - [`emitter.addWinListener([experimentName, ] callback)`](#emitteraddwinlistenerexperimentname--callback)
     - [`emitter.addExperimentVariants(experimentName, variantNames)`](#emitteraddexperimentvariantsexperimentname-variantnames)
-    - [`emitter.setExperimentValue(experimentName, variantName)`](#emittersetexperimentvalueexperimentname-variantname)
-    - [`emitter.getExperimentValue(experimentName)`](#emittergetexperimentvalueexperimentname)
+    - [`emitter.setActiveVariant(experimentName, variantName)`](#emittersetactivevariantexperimentname-variantname)
+    - [`emitter.getActiveVariant(experimentName)`](#emittergetactivevariantexperimentname)
   - [`experimentDebugger`](#experimentdebugger)
     - [`experimentDebugger.enable()`](#experimentdebuggerenable)
     - [`experimentDebugger.disable()`](#experimentdebuggerdisable)
@@ -257,7 +257,7 @@ Experiment container component. Children must be of type [`Variant`](#variant-).
     * **Required**
     * **Type:** `string`
     * **Example:** `"My Example"`
-  * `defaultValue` - Name of the default variant. This property is useful for server side rendering but otherwise not recommended.
+  * `defaultVariantName` - Name of the default variant. This property may be useful for server side rendering but is otherwise not recommended.
     * **Optional**
     * **Type:** `string`
     * **Example:** `"A"`
@@ -287,9 +287,9 @@ Emit a win event.
     * **Type:** `string`
     * **Example:** `"My Example"`
 
-#### `emitter.addValueListener([experimentName, ] callback)`
+#### `emitter.addActiveVariantListener([experimentName, ] callback)`
 
-Listen for the chosen value of an experiment.
+Listen for the chosen active variant of an experiment.
 
 * **Return Type:** [`Subscription`](#subscription)
 * **Parameters:**
@@ -359,7 +359,7 @@ Define experiment variant names. Required when an experiment [spans multiple com
     * **Type:** `Array.<string>`
     * **Example:** `["A", "B", "C"]`
 
-#### `emitter.setExperimentValue(experimentName, variantName)`
+#### `emitter.setActiveVariant(experimentName, variantName)`
 
 Set the active variant of an experiment.
 
@@ -374,7 +374,7 @@ Set the active variant of an experiment.
     * **Type:** `string`
     * **Example:** `"A"`
 
-#### `emitter.getExperimentValue(experimentName)`
+#### `emitter.getActiveVariant(experimentName)`
 
 Returns the variant name currently displayed by the experiment.
 

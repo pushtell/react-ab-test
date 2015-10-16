@@ -48,7 +48,7 @@ export default React.createClass({
       }
     }
     emitter._incrementActiveExperiments(this.props.name);
-    emitter.setExperimentValue(this.props.name, value);
+    emitter.setActiveVariant(this.props.name, value);
     if(!playedExperiments[this.props.name]) {
       emitter.emit('play', this.props.name, value);
       playedExperiments[this.props.name] = true;
@@ -56,7 +56,7 @@ export default React.createClass({
     this.setState({
       value: value
     });
-    this.valueSubscription = emitter.addValueListener(this.props.name, (experimentName, variantName) => {
+    this.valueSubscription = emitter.addActiveVariantListener(this.props.name, (experimentName, variantName) => {
       this.setState({
         value: variantName
       });
