@@ -55,6 +55,9 @@ emitter.addPlayListener(function(experimentName, variantName){
     - [`experimentDebugger.disable()`](#experimentdebuggerdisable)
   - [`Subscription`](#subscription)
     - [`subscription.remove()`](#subscriptionremove)
+- [Tests](#tests)
+  - [Browser Coverage](#browser-coverage)
+  - [Running tests](#running-tests)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
