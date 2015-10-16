@@ -48,7 +48,7 @@ emitter.addPlayListener(function(experimentName, variantName){
     - [`emitter.addActiveVariantListener([experimentName, ] callback)`](#emitteraddactivevariantlistenerexperimentname--callback)
     - [`emitter.addPlayListener([experimentName, ] callback)`](#emitteraddplaylistenerexperimentname--callback)
     - [`emitter.addWinListener([experimentName, ] callback)`](#emitteraddwinlistenerexperimentname--callback)
-    - [`emitter.defineExperimentVariants(experimentName, variantNames)`](#emitterdefineexperimentvariantsexperimentname-variantnames)
+    - [`emitter.defineVariants(experimentName, variantNames)`](#emitterdefinevariantsexperimentname-variantnames)
     - [`emitter.setActiveVariant(experimentName, variantName)`](#emittersetactivevariantexperimentname-variantname)
     - [`emitter.getActiveVariant(experimentName)`](#emittergetactivevariantexperimentname)
   - [`experimentDebugger`](#experimentdebugger)
@@ -130,7 +130,7 @@ var Variant = require("react-ab-test/lib/Variant");
 var emitter = require("react-ab-test/lib/emitter");
 
 // Define variants in advance.
-emitter.defineExperimentVariants("My Example", ["A", "B", "C"]);
+emitter.defineVariants("My Example", ["A", "B", "C"]);
 
 var Component1 = React.createClass({
   render: function(){
@@ -344,7 +344,7 @@ Listen for a successful outcome from the experiment. Trigged by the [emitter.emi
       * `variantName` - Name of the variant.
         * **Type:** `string`
 
-#### `emitter.defineExperimentVariants(experimentName, variantNames)`
+#### `emitter.defineVariants(experimentName, variantNames)`
 
 Define experiment variant names. Required when an experiment [spans multiple components](#coordinate-multiple-components) containing different sets of variants.
 

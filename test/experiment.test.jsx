@@ -121,7 +121,7 @@ describe("Experiment", function() {
   }));
   it("should not error if variants are added to a experiment after a variant was selected if variants were defined.", co.wrap(function *(){
     let experimentName = UUID.v4();
-    emitter.defineExperimentVariants(experimentName, ["A", "B", "C", "D"]);
+    emitter.defineVariants(experimentName, ["A", "B", "C", "D"]);
     let AppPart1 = React.createClass({
       onClickVariant: function(e){
         this.refs.experiment.win();
@@ -155,7 +155,7 @@ describe("Experiment", function() {
   }));
   it("should error if a variant is added to an experiment after variants were defined.", co.wrap(function *(){
     let experimentName = UUID.v4();
-    emitter.defineExperimentVariants(experimentName, ["A", "B", "C"]);
+    emitter.defineVariants(experimentName, ["A", "B", "C"]);
     let AppPart1 = React.createClass({
       onClickVariant: function(e){
         this.refs.experiment.win();

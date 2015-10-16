@@ -60,7 +60,7 @@ class PushtellEventEmitter extends EventEmitter {
       }
     });
   }
-  defineExperimentVariants(experimentName, variantNames){
+  defineVariants(experimentName, variantNames){
     let variants = {}
     variantNames.forEach(variantName => {
       variants[variantName] = true;
