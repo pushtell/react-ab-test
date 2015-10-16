@@ -1,6 +1,7 @@
 import React from 'react';
+import ReactDOM from "react-dom";
 import emitter from "./emitter";
-import {canUseDOM} from 'react/lib/ExecutionEnvironment';
+import {canUseDOM} from 'fbjs/lib/ExecutionEnvironment';
 import assign from 'react/lib/Object.assign';
 
 if(process.env.NODE_ENV === "production" || !canUseDOM) {
@@ -154,14 +155,14 @@ if(process.env.NODE_ENV === "production" || !canUseDOM) {
       let container = document.createElement('div');
       container.id = 'pushtell-debugger';
       body.appendChild(container);
-      React.render(<Debugger />, container);
+      ReactDOM.render(<Debugger />, container);
     },
     disable() {
       removeStyleSheet();
       let body = document.getElementsByTagName('body')[0];
       let container = document.getElementById('pushtell-debugger');
       if(container) {
-        React.unmountComponentAtNode(container);
+        ReactDOM.unmountComponentAtNode(container);
         body.removeChild(container);
       }
     }

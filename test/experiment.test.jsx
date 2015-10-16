@@ -1,4 +1,5 @@
 import React from "react";
+import ReactDOM from "react-dom";
 import Experiment from "../src/Experiment.jsx";
 import Variant from "../src/Variant.jsx";
 import assert from "assert";
@@ -28,7 +29,7 @@ describe("Experiment", function() {
       }
     });
     yield new Promise(function(resolve, reject){
-      React.render(<App />, container, resolve);
+      ReactDOM.render(<App />, container, resolve);
     });
     let elementA = document.getElementById('variant-a');
     let elementB = document.getElementById('variant-b');
@@ -47,7 +48,7 @@ describe("Experiment", function() {
     });
     try {
       yield new Promise(function(resolve, reject){
-        React.render(<App />, container, resolve);
+        ReactDOM.render(<App />, container, resolve);
       });
     } catch(error) {
       if(error.type !== "PUSHTELL_INVALID_CHILD") {
@@ -83,7 +84,7 @@ describe("Experiment", function() {
       }
     });
     yield new Promise(function(resolve, reject){
-      React.render(<App />, container, resolve);
+      ReactDOM.render(<App />, container, resolve);
     });
     let elementA = document.getElementById('variant-a');
     let elementB = document.getElementById('variant-b');

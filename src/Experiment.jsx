@@ -1,5 +1,5 @@
 import React from 'react';
-import warning from "react/lib/warning";
+import warning from 'fbjs/lib/warning';
 import emitter from "./emitter";
 import Variant from "./Variant";
 

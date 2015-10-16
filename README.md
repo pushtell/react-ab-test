@@ -181,7 +181,7 @@ emitter.addWinListener(function(experimentName, variantName){
 
 ### Debugging
 
-<img src="https://cdn.rawgit.com/pushtell/react-ab-test/master/documentation-images/debugger-animated.gif" width="300" height="300" />
+<img src="https://cdn.rawgit.com/pushtell/react-ab-test/master/documentation-images/debugger-animated-2.gif" width="325" height="325" />
 
 Try it [on JSFiddle](http://jsfiddle.net/pushtell/vs9kkxLd/)
 
@@ -390,7 +390,7 @@ Debugging tool. Attaches a fixed-position panel to the bottom of the `<body>` el
 
 The debugger is wrapped in a conditional `if(process.env.NODE_ENV === "production") {...}` and will not display on production builds using [envify](https://github.com/hughsk/envify).
 
-<img src="https://cdn.rawgit.com/pushtell/react-ab-test/master/documentation-images/debugger-animated.gif" width="300" height="300" />
+<img src="https://cdn.rawgit.com/pushtell/react-ab-test/master/documentation-images/debugger-animated-2.gif" width="325" height="325" />
 
 #### `experimentDebugger.enable()`
 

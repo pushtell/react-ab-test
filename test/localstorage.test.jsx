@@ -1,4 +1,5 @@
 import React from "react";
+import ReactDOM from "react-dom";
 import Experiment from "../src/LocalStorageExperiment.jsx";
 import Variant from "../src/Variant.jsx";
 import emitter from "../src/emitter.jsx";
@@ -35,9 +36,9 @@ describe("LocalStorage", function() {
       }
     });
     yield new Promise(function(resolve, reject){
-      React.render(<App />, container, resolve);
+      ReactDOM.render(<App />, container, resolve);
     });
-    React.unmountComponentAtNode(container);
+    ReactDOM.unmountComponentAtNode(container);
   }));
   it("should render the correct variant.", co.wrap(function *(){
     let experimentName = UUID.v4();
@@ -65,17 +66,17 @@ describe("LocalStorage", function() {
       }
     });
     yield new Promise(function(resolve, reject){
-      React.render(<AppWithDefaultValue />, container, resolve);
+      ReactDOM.render(<AppWithDefaultValue />, container, resolve);
     });
     let elementWithDefaultValue = document.getElementById('experiment-' + defaultValue);
     assert.notEqual(elementWithDefaultValue, null);
-    React.unmountComponentAtNode(container);
+    ReactDOM.unmountComponentAtNode(container);
     yield new Promise(function(resolve, reject){
-      React.render(<AppWithoutDefaultValue />, container, resolve);
+      ReactDOM.render(<AppWithoutDefaultValue />, container, resolve);
     });
     let elementWithoutDefaultValue = document.getElementById('experiment-' + defaultValue);
     assert.notEqual(elementWithoutDefaultValue, null);
-    React.unmountComponentAtNode(container);
+    ReactDOM.unmountComponentAtNode(container);
   }));
   it("should error if variants are added to a experiment after a variant was selected.", co.wrap(function *(){
     let experimentName = UUID.v4();
@@ -102,18 +103,18 @@ describe("LocalStorage", function() {
       }
     });
     yield new Promise(function(resolve, reject){
-      React.render(<AppPart1 />, container, resolve);
+      ReactDOM.render(<AppPart1 />, container, resolve);
     });
-    React.unmountComponentAtNode(container);
+    ReactDOM.unmountComponentAtNode(container);
     try {
       yield new Promise(function(resolve, reject){
-        React.render(<AppPart2 />, container, resolve);
+        ReactDOM.render(<AppPart2 />, container, resolve);
       });
     } catch(error) {
       if(error.type !== "PUSHTELL_INVALID_VARIANT") {
         throw error;
       }
-      React.unmountComponentAtNode(container);
+      ReactDOM.unmountComponentAtNode(container);
       return;
     }
     throw new Error("New variant was added after variant was selected.");
@@ -145,13 +146,13 @@ describe("LocalStorage", function() {
       }
     });
     yield new Promise(function(resolve, reject){
-      React.render(<AppPart1 />, container, resolve);
+      ReactDOM.render(<AppPart1 />, container, resolve);
     });
-    React.unmountComponentAtNode(container);
+    ReactDOM.unmountComponentAtNode(container);
     yield new Promise(function(resolve, reject){
-      React.render(<AppPart2 />, container, resolve);
+      ReactDOM.render(<AppPart2 />, container, resolve);
     });
-    React.unmountComponentAtNode(container);
+    ReactDOM.unmountComponentAtNode(container);
   }));
   it("should not error if an older test variant is set.", co.wrap(function *(){
     let experimentName = UUID.v4();
@@ -165,9 +166,9 @@ describe("LocalStorage", function() {
       }
     });
     yield new Promise(function(resolve, reject){
-      React.render(<App />, container, resolve);
+      ReactDOM.render(<App />, container, resolve);
     });
-    React.unmountComponentAtNode(container);
+    ReactDOM.unmountComponentAtNode(container);
   }));
   it("should emit when a variant is clicked.", co.wrap(function *(){
     let experimentName = UUID.v4();
@@ -195,7 +196,7 @@ describe("LocalStorage", function() {
       }
     });
     yield new Promise(function(resolve, reject){
-      React.render(<App />, container, resolve);
+      ReactDOM.render(<App />, container, resolve);
     });
     let elementA = document.getElementById('variant-a');
     TestUtils.Simulate.click(elementA);
@@ -204,6 +205,6 @@ describe("LocalStorage", function() {
     assert.equal(winningVariantNameGlobal, "A");
     winSubscription.remove();
     winSubscriptionGlobal.remove();
-    React.unmountComponentAtNode(container);
+    ReactDOM.unmountComponentAtNode(container);
   }));
 });

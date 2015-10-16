@@ -1,4 +1,5 @@
 import React from "react";
+import ReactDOM from "react-dom";
 import Experiment from "../src/Experiment.jsx";
 import Variant from "../src/Variant.jsx";
 import experimentDebugger from "../src/debugger.jsx";
@@ -51,7 +52,7 @@ describe("Debugger", function() {
       }
     });
     yield new Promise(function(resolve, reject){
-      React.render(<App />, container, resolve);
+      ReactDOM.render(<App />, container, resolve);
     });
     experimentDebugger.enable();
     let element = document.getElementById('pushtell-debugger');
@@ -59,7 +60,7 @@ describe("Debugger", function() {
     experimentDebugger.disable();
     element = document.getElementById('pushtell-debugger');
     assert.equal(element, null);
-    React.unmountComponentAtNode(container);
+    ReactDOM.unmountComponentAtNode(container);
   }));
   it("should add and remove style rules", function() {
     experimentDebugger.enable();
@@ -78,7 +79,7 @@ describe("Debugger", function() {
       }
     });
     yield new Promise(function(resolve, reject){
-      React.render(<App />, container, resolve);
+      ReactDOM.render(<App />, container, resolve);
     });
     experimentDebugger.enable();
     let elementA = document.getElementById('variant-a');
@@ -96,7 +97,7 @@ describe("Debugger", function() {
     assert.equal(elementA, null);
     assert.notEqual(elementB, null);
     experimentDebugger.disable();
-    React.unmountComponentAtNode(container);
+    ReactDOM.unmountComponentAtNode(container);
   }));
 });
 

@@ -1,4 +1,5 @@
 import React from "react";
+import ReactDOM from "react-dom";
 import Experiment from "../src/Experiment.jsx";
 import Variant from "../src/Variant.jsx";
 import emitter from "../src/emitter.jsx";
@@ -45,14 +46,14 @@ describe("Emitter", function() {
       }
     });
     yield new Promise(function(resolve, reject){
-      React.render(<App />, container, resolve);
+      ReactDOM.render(<App />, container, resolve);
     });
     assert.equal(playedVariantName, "A");
     assert.equal(experimentNameGlobal, experimentName);
     assert.equal(playedVariantNameGlobal, "A");
     playSubscription.remove();
     playSubscriptionGlobal.remove();
-    React.unmountComponentAtNode(container);
+    ReactDOM.unmountComponentAtNode(container);
   }));
   it("should emit when a variant wins.", co.wrap(function *(){
     let experimentName = UUID.v4();
@@ -77,7 +78,7 @@ describe("Emitter", function() {
       }
     });
     yield new Promise(function(resolve, reject){
-      React.render(<App />, container, resolve);
+      ReactDOM.render(<App />, container, resolve);
     });
     emitter.emitWin(experimentName);
     assert.equal(winningVariantName, "A");
@@ -85,7 +86,7 @@ describe("Emitter", function() {
     assert.equal(winningVariantNameGlobal, "A");
     winSubscription.remove();
     winSubscriptionGlobal.remove();
-    React.unmountComponentAtNode(container);
+    ReactDOM.unmountComponentAtNode(container);
   }));
   it("should emit when a variant is clicked.", co.wrap(function *(){
     let experimentName = UUID.v4();
@@ -113,7 +114,7 @@ describe("Emitter", function() {
       }
     });
     yield new Promise(function(resolve, reject){
-      React.render(<App />, container, resolve);
+      ReactDOM.render(<App />, container, resolve);
     });
     let elementA = document.getElementById('variant-a');
     TestUtils.Simulate.click(elementA);
@@ -122,7 +123,7 @@ describe("Emitter", function() {
     assert.equal(winningVariantNameGlobal, "A");
     winSubscription.remove();
     winSubscriptionGlobal.remove();
-    React.unmountComponentAtNode(container);
+    ReactDOM.unmountComponentAtNode(container);
   }));
   it("should emit when variants are added.", co.wrap(function *(){
     let experimentName = UUID.v4();
@@ -143,13 +144,13 @@ describe("Emitter", function() {
       }
     });
     yield new Promise(function(resolve, reject){
-      React.render(<App />, container, resolve);
+      ReactDOM.render(<App />, container, resolve);
     });
     assert.deepEqual(variants, ["A", "B"]);
     variantSubscription.remove();
     assert.deepEqual(variantsGlobal, ["A", "B"]);
     variantSubscriptionGlobal.remove();
-    React.unmountComponentAtNode(container);
+    ReactDOM.unmountComponentAtNode(container);
   }));
   it("should emit when a variant is chosen.", co.wrap(function *(){
     let experimentName = UUID.v4();
@@ -174,14 +175,14 @@ describe("Emitter", function() {
       }
     });
     yield new Promise(function(resolve, reject){
-      React.render(<App />, container, resolve);
+      ReactDOM.render(<App />, container, resolve);
     });
     assert.equal(valueName, "A");
     assert.equal(experimentNameGlobal, experimentName);
     assert.equal(valueNameGlobal, "A");
     valueSubscription.remove();
     valueSubscriptionGlobal.remove();
-    React.unmountComponentAtNode(container);
+    ReactDOM.unmountComponentAtNode(container);
   }));
   it("should get the experiment value.", co.wrap(function *(){
     let experimentName = UUID.v4();
@@ -194,10 +195,10 @@ describe("Emitter", function() {
       }
     });
     yield new Promise(function(resolve, reject){
-      React.render(<App />, container, resolve);
+      ReactDOM.render(<App />, container, resolve);
     });
     assert.equal(emitter.getExperimentValue(experimentName), "A");
-    React.unmountComponentAtNode(container);
+    ReactDOM.unmountComponentAtNode(container);
   }));
   it("should update the rendered component.", co.wrap(function *(){
     let experimentName = UUID.v4();
@@ -210,7 +211,7 @@ describe("Emitter", function() {
       }
     });
     yield new Promise(function(resolve, reject){
-      React.render(<App />, container, resolve);
+      ReactDOM.render(<App />, container, resolve);
     });
     let elementA = document.getElementById('variant-a');
     let elementB = document.getElementById('variant-b');
@@ -221,7 +222,7 @@ describe("Emitter", function() {
     elementB = document.getElementById('variant-b');
     assert.equal(elementA, null);
     assert.notEqual(elementB, null);
-    React.unmountComponentAtNode(container);
+    ReactDOM.unmountComponentAtNode(container);
   }));
   it("should report active components.", co.wrap(function *(){
     let experimentNameA = UUID.v4();
@@ -251,7 +252,7 @@ describe("Emitter", function() {
       }
     });
     yield new Promise(function(resolve, reject){
-      React.render(<AppA />, container, resolve);
+      ReactDOM.render(<AppA />, container, resolve);
     });
     let activeExperiments = {};
     activeExperiments[experimentNameA] = {
@@ -259,9 +260,9 @@ describe("Emitter", function() {
       "B": false
     };
     assert.deepEqual(emitter.getActiveExperiments(), activeExperiments);
-    React.unmountComponentAtNode(container);
+    ReactDOM.unmountComponentAtNode(container);
     yield new Promise(function(resolve, reject){
-      React.render(<AppB />, container, resolve);
+      ReactDOM.render(<AppB />, container, resolve);
     });
     activeExperiments = {};
     activeExperiments[experimentNameB] = {
@@ -269,9 +270,9 @@ describe("Emitter", function() {
       "D": false
     };
     assert.deepEqual(emitter.getActiveExperiments(), activeExperiments);
-    React.unmountComponentAtNode(container);
+    ReactDOM.unmountComponentAtNode(container);
     yield new Promise(function(resolve, reject){
-      React.render(<AppCombined />, container, resolve);
+      ReactDOM.render(<AppCombined />, container, resolve);
     });
     activeExperiments = {};
     activeExperiments[experimentNameA] = {
@@ -283,7 +284,7 @@ describe("Emitter", function() {
       "D": false
     };
     assert.deepEqual(emitter.getActiveExperiments(), activeExperiments);
-    React.unmountComponentAtNode(container);
+    ReactDOM.unmountComponentAtNode(container);
   }));
 });
 

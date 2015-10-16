@@ -1,4 +1,5 @@
 import React from "react";
+import ReactDOM from "react-dom";
 import Experiment from "../src/Experiment.jsx";
 import Variant from "../src/Variant.jsx";
 import assert from "assert";
@@ -30,7 +31,7 @@ describe("Variant", function() {
       }
     });
     yield new Promise(function(resolve, reject){
-      React.render(<App />, container, resolve);
+      ReactDOM.render(<App />, container, resolve);
     });
     assert.notEqual(container.innerHTML.indexOf(variantTextA), null);
   }));
@@ -45,13 +46,13 @@ describe("Variant", function() {
       }
     });
     yield new Promise(function(resolve, reject){
-      React.render(<App />, container, resolve);
+      ReactDOM.render(<App />, container, resolve);
     });
     let elementA = document.getElementById('variant-a');
     let elementB = document.getElementById('variant-b');
     assert.notEqual(elementA, null);
     assert.equal(elementB, null);
-    React.unmountComponentAtNode(container);
+    ReactDOM.unmountComponentAtNode(container);
   }));
   it("should render arrays of components.", co.wrap(function *(){
     let experimentName = UUID.v4();
@@ -70,13 +71,13 @@ describe("Variant", function() {
       }
     });
     yield new Promise(function(resolve, reject){
-      React.render(<App />, container, resolve);
+      ReactDOM.render(<App />, container, resolve);
     });
     let elementA = document.getElementById('variant-a');
     let elementB = document.getElementById('variant-b');
     assert.notEqual(elementA, null);
     assert.equal(elementB, null);
-    React.unmountComponentAtNode(container);
+    ReactDOM.unmountComponentAtNode(container);
   }));
 });
 
