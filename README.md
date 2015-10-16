@@ -229,7 +229,7 @@ var App = React.createClass({
 
 ### With Babel
 
-Code from the [`./src`](https://github.com/pushtell/react-ab-test/tree/master/src) directory is written in [JSX](https://facebook.github.io/jsx/) and transpiled into the [`./lib`](https://github.com/pushtell/react-ab-test/tree/master/lib) directory using [Babel](https://babeljs.io/). If your project uses Babel you may want to include files from [`./src`](https://github.com/pushtell/react-ab-test/tree/master/src) directly.
+Code from [`./src`](https://github.com/pushtell/react-ab-test/tree/master/src) is written in [JSX](https://facebook.github.io/jsx/) and transpiled into [`./lib`](https://github.com/pushtell/react-ab-test/tree/master/lib) using [Babel](https://babeljs.io/). If your project uses Babel you may want to include files from [`./src`](https://github.com/pushtell/react-ab-test/tree/master/src) directly.
 
 ## Alternative Libraries
 
