@@ -32,7 +32,7 @@ emitter.addPlayListener(function(experimentName, variantName){
 <h1>Table of Contents</h1>
 
 - [Installation](#installation)
-  - [`react` and `react-dom` Peer Dependencies](#react-and-react-dom-peer-dependencies)
+  - [Peer Dependencies](#peer-dependencies)
 - [Usage](#usage)
   - [Standalone Component](#standalone-component)
   - [Coordinate Multiple Components](#coordinate-multiple-components)
@@ -69,7 +69,7 @@ emitter.addPlayListener(function(experimentName, variantName){
 npm install react-ab-test
 ```
 
-### `react` and `react-dom` Peer Dependencies
+### Peer Dependencies
 
 If not already present in your project, install the `react` and `react-dom` peer dependencies.
 
