@@ -196,10 +196,10 @@ emitter.addWinListener(function(experimentName, variantName){
 
 <table>
   <tr>
-    <td>
+    <td width="50%">
       <img src="https://cdn.rawgit.com/pushtell/react-ab-test/master/documentation-images/debugger-animated-2.gif" width="325" height="325" />
     </td>
-    <td>
+    <td width="50%">
       <p>The <a href="#experimentdebugger">debugger</a> attaches a fixed-position panel to the bottom of the <code>&lt;body&gt;</code> element that displays mounted experiments and enables the user to change active variants in real-time.</p>
       <p>The debugger is wrapped in a conditional <code>if(process.env.NODE_ENV === "production") {...}</code> and will not display on production builds using <a href="https://github.com/hughsk/envify">envify</a>.</p>
     </td>
