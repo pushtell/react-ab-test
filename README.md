@@ -414,3 +414,39 @@ Returned by the emitter's add listener methods. More information available in th
 Removes the listener subscription and prevents future callbacks.
 
 * **Parameters:** No parameters
+
+## Tests
+
+### Browser Coverage
+
+[Karma](http://karma-runner.github.io/0.13/index.html) tests are performed on [Browserstack](https://www.browserstack.com/) in the following browsers:
+
+* IE 9, Windows 7
+* IE 10, Windows 7
+* IE 11, Windows 7
+* Opera (latest version), Windows 7
+* Firefox (latest version), Windows 7
+* Safari (latest version), OSX Yosemite
+* Android Browser, Google Nexus 7, Android 4.1
+* Safari, iPhone 6, iOS 8.3
+
+Please [let us know](https://github.com/pushtell/react-ab-test/issues/new) if a different browser configuration should be included here.
+
+### Running tests
+
+Locally:
+
+```bash
+
+npm test
+
+```
+
+On [Browserstack](https://www.browserstack.com/):
+
+```bash
+
+BROWSERSTACK_USERNAME=YOUR_USERNAME BROWSERSTACK_ACCESS_KEY=YOUR_ACCESS_KEY npm test
+
+```
+
