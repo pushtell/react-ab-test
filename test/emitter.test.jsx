@@ -125,33 +125,6 @@ describe("Emitter", function() {
     winSubscriptionGlobal.remove();
     ReactDOM.unmountComponentAtNode(container);
   }));
-  it("should emit when variants are added.", co.wrap(function *(){
-    let experimentName = UUID.v4();
-    let variants = [];
-    let variantsGlobal = [];
-    let variantSubscription = emitter.addVariantListener(experimentName, (_experimentName, variantName) => {
-      variants.push(variantName);
-    });
-    let variantSubscriptionGlobal = emitter.addVariantListener((_experimentName, variantName) => {
-      variantsGlobal.push(variantName);
-    });
-    let App = React.createClass({
-      render: function(){
-        return <Experiment name={experimentName} value="A">
-          <Variant name="A"><div id="variant-a" /></Variant>
-          <Variant name="B"><div id="variant-b" /></Variant>
-        </Experiment>;
-      }
-    });
-    yield new Promise(function(resolve, reject){
-      ReactDOM.render(<App />, container, resolve);
-    });
-    assert.deepEqual(variants, ["A", "B"]);
-    variantSubscription.remove();
-    assert.deepEqual(variantsGlobal, ["A", "B"]);
-    variantSubscriptionGlobal.remove();
-    ReactDOM.unmountComponentAtNode(container);
-  }));
   it("should emit when a variant is chosen.", co.wrap(function *(){
     let experimentName = UUID.v4();
     let valueName = null;

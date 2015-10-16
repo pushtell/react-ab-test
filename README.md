@@ -45,7 +45,6 @@ emitter.addPlayListener(function(experimentName, variantName){
   - [`<Variant />`](#variant-)
   - [`emitter`](#emitter)
     - [`emitter.emitWin(experimentName)`](#emitteremitwinexperimentname)
-    - [`emitter.addVariantListener([experimentName, ] callback)`](#emitteraddvariantlistenerexperimentname--callback)
     - [`emitter.addValueListener([experimentName, ] callback)`](#emitteraddvaluelistenerexperimentname--callback)
     - [`emitter.addPlayListener([experimentName, ] callback)`](#emitteraddplaylistenerexperimentname--callback)
     - [`emitter.addWinListener([experimentName, ] callback)`](#emitteraddwinlistenerexperimentname--callback)
@@ -284,25 +283,6 @@ Emit a win event.
     * **Required**
     * **Type:** `string`
     * **Example:** `"My Example"`
-
-#### `emitter.addVariantListener([experimentName, ] callback)`
-
-Listen for variants being added to an experiment.
-
-* **Return Type:** [`Subscription`](#subscription)
-* **Parameters:**
-  * `experimentName` - Name of an experiment. If provided, the callback will only be called for the specified experiment.
-    * **Optional**
-    * **Type:** `string`
-    * **Example:** `"My Example"`
-  * `callback` - Function to be called when a variant is added to an experiment.
-    * **Required**
-    * **Type:** `function`
-    * **Callback Arguments:**
-      * `experimentName` - Name of the experiment.
-        * **Type:** `string`
-      * `variantName` - Name of the variant.
-        * **Type:** `string`
 
 #### `emitter.addValueListener([experimentName, ] callback)`
 
