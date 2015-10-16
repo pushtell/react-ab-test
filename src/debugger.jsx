@@ -5,15 +5,6 @@ import assign from 'react/lib/Object.assign';
 
 let render, unmountComponentAtNode;
 
-try {
-  let ReactDOM = require("react-dom");
-  render = ReactDOM.render;
-  unmountComponentAtNode = ReactDOM.unmountComponentAtNode;
-} catch(e) {
-  render = React.render;
-  unmountComponentAtNode = React.unmountComponentAtNode;
-}
-
 if(process.env.NODE_ENV === "production" || !canUseDOM) {
   module.exports = {
     enable() {},
@@ -161,14 +152,14 @@ if(process.env.NODE_ENV === "production" || !canUseDOM) {
       let container = document.createElement('div');
       container.id = 'pushtell-debugger';
       body.appendChild(container);
-      ReactDOM.render(<Debugger />, container);
+      React.render(<Debugger />, container);
     },
     disable() {
       removeStyleSheet();
       let body = document.getElementsByTagName('body')[0];
       let container = document.getElementById('pushtell-debugger');
       if(container) {
-        ReactDOM.unmountComponentAtNode(container);
+        React.unmountComponentAtNode(container);
         body.removeChild(container);
       }
     }
