@@ -3,8 +3,6 @@ import emitter from "./emitter";
 import {canUseDOM} from 'fbjs/lib/ExecutionEnvironment';
 import assign from 'react/lib/Object.assign';
 
-let render, unmountComponentAtNode;
-
 if(process.env.NODE_ENV === "production" || !canUseDOM) {
   module.exports = {
     enable() {},
