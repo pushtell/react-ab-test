@@ -80,7 +80,7 @@ npm install react react-dom
 
 ### Standalone Component
 
-Try it [on JSFiddle](https://jsfiddle.net/pushtell/m14qvy7r/)
+~~Try it [on JSFiddle](https://jsfiddle.net/pushtell/m14qvy7r/)~~ JSFiddle Babel support [appears to be down.](https://github.com/jsfiddle/jsfiddle-issues/issues/634)
 
 ```js
 
@@ -121,7 +121,7 @@ emitter.addWinListener(function(experimentName, variantName){
 
 ### Coordinate Multiple Components
 
-Try it [on JSFiddle](http://jsfiddle.net/pushtell/pcutps9q/)
+~~Try it [on JSFiddle](http://jsfiddle.net/pushtell/pcutps9q/)~~ JSFiddle Babel support [appears to be down.](https://github.com/jsfiddle/jsfiddle-issues/issues/634)
 
 ```js
 
@@ -200,7 +200,7 @@ The debugger is wrapped in a conditional `if(process.env.NODE_ENV === "productio
 
 <img src="https://cdn.rawgit.com/pushtell/react-ab-test/master/documentation-images/debugger-animated-2.gif" width="325" height="325" />
 
-Try it [on JSFiddle](http://jsfiddle.net/pushtell/vs9kkxLd/)
+~~Try it [on JSFiddle](http://jsfiddle.net/pushtell/vs9kkxLd/)~~ JSFiddle Babel support [appears to be down.](https://github.com/jsfiddle/jsfiddle-issues/issues/634)
 
 ```js
 
