@@ -64,16 +64,18 @@ emitter.addPlayListener(function(experimentName, variantName){
 
 ## Installation
 
+`react-ab-test` is compatible with React 0.13.x and 0.14.x.
+
 ```bash
 npm install react-ab-test
 ```
 
 ### Peer Dependencies
 
-If not already present in your project, install the `react` and `react-dom` peer dependencies.
+If not already present in your project, install the `react` peer dependency.
 
 ```bash
-npm install react react-dom
+npm install react
 ```
 
 ## Usage
