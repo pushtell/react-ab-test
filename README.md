@@ -234,7 +234,7 @@ Code from the [`./src`](https://github.com/pushtell/react-ab-test/tree/master/sr
 ## Alternative Libraries
 
 * [**react-ab**](https://github.com/olahol/react-ab) - “Simple declarative and universal A/B testing component for React” by [Ola Holmström](https://github.com/olahol)
-* [**react-native-ab**](https://github.com/lwansbrough/react-native-ab/) - “A component for rendering A/B tests in React Native“ by [Loch Wansbrough](https://github.com/lwansbrough)
+* [**react-native-ab**](https://github.com/lwansbrough/react-native-ab/) - “A component for rendering A/B tests in React Native” by [Loch Wansbrough](https://github.com/lwansbrough)
 
 Please [let us know](https://github.com/pushtell/react-ab-test/issues/new) about alternate libraries not included here.
 
