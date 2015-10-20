@@ -450,7 +450,7 @@ var App = React.createClass({
     // mixpanelHelper sends the 'Experiment Win' event, equivalent to:
     // mixpanel.track('Experiment Win', {Experiment: "My Example", Variant: "A"})
   },
-  componentWillMount(){
+  componentWillMount: function(){
     // mixpanelHelper sends the 'Experiment Play' event, equivalent to:
     // mixpanel.track('Experiment Play', {Experiment: "My Example", Variant: "A"})
   },
@@ -508,7 +508,7 @@ var App = React.createClass({
     // segmentHelper sends the 'Experiment Win' event, equivalent to:
     // segment.track('Experiment Win', {Experiment: "My Example", Variant: "A"})
   },
-  componentWillMount(){
+  componentWillMount: function(){
     // segmentHelper sends the 'Experiment Play' event, equivalent to:
     // segment.track('Experiment Play', {Experiment: "My Example", Variant: "A"})
   },
