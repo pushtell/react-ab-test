@@ -431,9 +431,9 @@ Sends events to [Mixpanel](https://mixpanel.com). Requires `window.mixpanel` to 
 
 #### Usage
 
-When the [`<Experiment />`](#experiment-) is mounted, the helper sends an `"Experiment Play"` event using [`mixpanel.track()`](https://mixpanel.com/help/reference/javascript-full-api-reference#mixpanel.track) with `Experiment` and `Variant` properties.
+When the [`<Experiment />`](#experiment-) is mounted, the helper sends an `Experiment Play` event using [`mixpanel.track(...)`](https://mixpanel.com/help/reference/javascript-full-api-reference#mixpanel.track) with `Experiment` and `Variant` properties.
 
-When a [win is emitted](#emitteremitwinexperimentname) the helper sends an `"Experiment Win"` event using [`mixpanel.track()`](https://mixpanel.com/help/reference/javascript-full-api-reference#mixpanel.track) with `Experiment` and `Variant` properties.
+When a [win is emitted](#emitteremitwinexperimentname) the helper sends an `Experiment Win` event using [`mixpanel.track(...)`](https://mixpanel.com/help/reference/javascript-full-api-reference#mixpanel.track) with `Experiment` and `Variant` properties.
 
 ```js
 
@@ -489,9 +489,9 @@ Sends events to [Segment](https://segment.com). Requires `window.segment` to be 
 
 #### Usage
 
-When the [`<Experiment />`](#experiment-) is mounted, the helper sends an `"Experiment Play"` event using [`segment.track()`](https://segment.com/docs/libraries/analytics.js/#track) with `Experiment` and `Variant` properties.
+When the [`<Experiment />`](#experiment-) is mounted, the helper sends an `Experiment Play` event using [`segment.track(...)`](https://segment.com/docs/libraries/analytics.js/#track) with `Experiment` and `Variant` properties.
 
-When a [win is emitted](#emitteremitwinexperimentname) the helper sends an `"Experiment Win"` event using [`segment.track()`](https://segment.com/docs/libraries/analytics.js/#track) with `Experiment` and `Variant` properties.
+When a [win is emitted](#emitteremitwinexperimentname) the helper sends an `Experiment Win` event using [`segment.track(...)`](https://segment.com/docs/libraries/analytics.js/#track) with `Experiment` and `Variant` properties.
 
 ```js
 
