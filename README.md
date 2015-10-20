@@ -576,4 +576,3 @@ On [Browserstack](https://www.browserstack.com/):
 BROWSERSTACK_USERNAME=YOUR_USERNAME BROWSERSTACK_ACCESS_KEY=YOUR_ACCESS_KEY npm test
 
 ```
-
