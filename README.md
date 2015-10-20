@@ -387,6 +387,16 @@ Returns the variant name currently displayed by the experiment.
     * **Type:** `string`
     * **Example:** `"My Example"`
 
+### `Subscription`
+
+Returned by the emitter's add listener methods. More information available in the [facebook/emitter documentation.](https://github.com/facebook/emitter#api-concepts)
+
+#### `subscription.remove()`
+
+Removes the listener subscription and prevents future callbacks.
+
+* **Parameters:** No parameters
+
 ### `experimentDebugger`
 
 Debugging tool. Attaches a fixed-position panel to the bottom of the `<body>` element that displays mounted experiments and enables the user to change active variants in real-time.
@@ -407,15 +417,51 @@ Removes the debugging panel from the `<body>` element.
 
 * **Return Type:** No return value
 
-### `Subscription`
+### `mixpanelHelper`
 
-Returned by the emitter's add listener methods. More information available in the [facebook/emitter documentation.](https://github.com/facebook/emitter#api-concepts)
+Sends events to [Mixpanel](https://mixpanel.com)
 
-#### `subscription.remove()`
+#### Usage
 
-Removes the listener subscription and prevents future callbacks.
+```js
 
-* **Parameters:** No parameters
+var Experiment = require("react-ab-test/lib/Experiment");
+var Variant = require("react-ab-test/lib/Variant");
+var mixpanelHelper = require("react-ab-test/lib/helpers/mixpanel");
+
+// window.mixpanel has been set by [Mixpanel's embed snippet.](https://mixpanel.com/help/reference/javascript)
+mixpanelHelper.enable();
+
+var App = React.createClass({
+  render: function(){
+    return <div>
+      <Experiment ref="experiment" name="My Example">
+        <Variant name="A">
+          <div>Section A</div>
+        </Variant>
+        <Variant name="B">
+          <div>Section B</div>
+        </Variant>
+      </Experiment>
+    </div>;
+  }
+});
+
+```
+
+Records an event named 'Experiment Play' using [`mixpanel.track()`](https://mixpanel.com/help/reference/javascript-full-api-reference#mixpanel.track) with properties `{"Experiment": "My Example", "Variant": "A"}` when the [`<Experiment />`](#experiment-) is mounted.
+
+#### `mixpanelHelper.enable()`
+
+Add listeners to `win` and `play` events and report results to Mixpanel. Requires `window.mixpanel` to be set using the [Mixpanel embed snippet](https://mixpanel.com/help/reference/javascript).
+
+* **Return Type:** No return value
+
+#### `mixpanelHelper.disable()`
+
+Remove `win` and `play` listeners and stop reporting results to Mixpanel.
+
+* **Return Type:** No return value
 
 ## Tests
 
