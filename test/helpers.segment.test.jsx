@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import Experiment from "../src/CoreExperiment.jsx";
 import Variant from "../src/Variant.jsx";
 import emitter from "../src/emitter.jsx";
-import mixpanelHelper from "../src/helpers/mixpanel.jsx";
+import segmentHelper from "../src/helpers/segment.jsx";
 import assert from "assert";
 import co from "co";
 import UUID from "node-uuid";
@@ -11,7 +11,8 @@ import {canUseDOM} from 'fbjs/lib/ExecutionEnvironment';
 import ES6Promise from 'es6-promise';
 ES6Promise.polyfill();
 
-describe("Mixpanel Helper", function() {
+describe("Segment Helper", function() {
+  this.timeout(20000);
   let container;
   before(co.wrap(function *(){
     container = document.createElement("div");
@@ -21,35 +22,36 @@ describe("Mixpanel Helper", function() {
   after(function(){
     document.getElementsByTagName('body')[0].removeChild(container);
   });
-  it("should error if Mixpanel global is not set.", function (){
+  it("should error if Segment global is not set.", function (){
     assert.throws(
       function() {
-        mixpanelHelper.enable();
+        segmentHelper.enable();
       }, function(error) {
         return error.type === "PUSHTELL_HELPER_MISSING_GLOBAL";
       }
     );
   });
-  it("should error if Mixpanel is disabled before it is enabled.", function (){
+  it("should error if Segment is disabled before it is enabled.", function (){
     assert.throws(
       function() {
-        mixpanelHelper.disable();
+        segmentHelper.disable();
       }, function(error) {
         return error.type === "PUSHTELL_HELPER_INVALID_DISABLE";
       }
     );
   });
-  it("should report results to Mixpanel.", co.wrap(function *(){
+  it("should report results to Segment.", co.wrap(function *(){
     let playPromise, winPromise;
     if(canUseDOM) {
-      // Mixpanel embed code wrapped in a promise.
+      // Segment Analytics.js embed code wrapped in a promise.
       yield new Promise(function(resolve, reject){
-        (function(e,b){if(!b.__SV){var a,f,i,g;window.mixpanel=b;b._i=[];b.init=function(a,e,d){function f(b,h){var a=h.split(".");2==a.length&&(b=b[a[0]],h=a[1]);b[h]=function(){b.push([h].concat(Array.prototype.slice.call(arguments,0)))}}var c=b;"undefined"!==typeof d?c=b[d]=[]:d="mixpanel";c.people=c.people||[];c.toString=function(b){var a="mixpanel";"mixpanel"!==d&&(a+="."+d);b||(a+=" (stub)");return a};c.people.toString=function(){return c.toString(1)+".people (stub)"};i="disable time_event track track_pageview track_links track_forms register register_once alias unregister identify name_tag set_config people.set people.set_once people.increment people.append people.union people.track_charge people.clear_charges people.delete_user".split(" ");
-        for(g=0;g<i.length;g++)f(c,i[g]);b._i.push([a,e,d])};b.__SV=1.2;a=e.createElement("script");a.type="text/javascript";a.async=!0;a.src="undefined"!==typeof MIXPANEL_CUSTOM_LIB_URL?MIXPANEL_CUSTOM_LIB_URL:"file:"===e.location.protocol&&"//cdn.mxpnl.com/libs/mixpanel-2-latest.min.js".match(/^\/\//)?"https://cdn.mxpnl.com/libs/mixpanel-2-latest.min.js":"//cdn.mxpnl.com/libs/mixpanel-2-latest.min.js";f=e.getElementsByTagName("script")[0];f.parentNode.insertBefore(a,f)}})(document,window.mixpanel||[]);
-        mixpanel.init("fe967f7ecc749aebaae9f7e38363c266", {loaded: resolve});
+        !function(){var analytics=window.analytics=window.analytics||[];if(!analytics.initialize)if(analytics.invoked)window.console&&console.error&&console.error("Segment snippet included twice.");else{analytics.invoked=!0;analytics.methods=["trackSubmit","trackClick","trackLink","trackForm","pageview","identify","reset","group","track","ready","alias","page","once","off","on"];analytics.factory=function(t){return function(){var e=Array.prototype.slice.call(arguments);e.unshift(t);analytics.push(e);return analytics}};for(var t=0;t<analytics.methods.length;t++){var e=analytics.methods[t];analytics[e]=analytics.factory(e)}analytics.load=function(t){var e=document.createElement("script");e.type="text/javascript";e.async=!0;e.src=("https:"===document.location.protocol?"https://":"http://")+"cdn.segment.com/analytics.js/v1/"+t+"/analytics.min.js";var n=document.getElementsByTagName("script")[0];n.parentNode.insertBefore(e,n)};analytics.SNIPPET_VERSION="3.1.0";
+          analytics.load("Ovh9rJDYwrrfoTMMj8p5LVB6pwutYsQm");
+          }}();
+        analytics.ready(resolve);
       });
       playPromise = new Promise(function(resolve, reject){
-        let playSubscription = emitter.addListener("mixpanel-play", function(_experimentName, _variantName){
+        let playSubscription = emitter.addListener("segment-play", function(_experimentName, _variantName){
           assert.equal(_experimentName, experimentName);
           assert.equal(_variantName, "A");
           playSubscription.remove();
@@ -57,7 +59,7 @@ describe("Mixpanel Helper", function() {
         });
       });
       winPromise = new Promise(function(resolve, reject){
-        let winSubscription = emitter.addListener("mixpanel-win", function(_experimentName, _variantName){
+        let winSubscription = emitter.addListener("segment-win", function(_experimentName, _variantName){
           assert.equal(_experimentName, experimentName);
           assert.equal(_variantName, "A");
           winSubscription.remove();
@@ -68,7 +70,7 @@ describe("Mixpanel Helper", function() {
       playPromise = Promise.resolve();
       winPromise = Promise.resolve();
     }
-    mixpanelHelper.enable();
+    segmentHelper.enable();
     let experimentName = UUID.v4();
     let App = React.createClass({
       render: function(){
@@ -84,7 +86,7 @@ describe("Mixpanel Helper", function() {
     yield playPromise;
     emitter.emitWin(experimentName);
     yield winPromise;
-    mixpanelHelper.disable();
+    segmentHelper.disable();
     ReactDOM.unmountComponentAtNode(container);
     if(canUseDOM) {
       delete window.mixpanel;

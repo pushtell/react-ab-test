@@ -60,6 +60,10 @@ emitter.addPlayListener(function(experimentName, variantName){
     - [Usage](#usage-1)
     - [`mixpanelHelper.enable()`](#mixpanelhelperenable)
     - [`mixpanelHelper.disable()`](#mixpanelhelperdisable)
+  - [`segmentHelper`](#segmenthelper)
+    - [Usage](#usage-2)
+    - [`segmentHelper.enable()`](#segmenthelperenable)
+    - [`segmentHelper.disable()`](#segmenthelperdisable)
 - [Tests](#tests)
   - [Browser Coverage](#browser-coverage)
   - [Running Tests](#running-tests)
@@ -423,9 +427,13 @@ Removes the debugging panel from the `<body>` element.
 
 ### `mixpanelHelper`
 
-Sends events to [Mixpanel](https://mixpanel.com)
+Sends events to [Mixpanel](https://mixpanel.com). Requires `window.mixpanel` to be set using [Mixpanel's embed snippet](https://mixpanel.com/help/reference/javascript).
 
 #### Usage
+
+When the [`<Experiment />`](#experiment-) is mounted, the helper sends an `"Experiment Play"` event using [`mixpanel.track()`](https://mixpanel.com/help/reference/javascript-full-api-reference#mixpanel.track) with `Experiment` and `Variant` properties.
+
+When a [win is emitted](#emitteremitwinexperimentname) the helper sends an `"Experiment Win"` event using [`mixpanel.track()`](https://mixpanel.com/help/reference/javascript-full-api-reference#mixpanel.track) with `Experiment` and `Variant` properties.
 
 ```js
 
@@ -433,10 +441,19 @@ var Experiment = require("react-ab-test/lib/Experiment");
 var Variant = require("react-ab-test/lib/Variant");
 var mixpanelHelper = require("react-ab-test/lib/helpers/mixpanel");
 
-// window.mixpanel has been set by [Mixpanel's embed snippet.](https://mixpanel.com/help/reference/javascript)
+// window.mixpanel has been set by Mixpanel's embed snippet.
 mixpanelHelper.enable();
 
 var App = React.createClass({
+  onButtonClick: function(e){
+    emitter.emitWin("My Example");
+    // mixpanelHelper sends the 'Experiment Win' event, equivalent to:
+    // mixpanel.track('Experiment Win', {Experiment: "My Example", Variant: "A"})
+  },
+  componentWillMount(){
+    // mixpanelHelper sends the 'Experiment Play' event, equivalent to:
+    // mixpanel.track('Experiment Play', {Experiment: "My Example", Variant: "A"})
+  },
   render: function(){
     return <div>
       <Experiment ref="experiment" name="My Example">
@@ -447,23 +464,80 @@ var App = React.createClass({
           <div>Section B</div>
         </Variant>
       </Experiment>
+      <button onClick={this.onButtonClick}>Emit a win</button>
     </div>;
   }
 });
 
 ```
 
-Records an event named 'Experiment Play' using [`mixpanel.track()`](https://mixpanel.com/help/reference/javascript-full-api-reference#mixpanel.track) with properties `{"Experiment": "My Example", "Variant": "A"}` when the [`<Experiment />`](#experiment-) is mounted.
-
 #### `mixpanelHelper.enable()`
 
-Add listeners to `win` and `play` events and report results to Mixpanel. Requires `window.mixpanel` to be set using the [Mixpanel embed snippet](https://mixpanel.com/help/reference/javascript).
+Add listeners to `win` and `play` events and report results to Mixpanel.
 
 * **Return Type:** No return value
 
 #### `mixpanelHelper.disable()`
 
 Remove `win` and `play` listeners and stop reporting results to Mixpanel.
+
+* **Return Type:** No return value
+
+### `segmentHelper`
+
+Sends events to [Segment](https://segment.com). Requires `window.segment` to be set using [Segment's embed snippet](https://segment.com/docs/libraries/analytics.js/quickstart/#step-1-copy-the-snippet).
+
+#### Usage
+
+When the [`<Experiment />`](#experiment-) is mounted, the helper sends an `"Experiment Play"` event using [`segment.track()`](https://segment.com/docs/libraries/analytics.js/#track) with `Experiment` and `Variant` properties.
+
+When a [win is emitted](#emitteremitwinexperimentname) the helper sends an `"Experiment Win"` event using [`segment.track()`](https://segment.com/docs/libraries/analytics.js/#track) with `Experiment` and `Variant` properties.
+
+```js
+
+var Experiment = require("react-ab-test/lib/Experiment");
+var Variant = require("react-ab-test/lib/Variant");
+var segmentHelper = require("react-ab-test/lib/helpers/segment");
+
+// window.segment has been set by Segment's embed snippet.
+segmentHelper.enable();
+
+var App = React.createClass({
+  onButtonClick: function(e){
+    emitter.emitWin("My Example");
+    // segmentHelper sends the 'Experiment Win' event, equivalent to:
+    // segment.track('Experiment Win', {Experiment: "My Example", Variant: "A"})
+  },
+  componentWillMount(){
+    // segmentHelper sends the 'Experiment Play' event, equivalent to:
+    // segment.track('Experiment Play', {Experiment: "My Example", Variant: "A"})
+  },
+  render: function(){
+    return <div>
+      <Experiment ref="experiment" name="My Example">
+        <Variant name="A">
+          <div>Section A</div>
+        </Variant>
+        <Variant name="B">
+          <div>Section B</div>
+        </Variant>
+      </Experiment>
+      <button onClick={this.onButtonClick}>Emit a win</button>
+    </div>;
+  }
+});
+
+```
+
+#### `segmentHelper.enable()`
+
+Add listeners to `win` and `play` events and report results to Segment.
+
+* **Return Type:** No return value
+
+#### `segmentHelper.disable()`
+
+Remove `win` and `play` listeners and stop reporting results to Segment.
 
 * **Return Type:** No return value
 
