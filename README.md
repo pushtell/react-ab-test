@@ -51,6 +51,7 @@ emitter.addPlayListener(function(experimentName, variantName){
     - [`emitter.defineVariants(experimentName, variantNames)`](#emitterdefinevariantsexperimentname-variantnames)
     - [`emitter.setActiveVariant(experimentName, variantName)`](#emittersetactivevariantexperimentname-variantname)
     - [`emitter.getActiveVariant(experimentName)`](#emittergetactivevariantexperimentname)
+    - [`emitter.getSortedVariants(experimentName)`](#emittergetsortedvariantsexperimentname)
   - [`Subscription`](#subscription)
     - [`subscription.remove()`](#subscriptionremove)
   - [`experimentDebugger`](#experimentdebugger)
