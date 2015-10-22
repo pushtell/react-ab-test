@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import Experiment from "../src/CoreExperiment.jsx";
 import Variant from "../src/Variant.jsx";
 import emitter from "../src/emitter.jsx";
-import segmentHelper from "../src/helpers/segment.jsx";
+import googleAnalyticsHelper from "../src/helpers/googleanalytics.jsx";
 import assert from "assert";
 import co from "co";
 import UUID from "node-uuid";
@@ -11,8 +11,7 @@ import {canUseDOM} from 'fbjs/lib/ExecutionEnvironment';
 import ES6Promise from 'es6-promise';
 ES6Promise.polyfill();
 
-describe("Segment Helper", function() {
-  this.timeout(20000);
+describe("Google Analytics Helper", function() {
   let container;
   before(co.wrap(function *(){
     container = document.createElement("div");
@@ -22,36 +21,38 @@ describe("Segment Helper", function() {
   after(function(){
     document.getElementsByTagName('body')[0].removeChild(container);
   });
-  it("should error if Segment global is not set.", function (){
+  it("should error if Google Analytics global is not set.", function (){
     assert.throws(
       function() {
-        segmentHelper.enable();
+        googleAnalyticsHelper.enable();
       }, function(error) {
         return error.type === "PUSHTELL_HELPER_MISSING_GLOBAL";
       }
     );
   });
-  it("should error if Segment is disabled before it is enabled.", function (){
+  it("should error if Google Analytics is disabled before it is enabled.", function (){
     assert.throws(
       function() {
-        segmentHelper.disable();
+        googleAnalyticsHelper.disable();
       }, function(error) {
         return error.type === "PUSHTELL_HELPER_INVALID_DISABLE";
       }
     );
   });
-  it("should report results to Segment.", co.wrap(function *(){
+  it("should report results to Google Analytics.", co.wrap(function *(){
     let playPromise, winPromise;
     if(canUseDOM) {
-      // Segment Analytics.js embed code wrapped in a promise.
+      // Google Analytics embed code wrapped in a promise.
       yield new Promise(function(resolve, reject){
-        !function(){var analytics=window.analytics=window.analytics||[];if(!analytics.initialize)if(analytics.invoked)window.console&&console.error&&console.error("Segment snippet included twice.");else{analytics.invoked=!0;analytics.methods=["trackSubmit","trackClick","trackLink","trackForm","pageview","identify","reset","group","track","ready","alias","page","once","off","on"];analytics.factory=function(t){return function(){var e=Array.prototype.slice.call(arguments);e.unshift(t);analytics.push(e);return analytics}};for(var t=0;t<analytics.methods.length;t++){var e=analytics.methods[t];analytics[e]=analytics.factory(e)}analytics.load=function(t){var e=document.createElement("script");e.type="text/javascript";e.async=!0;e.src=("https:"===document.location.protocol?"https://":"http://")+"cdn.segment.com/analytics.js/v1/"+t+"/analytics.min.js";var n=document.getElementsByTagName("script")[0];n.parentNode.insertBefore(e,n)};analytics.SNIPPET_VERSION="3.1.0";
-          analytics.load("Ovh9rJDYwrrfoTMMj8p5LVB6pwutYsQm");
-          }}();
-        analytics.ready(resolve);
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-69110406-1', 'auto');
+        ga(resolve);
       });
       playPromise = new Promise(function(resolve, reject){
-        let playSubscription = emitter.addListener("segment-play", function(_experimentName, _variantName){
+        let playSubscription = emitter.addListener("googleanalytics-play", function(_experimentName, _variantName){
           assert.equal(_experimentName, experimentName);
           assert.equal(_variantName, "A");
           playSubscription.remove();
@@ -59,7 +60,7 @@ describe("Segment Helper", function() {
         });
       });
       winPromise = new Promise(function(resolve, reject){
-        let winSubscription = emitter.addListener("segment-win", function(_experimentName, _variantName){
+        let winSubscription = emitter.addListener("googleanalytics-win", function(_experimentName, _variantName){
           assert.equal(_experimentName, experimentName);
           assert.equal(_variantName, "A");
           winSubscription.remove();
@@ -70,7 +71,7 @@ describe("Segment Helper", function() {
       playPromise = Promise.resolve();
       winPromise = Promise.resolve();
     }
-    segmentHelper.enable();
+    googleAnalyticsHelper.enable();
     let experimentName = UUID.v4();
     let App = React.createClass({
       render: function(){
@@ -86,10 +87,10 @@ describe("Segment Helper", function() {
     yield playPromise;
     emitter.emitWin(experimentName);
     yield winPromise;
-    segmentHelper.disable();
+    googleAnalyticsHelper.disable();
     ReactDOM.unmountComponentAtNode(container);
     if(canUseDOM) {
-      delete window.analytics;
+      delete window.ga;
     }
   }));
 });

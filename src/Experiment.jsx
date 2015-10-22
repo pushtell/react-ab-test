@@ -43,6 +43,10 @@ export default React.createClass({
     emitter.emitWin(this.props.name);
   },
   getLocalStorageValue() {
+    let activeValue = emitter.getActiveVariant();
+    if(typeof activeValue === "string") {
+      return activeValue;
+    }
     let storedValue = store.getItem('PUSHTELL-' + this.props.name);
     if(typeof storedValue === "string") {
       emitter.setActiveVariant(this.props.name, storedValue, true);

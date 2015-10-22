@@ -28,6 +28,7 @@ export default React.createClass({
       children[element.props.name] = element;
       emitter.addExperimentVariant(this.props.name, element.props.name);
     });
+    emitter.emit("variants-loaded", this.props.name);
     return {
       variants: children
     };
