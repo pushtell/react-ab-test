@@ -92,7 +92,7 @@ npm install react
 
 ### Standalone Component
 
-Try it [on JSFiddle](https://jsfiddle.net/pushtell/m14qvy7r/) *JSFiddle Babel support [appears to be broken on Chrome 46.](https://github.com/jsfiddle/jsfiddle-issues/issues/634)*
+Try it [on JSFiddle](https://jsfiddle.net/pushtell/m14qvy7r/) *(JSFiddle Babel support [appears to be broken on Chrome 46.](https://github.com/jsfiddle/jsfiddle-issues/issues/634))*
 
 ```js
 
@@ -133,7 +133,7 @@ emitter.addWinListener(function(experimentName, variantName){
 
 ### Coordinate Multiple Components
 
-Try it [on JSFiddle](http://jsfiddle.net/pushtell/pcutps9q/) *JSFiddle Babel support [appears to be broken on Chrome 46.](https://github.com/jsfiddle/jsfiddle-issues/issues/634)*
+Try it [on JSFiddle](http://jsfiddle.net/pushtell/pcutps9q/) *(JSFiddle Babel support [appears to be broken on Chrome 46.](https://github.com/jsfiddle/jsfiddle-issues/issues/634))*
 
 ```js
 
@@ -212,7 +212,7 @@ The debugger is wrapped in a conditional `if(process.env.NODE_ENV === "productio
 
 <img src="https://cdn.rawgit.com/pushtell/react-ab-test/master/documentation-images/debugger-animated-2.gif" width="325" height="325" />
 
-Try it [on JSFiddle](http://jsfiddle.net/pushtell/vs9kkxLd/) *JSFiddle Babel support [appears to be broken on Chrome 46.](https://github.com/jsfiddle/jsfiddle-issues/issues/634)*
+Try it [on JSFiddle](http://jsfiddle.net/pushtell/vs9kkxLd/) *(JSFiddle Babel support [appears to be broken on Chrome 46.](https://github.com/jsfiddle/jsfiddle-issues/issues/634))*
 
 ```js
 
@@ -242,14 +242,15 @@ var App = React.createClass({
 
 A [`<Experiment />`](#experiment-) component with a defined `userIdentifier` property will choose a consistent [`<Variant />`](#variant-). (When undefined the [`<Variant />`](#variant-) is chosen randomly.)
 
-The application in `App.jsx`:
+The React component in [`Component.jsx`](https://github.com/pushtell/react-ab-test/tree/master/example/isomorphic/Component.jsx):
 
 ```js
 
-var Experiment = require("react-ab-test/lib/Experiment");
-var Variant = require("react-ab-test/lib/Variant");
+var React = require("react");
+var Experiment = require("../lib/Experiment");
+var Variant = require("../lib/Variant");
 
-var App = React.createClass({
+module.exports = React.createClass({
   propTypes: {
     userIdentifier: React.PropTypes.string.isRequired
   },
@@ -269,7 +270,7 @@ var App = React.createClass({
 
 ```
 
-An [EJS](https://github.com/mde/ejs) template in `template.ejs`:
+An [EJS](https://github.com/mde/ejs) template in [`template.ejs`](https://github.com/pushtell/react-ab-test/tree/master/example/isomorphic/views/template.ejs):
 
 ```html
 <!doctype html>
@@ -278,45 +279,63 @@ An [EJS](https://github.com/mde/ejs) template in `template.ejs`:
     <title>Isomorphic Rendering Example</title>
   </head>
   <script type="text/javascript">
-    var USER_ID = <%- JSON.stringify(userId) %>;
+    var SESSION_ID = <%- JSON.stringify(sessionID) %>;
   </script>
   <body>
-    <div id="react-mount">
-      <%- reactOutput %>
-    </div>
+    <div id="react-mount"><%- reactOutput %></div>
+    <script type="text/javascript" src="bundle.js"></script>
   </body>
 </html>
 ```
 
-On the server:
+In [`server.js`]](https://github.com/pushtell/react-ab-test/tree/master/example/isomorphic/server.js):
 
 ```js
 
 require("babel/register")({only: /jsx/});
+
+var express = require('express');
+var session = require('express-session');
+var React = require("react");
 var ReactDOMServer = require("react-dom/server");
-var ejs = require("ejs");
-var App = require("./App.jsx");
+var Component = require("./Component.jsx");
 
-// A distinct user identifier. This could be a registered user's ID or a session ID;
-var userId = "feb2eeab3d624a29bdff8a812f86f566";
+var app = express();
 
-// The instatiated App element.
-var reactElement = React.createElement(App, {userIdentifier:userId});
+app.set('view engine', 'ejs');
 
-// The rendered
-var reactString = ReactDOMServer.renderToString(reactElement);
+app.use(session({
+  secret: 'keyboard cat',
+  resave: false,
+  saveUninitialized: true
+}));
 
-var html = ejs.render(reactString, {userId: userId}, {filename: "template.html"});
+app.get('/', function (req, res) {
+  var reactElement = React.createElement(Component, {userIdentifier: req.sessionID});
+  var reactString = ReactDOMServer.renderToString(reactElement);
+  res.render('template', {
+    sessionID: req.sessionID,
+    reactOutput: reactString
+  });
+});
+
+app.use(express.static('www'));
+
+app.listen(8080);
 
 ```
 
-On the client:
+On the client in [`app.jsx`]](https://github.com/pushtell/react-ab-test/tree/master/example/isomorphic/www/app.jsx):
 
 ```js
 
-var ReactDOM = require("react-dom");
+var React = require('react');
+var ReactDOM = require('react-dom');
+var Experiment = require("../../lib/Experiment");
+var Variant = require("../../lib/Variant");
+var Component = require("../Component.jsx");
 
-ReactDOM.render(<App userIdentifier={USER_ID} />, document.getElementById("react-main-mount"));
+ReactDOM.render(<Component userIdentifier={SESSION_ID} />, document.getElementById("react-mount"));
 
 ```
 
@@ -533,7 +552,7 @@ When the [`<Experiment />`](#experiment-) is mounted, the helper sends an `Exper
 
 When a [win is emitted](#emitteremitwinexperimentname) the helper sends an `Experiment Win` event using [`mixpanel.track(...)`](https://mixpanel.com/help/reference/javascript-full-api-reference#mixpanel.track) with `Experiment` and `Variant` properties.
 
-Try it [on JSFiddle](https://jsfiddle.net/pushtell/hwtnzm35/) *JSFiddle Babel support [appears to be broken on Chrome 46.](https://github.com/jsfiddle/jsfiddle-issues/issues/634)*
+Try it [on JSFiddle](https://jsfiddle.net/pushtell/hwtnzm35/) *(JSFiddle Babel support [appears to be broken on Chrome 46.](https://github.com/jsfiddle/jsfiddle-issues/issues/634))*
 
 ```js
 
@@ -593,7 +612,7 @@ When the [`<Experiment />`](#experiment-) is mounted, the helper sends an `Exper
 
 When a [win is emitted](#emitteremitwinexperimentname) the helper sends an `Experiment Win` event using [`segment.track(...)`](https://segment.com/docs/libraries/analytics.js/#track) with `Experiment` and `Variant` properties.
 
-Try it [on JSFiddle](https://jsfiddle.net/pushtell/ae1jeo2k/) *JSFiddle Babel support [appears to be broken on Chrome 46.](https://github.com/jsfiddle/jsfiddle-issues/issues/634)*
+Try it [on JSFiddle](https://jsfiddle.net/pushtell/ae1jeo2k/) *(JSFiddle Babel support [appears to be broken on Chrome 46.](https://github.com/jsfiddle/jsfiddle-issues/issues/634))*
 
 ```js
 

@@ -1,6 +1,6 @@
 var React = require("react");
-var Experiment = require("../lib/Experiment");
-var Variant = require("../lib/Variant");
+var Experiment = require("../../lib/Experiment");
+var Variant = require("../../lib/Variant");
 
 module.exports = React.createClass({
   propTypes: {

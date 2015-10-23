@@ -12,6 +12,10 @@
   "scripts": {
     "start": "./node_modules/webpack-dev-server/bin/webpack-dev-server.js --config ./webpack.example.config.js"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pushtell/react-ab-test.git"
+  },
   "author": "",
   "license": "MIT"
 }

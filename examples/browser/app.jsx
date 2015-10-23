@@ -1,13 +1,12 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-
-import Experiment from "../lib/Experiment";
-import Variant from "../lib/Variant";
-import experimentDebugger from "../lib/debugger";
+var React = require('react');
+var ReactDOM = require('react-dom');
+var Experiment = require("../../lib/Experiment");
+var Variant = require("../../lib/Variant");
+var experimentDebugger = require("../../lib/debugger");
 
 experimentDebugger.enable();
 
-const App = React.createClass({
+var App = React.createClass({
   render() {
     return <div>
       <h1>Experiment 1</h1>
