@@ -38,6 +38,7 @@ emitter.addPlayListener(function(experimentName, variantName){
   - [Coordinate Multiple Components](#coordinate-multiple-components)
   - [Debugging](#debugging)
   - [Server Rendering](#server-rendering)
+    - [Example](#example)
   - [With Babel](#with-babel)
 - [Alternative Libraries](#alternative-libraries)
 - [Resources for A/B Testing with React](#resources-for-ab-testing-with-react)
@@ -244,7 +245,7 @@ A [`<Experiment />`](#experiment-) component with a `userIdentifier` property wi
 
 #### Example
 
-See [`./examples/isomorphic](https://github.com/pushtell/react-ab-test/tree/develop/examples/isomorphic).
+See [`./examples/isomorphic`](https://github.com/pushtell/react-ab-test/tree/develop/examples/isomorphic).
 
 The component in [`Component.jsx`](https://github.com/pushtell/react-ab-test/blob/master/example/isomorphic/Component.jsx):
 
