@@ -241,11 +241,11 @@ var App = React.createClass({
 ```
 ### Server Rendering
 
-A [`<Experiment />`](#experiment-) component with a `userIdentifier` property will choose a consistent [`<Variant />`](#variant-).
+A [`<Experiment />`](#experiment-) with a `userIdentifier` property will choose a consistent [`<Variant />`](#variant-) making the component suitable for server side rendering.
+
+See [`./examples/isomorphic`](https://github.com/pushtell/react-ab-test/tree/develop/examples/isomorphic) for a working example.
 
 #### Example
-
-See [`./examples/isomorphic`](https://github.com/pushtell/react-ab-test/tree/develop/examples/isomorphic).
 
 The component in [`Component.jsx`](https://github.com/pushtell/react-ab-test/blob/master/example/isomorphic/Component.jsx):
 
