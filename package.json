@@ -40,7 +40,7 @@
     "mocha-babel": "*"
   },
   "scripts": {
-    "test": "./node_modules/karma/bin/karma start test/karma.conf.js; mocha --compilers js:mocha-babel test-isomorphic/*.jsx",
+    "test": "./node_modules/karma/bin/karma start test/browser/karma.conf.js; mocha --compilers js:mocha-babel test/isomorphic/*.jsx",
     "build": "doctoc . --github --title '<h1>Table of Contents</h1>'; ./node_modules/babel/bin/babel.js ./src --out-dir ./lib; ./node_modules/webpack/bin/webpack.js --config webpack.standalone.config.js"
   },
   "repository": {
