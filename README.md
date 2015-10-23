@@ -83,14 +83,6 @@ Please [★ on GitHub](https://github.com/pushtell/react-ab-test)!
 npm install react-ab-test
 ```
 
-### Peer Dependencies
-
-If not already present in your project, install the `react` peer dependency.
-
-```bash
-npm install react
-```
-
 ## Usage
 
 ### Standalone Component
@@ -243,13 +235,13 @@ var App = React.createClass({
 ```
 ### Server Rendering
 
-A [`<Experiment />`](#experiment-) with a `userIdentifier` property will choose a consistent [`<Variant />`](#variant-) making the component suitable for server side rendering.
+A [`<Experiment />`](#experiment-) with a `userIdentifier` property will choose a consistent [`<Variant />`](#variant-) suitable for server side rendering.
 
 See [`./examples/isomorphic`](https://github.com/pushtell/react-ab-test/tree/develop/examples/isomorphic) for a working example.
 
 #### Example
 
-The component in [`Component.jsx`](https://github.com/pushtell/react-ab-test/blob/master/example/isomorphic/Component.jsx):
+The component in [`Component.jsx`](https://github.com/pushtell/react-ab-test/blob/master/examples/isomorphic/Component.jsx):
 
 ```js
 
@@ -277,7 +269,7 @@ module.exports = React.createClass({
 
 ```
 
-We use a session ID for the `userIdentifier` property in this example, although a long-lived user ID would be preferable. See [`server.js`](https://github.com/pushtell/react-ab-test/blob/master/example/isomorphic/server.js):
+We use a session ID for the `userIdentifier` property in this example, although a long-lived user ID would be preferable. See [`server.js`](https://github.com/pushtell/react-ab-test/blob/master/examples/isomorphic/server.js):
 
 ```js
 require("babel/register")({only: /jsx/});
@@ -312,7 +304,7 @@ app.use(express.static('www'));
 app.listen(8080);
 ```
 
-An [EJS](https://github.com/mde/ejs) template in [`template.ejs`](https://github.com/pushtell/react-ab-test/blob/master/example/isomorphic/views/template.ejs):
+An [EJS](https://github.com/mde/ejs) template in [`template.ejs`](https://github.com/pushtell/react-ab-test/blob/master/examples/isomorphic/views/template.ejs):
 
 ```html
 <!doctype html>
@@ -330,7 +322,7 @@ An [EJS](https://github.com/mde/ejs) template in [`template.ejs`](https://github
 </html>
 ```
 
-On the client in [`app.jsx`](https://github.com/pushtell/react-ab-test/blob/master/example/isomorphic/www/app.jsx):
+On the client in [`app.jsx`](https://github.com/pushtell/react-ab-test/blob/master/examples/isomorphic/www/app.jsx):
 
 ```js
 var React = require('react');
@@ -372,11 +364,11 @@ Experiment container component. Children must be of type [`Variant`](#variant-).
     * **Required**
     * **Type:** `string`
     * **Example:** `"My Example"`
-  * `userIdentifier` - Distinct user identifier. When defined, this value is hashed to choose a variant if `defaultVariantName` or a stored value is not present. Useful for server side rendering.
+  * `userIdentifier` - Distinct user identifier. When defined, this value is hashed to choose a variant if `defaultVariantName` or a stored value is not present. Useful for [server side rendering](#server-rendering).
     * **Optional**
     * **Type:** `string`
     * **Example:** `"7cf61a4521f24507936a8977e1eee2d4"`
-  * `defaultVariantName` - Name of the default variant. When defined, this value is used to choose a variant if a stored value is not present. This property may be useful for server side rendering but is otherwise not recommended.
+  * `defaultVariantName` - Name of the default variant. When defined, this value is used to choose a variant if a stored value is not present. This property may be useful for [server side rendering](#server-rendering) but is otherwise not recommended.
     * **Optional**
     * **Type:** `string`
     * **Example:** `"A"`
