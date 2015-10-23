@@ -27,3 +27,5 @@ build/Release
 node_modules
 
 run-browserstack-tests.sh
+
+bundle.js
