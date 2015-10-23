@@ -240,15 +240,15 @@ var App = React.createClass({
 ```
 ### Server Rendering
 
-A [`<Experiment />`](#experiment-) component with a defined `userIdentifier` property will choose a consistent [`<Variant />`](#variant-). (When undefined the [`<Variant />`](#variant-) is chosen randomly.)
+A [`<Experiment />`](#experiment-) component with a `userIdentifier` property will choose a consistent [`<Variant />`](#variant-). When undefined the [`<Variant />`](#variant-) is chosen randomly.
 
-The React component in [`Component.jsx`](https://github.com/pushtell/react-ab-test/tree/master/example/isomorphic/Component.jsx):
+The component in [`Component.jsx`](https://github.com/pushtell/react-ab-test/blob/master/example/isomorphic/Component.jsx):
 
 ```js
 
 var React = require("react");
-var Experiment = require("../lib/Experiment");
-var Variant = require("../lib/Variant");
+var Experiment = require("react-ab-test/lib/Experiment");
+var Variant = require("react-ab-test/lib/Variant");
 
 module.exports = React.createClass({
   propTypes: {
@@ -270,7 +270,7 @@ module.exports = React.createClass({
 
 ```
 
-An [EJS](https://github.com/mde/ejs) template in [`template.ejs`](https://github.com/pushtell/react-ab-test/tree/master/example/isomorphic/views/template.ejs):
+An [EJS](https://github.com/mde/ejs) template in [`template.ejs`](https://github.com/pushtell/react-ab-test/blob/master/example/isomorphic/views/template.ejs):
 
 ```html
 <!doctype html>
@@ -288,10 +288,9 @@ An [EJS](https://github.com/mde/ejs) template in [`template.ejs`](https://github
 </html>
 ```
 
-In [`server.js`]](https://github.com/pushtell/react-ab-test/tree/master/example/isomorphic/server.js):
+In [`server.js`](https://github.com/pushtell/react-ab-test/blob/master/example/isomorphic/server.js):
 
 ```js
-
 require("babel/register")({only: /jsx/});
 
 var express = require('express');
@@ -322,21 +321,18 @@ app.get('/', function (req, res) {
 app.use(express.static('www'));
 
 app.listen(8080);
-
 ```
 
-On the client in [`app.jsx`]](https://github.com/pushtell/react-ab-test/tree/master/example/isomorphic/www/app.jsx):
+On the client in [`app.jsx`](https://github.com/pushtell/react-ab-test/blob/master/example/isomorphic/www/app.jsx):
 
 ```js
-
 var React = require('react');
 var ReactDOM = require('react-dom');
-var Experiment = require("../../lib/Experiment");
-var Variant = require("../../lib/Variant");
 var Component = require("../Component.jsx");
 
-ReactDOM.render(<Component userIdentifier={SESSION_ID} />, document.getElementById("react-mount"));
+var container = document.getElementById("react-mount");
 
+ReactDOM.render(<Component userIdentifier={SESSION_ID} />, container);
 ```
 
 ### With Babel
