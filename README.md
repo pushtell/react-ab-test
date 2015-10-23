@@ -19,7 +19,7 @@ Wrap components in [`<Variant />`](#variant-) and nest in [`<Experiment />`](#ex
 </Experiment>
 ```
 
-Report to your analytics provider using the [`emitter`](#emitter).
+Report to your analytics provider using the [`emitter`](#emitter). Additional helper methods are available for [Mixpanel](#mixpanelhelper) and [Segment.com](#segmenthelper).
 
 ```js
 emitter.addPlayListener(function(experimentName, variantName){
