@@ -37,6 +37,7 @@ emitter.addPlayListener(function(experimentName, variantName){
   - [Standalone Component](#standalone-component)
   - [Coordinate Multiple Components](#coordinate-multiple-components)
   - [Debugging](#debugging)
+  - [Server Rendering](#server-rendering)
   - [With Babel](#with-babel)
 - [Alternative Libraries](#alternative-libraries)
 - [Resources for A/B Testing with React](#resources-for-ab-testing-with-react)
@@ -237,6 +238,87 @@ var App = React.createClass({
 });
 
 ```
+### Server Rendering
+
+A [`<Experiment />`](#experiment-) component with a defined `userIdentifier` property will choose a consistent [`<Variant />`](#variant-). (When undefined the [`<Variant />`](#variant-) is chosen randomly.)
+
+The application in `App.jsx`:
+
+```js
+
+var Experiment = require("react-ab-test/lib/Experiment");
+var Variant = require("react-ab-test/lib/Variant");
+
+var App = React.createClass({
+  propTypes: {
+    userIdentifier: React.PropTypes.string.isRequired
+  },
+  render: function(){
+    return <div>
+      <Experiment ref="experiment" name="My Example" userIdentifier={this.props.userIdentifier}>
+        <Variant name="A">
+          <div>Section A</div>
+        </Variant>
+        <Variant name="B">
+          <div>Section B</div>
+        </Variant>
+      </Experiment>
+    </div>;
+  }
+});
+
+```
+
+An [EJS](https://github.com/mde/ejs) template in `template.ejs`:
+
+```html
+<!doctype html>
+<html>
+  <head>
+    <title>Isomorphic Rendering Example</title>
+  </head>
+  <script type="text/javascript">
+    var USER_ID = <%- JSON.stringify(userId) %>;
+  </script>
+  <body>
+    <div id="react-mount">
+      <%- reactOutput %>
+    </div>
+  </body>
+</html>
+```
+
+On the server:
+
+```js
+
+require("babel/register")({only: /jsx/});
+var ReactDOMServer = require("react-dom/server");
+var ejs = require("ejs");
+var App = require("./App.jsx");
+
+// A distinct user identifier. This could be a registered user's ID or a session ID;
+var userId = "feb2eeab3d624a29bdff8a812f86f566";
+
+// The instatiated App element.
+var reactElement = React.createElement(App, {userIdentifier:userId});
+
+// The rendered
+var reactString = ReactDOMServer.renderToString(reactElement);
+
+var html = ejs.render(reactString, {userId: userId}, {filename: "template.html"});
+
+```
+
+On the client:
+
+```js
+
+var ReactDOM = require("react-dom");
+
+ReactDOM.render(<App userIdentifier={USER_ID} />, document.getElementById("react-main-mount"));
+
+```
 
 ### With Babel
 
@@ -268,7 +350,11 @@ Experiment container component. Children must be of type [`Variant`](#variant-).
     * **Required**
     * **Type:** `string`
     * **Example:** `"My Example"`
-  * `defaultVariantName` - Name of the default variant. This property may be useful for server side rendering but is otherwise not recommended.
+  * `userIdentifier` - Distinct user identifier. When defined, this value is hashed to choose a variant if `defaultVariantName` or a stored value is not present. Useful for server side rendering.
+    * **Optional**
+    * **Type:** `string`
+    * **Example:** `"7cf61a4521f24507936a8977e1eee2d4"`
+  * `defaultVariantName` - Name of the default variant. When defined, this value is used to choose a variant if a stored value is not present. This property may be useful for server side rendering but is otherwise not recommended.
     * **Optional**
     * **Type:** `string`
     * **Example:** `"A"`
@@ -447,6 +533,8 @@ When the [`<Experiment />`](#experiment-) is mounted, the helper sends an `Exper
 
 When a [win is emitted](#emitteremitwinexperimentname) the helper sends an `Experiment Win` event using [`mixpanel.track(...)`](https://mixpanel.com/help/reference/javascript-full-api-reference#mixpanel.track) with `Experiment` and `Variant` properties.
 
+Try it [on JSFiddle](https://jsfiddle.net/pushtell/hwtnzm35/) *JSFiddle Babel support [appears to be broken on Chrome 46.](https://github.com/jsfiddle/jsfiddle-issues/issues/634)*
+
 ```js
 
 var Experiment = require("react-ab-test/lib/Experiment");
@@ -504,6 +592,8 @@ Sends events to [Segment](https://segment.com). Requires `window.segment` to be 
 When the [`<Experiment />`](#experiment-) is mounted, the helper sends an `Experiment Play` event using [`segment.track(...)`](https://segment.com/docs/libraries/analytics.js/#track) with `Experiment` and `Variant` properties.
 
 When a [win is emitted](#emitteremitwinexperimentname) the helper sends an `Experiment Win` event using [`segment.track(...)`](https://segment.com/docs/libraries/analytics.js/#track) with `Experiment` and `Variant` properties.
+
+Try it [on JSFiddle](https://jsfiddle.net/pushtell/ae1jeo2k/) *JSFiddle Babel support [appears to be broken on Chrome 46.](https://github.com/jsfiddle/jsfiddle-issues/issues/634)*
 
 ```js
 
@@ -569,7 +659,9 @@ Remove `win` and `play` listeners and stop reporting results to Segment.
 * Android Browser (latest version), Google Nexus 7, Android 4.1
 * Mobile Safari (latest version), iPhone 6, iOS 8.3
 
-Please [let us know](https://github.com/pushtell/react-ab-test/issues/new) if a different browser configuration should be included here.
+[Mocha](https://mochajs.org/) tests are performed on the latest version of [Node](https://nodejs.org/en/).
+
+Please [let us know](https://github.com/pushtell/react-ab-test/issues/new) if a different configuration should be included here.
 
 ### Running Tests
 

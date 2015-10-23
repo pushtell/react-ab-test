@@ -12,6 +12,7 @@ import ES6Promise from 'es6-promise';
 ES6Promise.polyfill();
 
 describe("Mixpanel Helper", function() {
+  this.timeout(10000);
   let container;
   before(co.wrap(function *(){
     container = document.createElement("div");
@@ -20,6 +21,7 @@ describe("Mixpanel Helper", function() {
   }));
   after(function(){
     document.getElementsByTagName('body')[0].removeChild(container);
+    emitter._reset();
   });
   it("should error if Mixpanel global is not set.", function (){
     assert.throws(

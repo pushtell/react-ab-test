@@ -1,0 +1,13 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Isomorphic Rendering Example</title>
+  </head>
+  <script type="text/javascript">
+    var SESSION_ID = <%- JSON.stringify(sessionID) %>;
+  </script>
+  <body>
+    <div id="react-mount"><%- reactOutput %></div>
+    <script type="text/javascript" src="bundle.js"></script>
+  </body>
+</html>

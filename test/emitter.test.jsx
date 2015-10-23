@@ -19,6 +19,7 @@ describe("Emitter", function() {
   });
   after(function(){
     document.getElementsByTagName('body')[0].removeChild(container);
+    emitter._reset();
   });
   it("should throw an error when passed an invalid name argument.", function (){
     assert.throws(function(){emitter.emitWin(1)}, /type \'string\'/);

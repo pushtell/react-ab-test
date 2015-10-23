@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import Experiment from "../src/CoreExperiment.jsx";
 import Variant from "../src/Variant.jsx";
 import experimentDebugger from "../src/debugger.jsx";
+import emitter from "../src/emitter.jsx";
 import assert from "assert";
 import co from "co";
 import UUID from "node-uuid";
@@ -40,6 +41,7 @@ describe("Debugger", function() {
   });
   after(function(){
     document.getElementsByTagName('body')[0].removeChild(container);
+    emitter._reset();
   });
   it("should enable and disable.", co.wrap(function *(){
     let experimentName = UUID.v4();

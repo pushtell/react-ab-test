@@ -1,0 +1,20 @@
+{
+  "name": "example-isomorphic",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "dependencies": {
+    "express": "^4.13.3",
+    "envify": "^3.4.0",
+    "express-session": "^1.11.3",
+    "react": "^0.14.0",
+    "react-dom": "^0.14.0",
+    "webpack": "^1.12.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "webpack --config webpack.example.config.js; node server.js"
+  },
+  "author": "",
+  "license": "MIT"
+}

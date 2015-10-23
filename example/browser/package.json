@@ -1,0 +1,17 @@
+{
+  "name": "example-browser",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "dependencies": {
+    "react": "^0.14.0",
+    "react-dom": "^0.14.0",
+    "webpack-dev-server": "*"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "./node_modules/webpack-dev-server/bin/webpack-dev-server.js --config ./webpack.example.config.js"
+  },
+  "author": "",
+  "license": "MIT"
+}

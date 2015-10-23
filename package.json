@@ -2,8 +2,8 @@
   "name": "react-ab-test",
   "keywords": ["react", "react-component", "testing", "test", "A/B", "ab", "A/B testing", "A/B test"],
   "main": "index.js",
-  "version": "1.1.3",
-  "description": "A/B testing React components and debug tools. Simple, universal interface. Well documented, lightweight, and tested in popular browsers. Includes helpers for Mixpanel, Google Analytics, and Segment.com.",
+  "version": "1.2.0",
+  "description": "A/B testing React components and debug tools. Isomorphic with a simple, universal interface. Well documented and lightweight. Tested in node and popular browsers. Includes helpers for Mixpanel and Segment.com.",
   "directories": {
     "test": "test"
   },
@@ -37,11 +37,10 @@
     "node-uuid": "*",
     "karma-coveralls": "*",
     "karma-coverage": "*",
-    "webpack-dev-server": "*"
+    "mocha-babel": "*"
   },
   "scripts": {
-    "example": "echo 'Visit http://localhost:8080 in your browser to view the example.'; ./node_modules/webpack-dev-server/bin/webpack-dev-server.js --config ./example/webpack.example.config.js --content-base ./example",
-    "test": "./node_modules/karma/bin/karma start test/karma.conf.js",
+    "test": "./node_modules/karma/bin/karma start test/karma.conf.js; mocha --compilers js:mocha-babel test-isomorphic/*.jsx",
     "build": "doctoc . --github --title '<h1>Table of Contents</h1>'; ./node_modules/babel/bin/babel.js ./src --out-dir ./lib; ./node_modules/webpack/bin/webpack.js --config webpack.standalone.config.js"
   },
   "repository": {

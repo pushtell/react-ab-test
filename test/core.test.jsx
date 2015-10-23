@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import Experiment from "../src/CoreExperiment.jsx";
 import Variant from "../src/Variant.jsx";
+import emitter from "../src/emitter.jsx";
 import assert from "assert";
 import co from "co";
 import UUID from "node-uuid";
@@ -17,6 +18,7 @@ describe("Core Experiment", function() {
   });
   after(function(){
     document.getElementsByTagName('body')[0].removeChild(container);
+    emitter._reset();
   });
   it("should render the correct variant.", co.wrap(function *(){
     let experimentName = UUID.v4();

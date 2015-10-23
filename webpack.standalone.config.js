@@ -30,6 +30,12 @@ module.exports = {
       }, {
         test: require.resolve("./lib/debugger"),
         loader: "expose?experimentDebugger"
+      }, {
+        test: require.resolve("./lib/helpers/mixpanel"),
+        loader: "expose?mixpanelHelper"
+      }, {
+        test: require.resolve("./lib/helpers/segment"),
+        loader: "expose?segmentHelper"
       }
     ],
     postLoaders: [

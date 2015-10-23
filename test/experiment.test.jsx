@@ -10,6 +10,31 @@ import TestUtils from 'react/lib/ReactTestUtils'
 import ES6Promise from 'es6-promise';
 ES6Promise.polyfill();
 
+let store;
+
+let noopStore = {
+  getItem: function(){},
+  setItem: function(){},
+  clear: function(){}
+};
+
+if(typeof window !== 'undefined' && 'localStorage' in window && window['localStorage'] !== null) {
+  try {
+    let key = '__pushtell_react__';
+    window.localStorage.setItem(key, key);
+    if (window.localStorage.getItem(key) !== key) {
+      store = noopStore;
+    } else {
+      window.localStorage.removeItem(key);
+      store = window.localStorage;
+    }
+  } catch(e) {
+    store = noopStore;
+  }
+} else {
+  store = noopStore;
+}
+
 describe("Experiment", function() {
   let container;
   before(function(){
@@ -19,6 +44,7 @@ describe("Experiment", function() {
   });
   after(function(){
     document.getElementsByTagName('body')[0].removeChild(container);
+    emitter._reset();
   });
   it("should choose a version.", co.wrap(function *(){
     let experimentName = UUID.v4();
@@ -30,7 +56,7 @@ describe("Experiment", function() {
       render: function(){
         return <Experiment name={experimentName}>
           {variantNames.map(name => {
-            return <Variant key={name} name={name}><div id={'experiment-' + name}></div></Variant>
+            return <Variant key={name} name={name}><div id={'variant-' + name}></div></Variant>
           })}
         </Experiment>;
       }
@@ -51,7 +77,7 @@ describe("Experiment", function() {
       render: function(){
         return <Experiment name={experimentName} defaultVariantName={defaultVariantName}>
           {variantNames.map(name => {
-            return <Variant key={name} name={name}><div id={'experiment-' + name}></div></Variant>
+            return <Variant key={name} name={name}><div id={'variant-' + name}></div></Variant>
           })}
         </Experiment>;
       }
@@ -60,7 +86,7 @@ describe("Experiment", function() {
       render: function(){
         return <Experiment name={experimentName}>
           {variantNames.map(name => {
-            return <Variant key={name} name={name}><div id={'experiment-' + name}></div></Variant>
+            return <Variant key={name} name={name}><div id={'variant-' + name}></div></Variant>
           })}
         </Experiment>;
       }
@@ -68,13 +94,13 @@ describe("Experiment", function() {
     yield new Promise(function(resolve, reject){
       ReactDOM.render(<AppWithdefaultVariantName />, container, resolve);
     });
-    let elementWithdefaultVariantName = document.getElementById('experiment-' + defaultVariantName);
+    let elementWithdefaultVariantName = document.getElementById('variant-' + defaultVariantName);
     assert.notEqual(elementWithdefaultVariantName, null);
     ReactDOM.unmountComponentAtNode(container);
     yield new Promise(function(resolve, reject){
       ReactDOM.render(<AppWithoutdefaultVariantName />, container, resolve);
     });
-    let elementWithoutdefaultVariantName = document.getElementById('experiment-' + defaultVariantName);
+    let elementWithoutdefaultVariantName = document.getElementById('variant-' + defaultVariantName);
     assert.notEqual(elementWithoutdefaultVariantName, null);
     ReactDOM.unmountComponentAtNode(container);
   }));
@@ -247,5 +273,41 @@ describe("Experiment", function() {
     winSubscription.remove();
     winSubscriptionGlobal.remove();
     ReactDOM.unmountComponentAtNode(container);
+  }));
+  it("should choose the same variant when a user identifier is defined.", co.wrap(function *(){
+    let userIdentifier = UUID.v4();
+    let experimentName = UUID.v4();
+    let variantNames = [];
+    for(let i = 0; i < 100; i++) {
+      variantNames.push(UUID.v4());
+    }
+    let App = React.createClass({
+      render: function(){
+        return <Experiment name={experimentName} userIdentifier={userIdentifier}>
+          {variantNames.map(name => {
+            return <Variant key={name} name={name}><div id={'variant-' + name}></div></Variant>
+          })}
+        </Experiment>;
+      }
+    });
+    let chosenVariant;
+    emitter.once("play", function(experimentName, variantName){
+      chosenVariant = variantName;
+    });
+    yield new Promise(function(resolve, reject){
+      ReactDOM.render(<App />, container, resolve);
+    });
+    ReactDOM.unmountComponentAtNode(container);
+    assert(chosenVariant);
+    for(let i = 0; i < 100; i++) {
+      emitter._reset();
+      store.clear();
+      yield new Promise(function(resolve, reject){
+        ReactDOM.render(<App />, container, resolve);
+      });
+      let element = document.getElementById('variant-' + chosenVariant);
+      assert.notEqual(element, null);
+      ReactDOM.unmountComponentAtNode(container);
+    }
   }));
 });

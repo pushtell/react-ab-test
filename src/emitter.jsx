@@ -1,9 +1,9 @@
 import {EventEmitter} from 'fbemitter';
 
-const values = {};
-const experiments = {};
-const activeExperiments = {};
-const experimentsWithDefinedVariants = {};
+let values = {};
+let experiments = {};
+let activeExperiments = {};
+let experimentsWithDefinedVariants = {};
 
 class PushtellEventEmitter extends EventEmitter {
   emitWin(experimentName){
@@ -11,6 +11,12 @@ class PushtellEventEmitter extends EventEmitter {
       throw new Error("Required argument 'experimentName' should have type 'string'");
     }
     this.emit("win", experimentName, values[experimentName]);
+  }
+  _reset(){
+    values = {};
+    experiments = {};
+    activeExperiments = {};
+    experimentsWithDefinedVariants = {};
   }
   _incrementActiveExperiments(experimentName) {
     activeExperiments[experimentName] = activeExperiments[experimentName] || 0;

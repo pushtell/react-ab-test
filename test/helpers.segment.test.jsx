@@ -12,7 +12,7 @@ import ES6Promise from 'es6-promise';
 ES6Promise.polyfill();
 
 describe("Segment Helper", function() {
-  this.timeout(20000);
+  this.timeout(10000);
   let container;
   before(co.wrap(function *(){
     container = document.createElement("div");
@@ -21,6 +21,7 @@ describe("Segment Helper", function() {
   }));
   after(function(){
     document.getElementsByTagName('body')[0].removeChild(container);
+    emitter._reset();
   });
   it("should error if Segment global is not set.", function (){
     assert.throws(

@@ -1,6 +1,7 @@
 import React from "react";
 import CoreExperiment from "./CoreExperiment";
 import emitter from "./emitter";
+import crc32 from "fbjs/lib/crc32";
 
 let store;
 
@@ -37,7 +38,8 @@ export default React.createClass({
   displayName: "Pushtell.Experiment",
   propTypes: {
     name: React.PropTypes.string.isRequired,
-    defaultVariantName: React.PropTypes.string
+    defaultVariantName: React.PropTypes.string,
+    userIdentifier: React.PropTypes.string
   },
   win(){
     emitter.emitWin(this.props.name);
@@ -57,7 +59,8 @@ export default React.createClass({
       return this.props.defaultVariantName;
     }
     let variants = emitter.getSortedVariants(this.props.name);
-    let randomValue = variants[Math.floor(Math.random() * variants.length)];
+    let index = typeof this.props.userIdentifier === 'string' ? Math.abs(crc32(this.props.userIdentifier) % variants.length) : Math.floor(Math.random() * variants.length);
+    let randomValue = variants[index];
     emitter.setActiveVariant(this.props.name, randomValue);
     return randomValue;
   },
