@@ -19,7 +19,7 @@ Wrap components in [`<Variant />`](#variant-) and nest in [`<Experiment />`](#ex
 </Experiment>
 ```
 
-Report to your analytics provider using the [`emitter`](#emitter). Additional helper methods are available for [Mixpanel](#mixpanelhelper) and [Segment.com](#segmenthelper).
+Report to your analytics provider using the [`emitter`](#emitter). Helpers are available for [Mixpanel](#mixpanelhelper) and [Segment.com](#segmenthelper).
 
 ```js
 emitter.addPlayListener(function(experimentName, variantName){
@@ -240,7 +240,11 @@ var App = React.createClass({
 ```
 ### Server Rendering
 
-A [`<Experiment />`](#experiment-) component with a `userIdentifier` property will choose a consistent [`<Variant />`](#variant-). When undefined the [`<Variant />`](#variant-) is chosen randomly.
+A [`<Experiment />`](#experiment-) component with a `userIdentifier` property will choose a consistent [`<Variant />`](#variant-).
+
+#### Example
+
+See [`./examples/isomorphic](https://github.com/pushtell/react-ab-test/tree/develop/examples/isomorphic).
 
 The component in [`Component.jsx`](https://github.com/pushtell/react-ab-test/blob/master/example/isomorphic/Component.jsx):
 
@@ -270,25 +274,7 @@ module.exports = React.createClass({
 
 ```
 
-An [EJS](https://github.com/mde/ejs) template in [`template.ejs`](https://github.com/pushtell/react-ab-test/blob/master/example/isomorphic/views/template.ejs):
-
-```html
-<!doctype html>
-<html>
-  <head>
-    <title>Isomorphic Rendering Example</title>
-  </head>
-  <script type="text/javascript">
-    var SESSION_ID = <%- JSON.stringify(sessionID) %>;
-  </script>
-  <body>
-    <div id="react-mount"><%- reactOutput %></div>
-    <script type="text/javascript" src="bundle.js"></script>
-  </body>
-</html>
-```
-
-In [`server.js`](https://github.com/pushtell/react-ab-test/blob/master/example/isomorphic/server.js):
+We use a session ID for the `userIdentifier` property in this example, although a long-lived user ID would be preferable. See [`server.js`](https://github.com/pushtell/react-ab-test/blob/master/example/isomorphic/server.js):
 
 ```js
 require("babel/register")({only: /jsx/});
@@ -321,6 +307,24 @@ app.get('/', function (req, res) {
 app.use(express.static('www'));
 
 app.listen(8080);
+```
+
+An [EJS](https://github.com/mde/ejs) template in [`template.ejs`](https://github.com/pushtell/react-ab-test/blob/master/example/isomorphic/views/template.ejs):
+
+```html
+<!doctype html>
+<html>
+  <head>
+    <title>Isomorphic Rendering Example</title>
+  </head>
+  <script type="text/javascript">
+    var SESSION_ID = <%- JSON.stringify(sessionID) %>;
+  </script>
+  <body>
+    <div id="react-mount"><%- reactOutput %></div>
+    <script type="text/javascript" src="bundle.js"></script>
+  </body>
+</html>
 ```
 
 On the client in [`app.jsx`](https://github.com/pushtell/react-ab-test/blob/master/example/isomorphic/www/app.jsx):
