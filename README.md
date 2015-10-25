@@ -34,7 +34,6 @@ Please [★ on GitHub](https://github.com/pushtell/react-ab-test)!
 <h1>Table of Contents</h1>
 
 - [Installation](#installation)
-  - [Peer Dependencies](#peer-dependencies)
 - [Usage](#usage)
   - [Standalone Component](#standalone-component)
   - [Coordinate Multiple Components](#coordinate-multiple-components)
