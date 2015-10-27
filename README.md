@@ -86,7 +86,7 @@ npm install react-ab-test
 
 ### Standalone Component
 
-Try it [on JSFiddle](https://jsfiddle.net/pushtell/m14qvy7r/) *(JSFiddle Babel support [appears to be broken on Chrome 46.](https://github.com/jsfiddle/jsfiddle-issues/issues/634))*
+Try it [on JSFiddle](https://jsfiddle.net/pushtell/m14qvy7r/)
 
 ```js
 
@@ -127,7 +127,7 @@ emitter.addWinListener(function(experimentName, variantName){
 
 ### Coordinate Multiple Components
 
-Try it [on JSFiddle](http://jsfiddle.net/pushtell/pcutps9q/) *(JSFiddle Babel support [appears to be broken on Chrome 46.](https://github.com/jsfiddle/jsfiddle-issues/issues/634))*
+Try it [on JSFiddle](http://jsfiddle.net/pushtell/pcutps9q/)
 
 ```js
 
@@ -206,7 +206,7 @@ The debugger is wrapped in a conditional `if(process.env.NODE_ENV === "productio
 
 <img src="https://cdn.rawgit.com/pushtell/react-ab-test/master/documentation-images/debugger-animated-2.gif" width="325" height="325" />
 
-Try it [on JSFiddle](http://jsfiddle.net/pushtell/vs9kkxLd/) *(JSFiddle Babel support [appears to be broken on Chrome 46.](https://github.com/jsfiddle/jsfiddle-issues/issues/634))*
+Try it [on JSFiddle](http://jsfiddle.net/pushtell/vs9kkxLd/)
 
 ```js
 
@@ -547,7 +547,7 @@ When the [`<Experiment />`](#experiment-) is mounted, the helper sends an `Exper
 
 When a [win is emitted](#emitteremitwinexperimentname) the helper sends an `Experiment Win` event using [`mixpanel.track(...)`](https://mixpanel.com/help/reference/javascript-full-api-reference#mixpanel.track) with `Experiment` and `Variant` properties.
 
-Try it [on JSFiddle](https://jsfiddle.net/pushtell/hwtnzm35/) *(JSFiddle Babel support [appears to be broken on Chrome 46.](https://github.com/jsfiddle/jsfiddle-issues/issues/634))*
+Try it [on JSFiddle](https://jsfiddle.net/pushtell/hwtnzm35/)
 
 ```js
 
@@ -607,7 +607,7 @@ When the [`<Experiment />`](#experiment-) is mounted, the helper sends an `Exper
 
 When a [win is emitted](#emitteremitwinexperimentname) the helper sends an `Experiment Win` event using [`segment.track(...)`](https://segment.com/docs/libraries/analytics.js/#track) with `Experiment` and `Variant` properties.
 
-Try it [on JSFiddle](https://jsfiddle.net/pushtell/ae1jeo2k/) *(JSFiddle Babel support [appears to be broken on Chrome 46.](https://github.com/jsfiddle/jsfiddle-issues/issues/634))*
+Try it [on JSFiddle](https://jsfiddle.net/pushtell/ae1jeo2k/)
 
 ```js
 
