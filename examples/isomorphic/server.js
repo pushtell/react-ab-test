@@ -1,4 +1,4 @@
-require("babel/register")({only: /jsx/});
+require("babel-core/register")({only: /Component|www/});
 
 var express = require('express');
 var session = require('express-session');

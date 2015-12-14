@@ -15,9 +15,13 @@ module.exports = {
   module: {
     loaders: [
       {
-        exclude: /node_modules/,
-        loader: 'babel-loader',
-        test: /\.jsx?$/
+        test: /\.jsx?$/,
+        exclude: /(node_modules)/,
+        loader: 'babel',
+        query: {
+          cacheDirectory: true,
+          presets: ["stage-1", "es2015", "react"]
+        }
       }, {
         exclude: /node_modules/,
         loader: 'regenerator-loader',

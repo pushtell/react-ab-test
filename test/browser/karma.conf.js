@@ -104,9 +104,13 @@ module.exports = function (karma) {
       module: {
         loaders: [
           {
+            test: /\.jsx?$/,
             exclude: /(node_modules|lib|example)/,
-            loader: 'babel-loader',
-            test: /\.jsx?$/
+            loader: 'babel',
+            query: {
+              cacheDirectory: true,
+              presets: ["stage-1", "es2015", "react"]
+            }
           }, {
             exclude: /(node_modules|lib|example)/,
             loader: 'regenerator-loader',

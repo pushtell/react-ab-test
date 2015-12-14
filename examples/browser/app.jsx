@@ -27,7 +27,7 @@ var App = React.createClass({
           <h2>Variant Y</h2>
         </Variant>
       </Experiment>
-    </div>
+    </div>;
   }
 });
 

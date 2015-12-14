@@ -76,7 +76,7 @@ Please [★ on GitHub](https://github.com/pushtell/react-ab-test)!
 
 ## Installation
 
-`react-ab-test` is compatible with React 0.13.x and 0.14.x.
+`react-ab-test` is compatible with React 0.14.x.
 
 ```bash
 npm install react-ab-test

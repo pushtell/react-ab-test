@@ -9,7 +9,8 @@
     "express-session": "^1.11.3",
     "react": "^0.14.0",
     "react-dom": "^0.14.0",
-    "webpack": "^1.12.2"
+    "webpack": "^1.12.2",
+    "ejs": "^2.3.4"
   },
   "devDependencies": {},
   "scripts": {

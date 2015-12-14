@@ -1,47 +1,66 @@
 {
   "name": "react-ab-test",
-  "keywords": ["react", "react-component", "testing", "test", "A/B", "ab", "A/B testing", "A/B test"],
+  "keywords": [
+    "react",
+    "react-component",
+    "testing",
+    "test",
+    "A/B",
+    "ab",
+    "A/B testing",
+    "A/B test"
+  ],
   "main": "index.js",
-  "version": "1.2.1",
+  "version": "1.3.0",
   "description": "A/B testing React components and debug tools. Isomorphic with a simple, universal interface. Well documented and lightweight. Tested in popular browsers and Node.js. Includes helpers for Mixpanel and Segment.com.",
   "directories": {
     "test": "test"
   },
   "peerDependencies": {
-    "react": ">=0.13.0"
+    "react": ">=0.14.0"
   },
   "dependencies": {
     "fbemitter": "^2.0.0",
-    "fbjs": "^0.4.0"
+    "fbjs": "^0.5.1"
   },
   "devDependencies": {
-    "react": "^0.14.0",
-    "react-dom": "^0.14.0",
-    "babel": "*",
-    "assert": "*",
-    "co": "*",
-    "regenerator-loader": "*",
-    "babel-loader": "*",
-    "isparta-loader": "*",
-    "expose-loader": "*",
-    "transform-loader": "*",
-    "envify": "*",
-    "karma": "*",
-    "karma-chrome-launcher": "*",
-    "karma-firefox-launcher": "*",
-    "karma-mocha": "*",
-    "karma-sourcemap-loader": "*",
-    "karma-webpack": "*",
-    "karma-browserstack-launcher": "*",
-    "es6-promise": "*",
-    "node-uuid": "*",
-    "karma-coveralls": "*",
-    "karma-coverage": "*",
-    "mocha-babel": "*"
+    "assert": "^1.3.0",
+    "babel": "^6.3.13",
+    "babel-cli": "^6.3.17",
+    "babel-loader": "^6.2.0",
+    "babel-plugin-add-module-exports": "^0.1.1",
+    "babel-polyfill": "^6.3.14",
+    "babel-preset-es2015": "^6.3.13",
+    "babel-preset-react": "^6.3.13",
+    "babel-preset-stage-1": "^6.3.13",
+    "co": "^4.6.0",
+    "envify": "^3.4.0",
+    "es6-promise": "^3.0.2",
+    "expose-loader": "^0.7.1",
+    "fbemitter": "^2.0.0",
+    "fbjs": "^0.5.1",
+    "isparta-loader": "^2.0.0",
+    "karma": "^0.13.15",
+    "karma-browserstack-launcher": "^0.1.7",
+    "karma-chrome-launcher": "^0.2.2",
+    "karma-coverage": "^0.5.3",
+    "karma-coveralls": "^1.1.2",
+    "karma-firefox-launcher": "^0.1.7",
+    "karma-mocha": "^0.2.1",
+    "karma-sourcemap-loader": "^0.3.6",
+    "karma-webpack": "^1.7.0",
+    "mocha": "^2.3.4",
+    "node-uuid": "^1.4.7",
+    "react": "^0.14.3",
+    "react-dom": "^0.14.3",
+    "regenerator": "^0.8.42",
+    "regenerator-loader": "^2.0.0",
+    "transform-loader": "^0.2.3",
+    "webpack": "^1.12.9"
   },
   "scripts": {
-    "test": "./node_modules/karma/bin/karma start test/browser/karma.conf.js; mocha --compilers js:mocha-babel test/isomorphic/*.jsx",
-    "build": "doctoc . --github --title '<h1>Table of Contents</h1>'; ./node_modules/babel/bin/babel.js ./src --out-dir ./lib; ./node_modules/webpack/bin/webpack.js --config webpack.standalone.config.js"
+    "test": "./node_modules/karma/bin/karma start test/browser/karma.conf.js; mocha --require babel-core/register --require babel-polyfill test/isomorphic/*.jsx",
+    "build": "doctoc . --github --title '<h1>Table of Contents</h1>'; ./node_modules/babel-cli/bin/babel.js --presets es2015,stage-1,react --plugins add-module-exports ./src --out-dir ./lib; ./node_modules/webpack/bin/webpack.js --config webpack.standalone.config.js"
   },
   "repository": {
     "type": "git",
