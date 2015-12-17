@@ -5,7 +5,7 @@ import crc32 from "fbjs/lib/crc32";
 
 let store;
 
-let noopStore = {
+const noopStore = {
   getItem: function(){},
   setItem: function(){}
 };
@@ -45,11 +45,11 @@ export default React.createClass({
     emitter.emitWin(this.props.name);
   },
   getLocalStorageValue() {
-    let activeValue = emitter.getActiveVariant();
+    const activeValue = emitter.getActiveVariant();
     if(typeof activeValue === "string") {
       return activeValue;
     }
-    let storedValue = store.getItem('PUSHTELL-' + this.props.name);
+    const storedValue = store.getItem('PUSHTELL-' + this.props.name);
     if(typeof storedValue === "string") {
       emitter.setActiveVariant(this.props.name, storedValue, true);
       return storedValue;
@@ -58,9 +58,18 @@ export default React.createClass({
       emitter.setActiveVariant(this.props.name, this.props.defaultVariantName);
       return this.props.defaultVariantName;
     }
-    let variants = emitter.getSortedVariants(this.props.name);
-    let index = typeof this.props.userIdentifier === 'string' ? Math.abs(crc32(this.props.userIdentifier) % variants.length) : Math.floor(Math.random() * variants.length);
-    let randomValue = variants[index];
+    const variants = emitter.getSortedVariants(this.props.name);
+    const weights = emitter.getSortedVariantWeights(this.props.name);
+    const weightSum = weights.reduce((a, b) => {return a + b;}, 0);
+    let weightedIndex = typeof this.props.userIdentifier === 'string' ? Math.abs(crc32(this.props.userIdentifier) % weightSum) : Math.floor(Math.random() * weightSum);
+    let randomValue = variants[variants.length - 1];
+    for (let index = 0; index < weights.length; index++) {
+      weightedIndex -= weights[index];
+      if (weightedIndex < 0) {
+        randomValue = variants[index];
+        break;
+      }
+    }
     emitter.setActiveVariant(this.props.name, randomValue);
     return randomValue;
   },

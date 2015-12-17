@@ -33,44 +33,48 @@ Please [★ on GitHub](https://github.com/pushtell/react-ab-test)!
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 <h1>Table of Contents</h1>
 
-- [Installation](#installation)
-- [Usage](#usage)
-  - [Standalone Component](#standalone-component)
-  - [Coordinate Multiple Components](#coordinate-multiple-components)
-  - [Debugging](#debugging)
-  - [Server Rendering](#server-rendering)
-    - [Example](#example)
-  - [With Babel](#with-babel)
-- [Alternative Libraries](#alternative-libraries)
-- [Resources for A/B Testing with React](#resources-for-ab-testing-with-react)
-- [API Reference](#api-reference)
-  - [`<Experiment />`](#experiment-)
-  - [`<Variant />`](#variant-)
-  - [`emitter`](#emitter)
-    - [`emitter.emitWin(experimentName)`](#emitteremitwinexperimentname)
-    - [`emitter.addActiveVariantListener([experimentName, ] callback)`](#emitteraddactivevariantlistenerexperimentname--callback)
-    - [`emitter.addPlayListener([experimentName, ] callback)`](#emitteraddplaylistenerexperimentname--callback)
-    - [`emitter.addWinListener([experimentName, ] callback)`](#emitteraddwinlistenerexperimentname--callback)
-    - [`emitter.defineVariants(experimentName, variantNames)`](#emitterdefinevariantsexperimentname-variantnames)
-    - [`emitter.setActiveVariant(experimentName, variantName)`](#emittersetactivevariantexperimentname-variantname)
-    - [`emitter.getActiveVariant(experimentName)`](#emittergetactivevariantexperimentname)
-    - [`emitter.getSortedVariants(experimentName)`](#emittergetsortedvariantsexperimentname)
-  - [`Subscription`](#subscription)
-    - [`subscription.remove()`](#subscriptionremove)
-  - [`experimentDebugger`](#experimentdebugger)
-    - [`experimentDebugger.enable()`](#experimentdebuggerenable)
-    - [`experimentDebugger.disable()`](#experimentdebuggerdisable)
-  - [`mixpanelHelper`](#mixpanelhelper)
-    - [Usage](#usage-1)
-    - [`mixpanelHelper.enable()`](#mixpanelhelperenable)
-    - [`mixpanelHelper.disable()`](#mixpanelhelperdisable)
-  - [`segmentHelper`](#segmenthelper)
-    - [Usage](#usage-2)
-    - [`segmentHelper.enable()`](#segmenthelperenable)
-    - [`segmentHelper.disable()`](#segmenthelperdisable)
-- [Tests](#tests)
-  - [Browser Coverage](#browser-coverage)
-  - [Running Tests](#running-tests)
+  - [Installation](#installation)
+  - [Usage](#usage)
+    - [Standalone Component](#standalone-component)
+    - [Coordinate Multiple Components](#coordinate-multiple-components)
+    - [Variant Weights](#variant-weights)
+- [Headline A](#headline-a)
+- [Headline B](#headline-b)
+- [Headline C](#headline-c)
+    - [Debugging](#debugging)
+    - [Server Rendering](#server-rendering)
+      - [Example](#example)
+    - [With Babel](#with-babel)
+  - [Alternative Libraries](#alternative-libraries)
+  - [Resources for A/B Testing with React](#resources-for-ab-testing-with-react)
+  - [API Reference](#api-reference)
+    - [`<Experiment />`](#experiment-)
+    - [`<Variant />`](#variant-)
+    - [`emitter`](#emitter)
+      - [`emitter.emitWin(experimentName)`](#emitteremitwinexperimentname)
+      - [`emitter.addActiveVariantListener([experimentName, ] callback)`](#emitteraddactivevariantlistenerexperimentname--callback)
+      - [`emitter.addPlayListener([experimentName, ] callback)`](#emitteraddplaylistenerexperimentname--callback)
+      - [`emitter.addWinListener([experimentName, ] callback)`](#emitteraddwinlistenerexperimentname--callback)
+      - [`emitter.defineVariants(experimentName, variantNames [, variantWeights])`](#emitterdefinevariantsexperimentname-variantnames--variantweights)
+      - [`emitter.setActiveVariant(experimentName, variantName)`](#emittersetactivevariantexperimentname-variantname)
+      - [`emitter.getActiveVariant(experimentName)`](#emittergetactivevariantexperimentname)
+      - [`emitter.getSortedVariants(experimentName)`](#emittergetsortedvariantsexperimentname)
+    - [`Subscription`](#subscription)
+      - [`subscription.remove()`](#subscriptionremove)
+    - [`experimentDebugger`](#experimentdebugger)
+      - [`experimentDebugger.enable()`](#experimentdebuggerenable)
+      - [`experimentDebugger.disable()`](#experimentdebuggerdisable)
+    - [`mixpanelHelper`](#mixpanelhelper)
+      - [Usage](#usage-1)
+      - [`mixpanelHelper.enable()`](#mixpanelhelperenable)
+      - [`mixpanelHelper.disable()`](#mixpanelhelperdisable)
+    - [`segmentHelper`](#segmenthelper)
+      - [Usage](#usage-2)
+      - [`segmentHelper.enable()`](#segmenthelperenable)
+      - [`segmentHelper.disable()`](#segmenthelperdisable)
+  - [Tests](#tests)
+    - [Browser Coverage](#browser-coverage)
+    - [Running Tests](#running-tests)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -194,6 +198,41 @@ emitter.addPlayListener(function(experimentName, variantName){
 // Called when a 'win' is emitted, in this case by emitter.emitWin()
 emitter.addWinListener(function(experimentName, variantName){
   console.log("Variant ‘" + variantName + "’ of experiment ‘" + experimentName + "’ was clicked");
+});
+
+```
+
+### Variant Weights
+
+Try it [on JSFiddle](http://jsfiddle.net/pushtell/e2q7xe4f/)
+
+Use [emitter.defineVariants()](#emitterdefinevariantsexperimentname-variantnames--variantweights) to optionally define the ratios by which variants are chosen.
+
+```js
+
+var Experiment = require("react-ab-test/lib/Experiment");
+var Variant = require("react-ab-test/lib/Variant");
+var emitter = require("react-ab-test/lib/emitter");
+
+// Define variants and weights in advance.
+emitter.defineVariants("My Example", ["A", "B", "C"], [10, 40, 40]);
+
+var App = React.createClass({
+  render: function(){
+    return <div>
+      <Experiment ref="experiment" name="My Example">
+        <Variant name="A">
+          <h1>Headline A</h1>
+        </Variant>
+        <Variant name="B">
+          <h1>Headline B</h1>
+        </Variant>
+        <Variant name="C">
+          <h1>Headline C</h1>
+        </Variant>
+      </Experiment>
+    </div>;
+  }
 });
 
 ```
@@ -455,9 +494,13 @@ Listen for a successful outcome from the experiment. Trigged by the [emitter.emi
       * `variantName` - Name of the variant.
         * **Type:** `string`
 
-#### `emitter.defineVariants(experimentName, variantNames)`
+#### `emitter.defineVariants(experimentName, variantNames [, variantWeights])`
 
-Define experiment variant names. Required when an experiment [spans multiple components](#coordinate-multiple-components) containing different sets of variants.
+Define experiment variant names and weighting. Required when an experiment [spans multiple components](#coordinate-multiple-components) containing different sets of variants.
+
+If `variantWeights` are not specified variants will be chosen at equal rates.
+
+The variants will be chosen according to the ratio of the numbers, for example variants `["A", "B", "C"]` with weights `[20, 40, 40]` will be chosen 20%, 40%, and 40% of the time, respectively.
 
 * **Return Type:** No return value
 * **Parameters:**
@@ -469,6 +512,10 @@ Define experiment variant names. Required when an experiment [spans multiple com
     * **Required**
     * **Type:** `Array.<string>`
     * **Example:** `["A", "B", "C"]`
+  * `variantWeights` - Array of variant weights.
+    * **Optional**
+    * **Type:** `Array.<number>`
+    * **Example:** `[20, 40, 40]`
 
 #### `emitter.setActiveVariant(experimentName, variantName)`
 

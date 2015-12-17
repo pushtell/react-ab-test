@@ -3,8 +3,6 @@ import warning from 'fbjs/lib/warning';
 import emitter from "./emitter";
 import Variant from "./Variant";
 
-const playedExperiments = {};
-
 export default React.createClass({
   displayName: "Pushtell.CoreExperiment",
   propTypes: {
@@ -50,10 +48,7 @@ export default React.createClass({
     }
     emitter._incrementActiveExperiments(this.props.name);
     emitter.setActiveVariant(this.props.name, value);
-    if(!playedExperiments[this.props.name]) {
-      emitter.emit('play', this.props.name, value);
-      playedExperiments[this.props.name] = true;
-    }
+    emitter._emitPlay(this.props.name, value);
     this.setState({
       value: value
     });

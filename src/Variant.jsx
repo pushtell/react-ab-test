@@ -3,7 +3,7 @@ import React from 'react';
 export default React.createClass({
   displayName: "Pushtell.Variant",
   propTypes: {
-    name: React.PropTypes.string.isRequired,
+    name: React.PropTypes.string.isRequired
   },
   render(){
     if(React.isValidElement(this.props.children)) {

@@ -73,10 +73,10 @@ module.exports = function (karma) {
         browser: 'safari',
         browser_version : 'latest'
       },
-      bs_android_4_default: {
+      bs_android_5_default: {
         base: 'BrowserStack',
-        os_version: "4.1",
-        device: "Google Nexus 7",
+        os_version: "5.0",
+        device: "Google Nexus 5",
         browser_version: null,
         os: "android",
         browser: "android"
@@ -104,7 +104,7 @@ module.exports = function (karma) {
       module: {
         loaders: [
           {
-            test: /\.jsx?$/,
+            test: /\.jsx$/,
             exclude: /(node_modules|lib|example)/,
             loader: 'babel',
             query: {
@@ -114,15 +114,17 @@ module.exports = function (karma) {
           }, {
             exclude: /(node_modules|lib|example)/,
             loader: 'regenerator-loader',
-            test: /\.jsx?$/
+            test: /\.jsx$/
           }, {
             include: path.resolve('src'),
             loader: 'isparta',
-            test: /\.jsx?$/
+            test: /\.jsx$/
           }
         ]
       }
     },
+    browserNoActivityTimeout: 30000,
+    browserDisconnectTolerance: 2,
     webpackMiddleware: {
       noInfo: true,
     }
