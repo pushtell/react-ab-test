@@ -202,7 +202,7 @@ emitter.addWinListener(function(experimentName, variantName){
 
 ```
 
-### Variant Weights
+### Weighting Variants
 
 Try it [on JSFiddle](http://jsfiddle.net/pushtell/e2q7xe4f/)
 
@@ -222,13 +222,13 @@ var App = React.createClass({
     return <div>
       <Experiment ref="experiment" name="My Example">
         <Variant name="A">
-          <h1>Headline A</h1>
+          <div>Section A</div>
         </Variant>
         <Variant name="B">
-          <h1>Headline B</h1>
+          <div>Section B</div>
         </Variant>
         <Variant name="C">
-          <h1>Headline C</h1>
+          <div>Section C</div>
         </Variant>
       </Experiment>
     </div>;
