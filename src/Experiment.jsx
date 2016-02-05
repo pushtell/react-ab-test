@@ -45,7 +45,7 @@ export default React.createClass({
     emitter.emitWin(this.props.name);
   },
   getLocalStorageValue() {
-    const activeValue = emitter.getActiveVariant();
+    const activeValue = emitter.getActiveVariant(this.props.name);
     if(typeof activeValue === "string") {
       return activeValue;
     }

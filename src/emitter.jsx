@@ -32,6 +32,7 @@ PushtellEventEmitter.prototype._emitPlay = function(experimentName, variantName)
 };
 
 PushtellEventEmitter.prototype._resetPlayedExperiments = function(){
+  values = {};
   playedExperiments = {};
 }
 
