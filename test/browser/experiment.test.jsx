@@ -245,8 +245,8 @@ describe("Experiment", function() {
     };
     let experimentNameGlobal = null;
     let winningVariantNameGlobal = null;
-    let winCallbackGlobal = function(expirimentName, variantName){
-      experimentNameGlobal = expirimentName;
+    let winCallbackGlobal = function(experimentName, variantName){
+      experimentNameGlobal = experimentName;
       winningVariantNameGlobal = variantName;
     };
     let winSubscription = emitter.addWinListener(experimentName, winCallback);

@@ -175,12 +175,12 @@ PushtellEventEmitter.prototype.addExperimentVariant = function(experimentName, v
   experimentWeights[experimentName] = experimentWeights[experimentName] || {};
   if(experiments[experimentName][variantName] !== true) {
     if(experimentsWithDefinedVariants[experimentName]) {
-      const error = new Error("Expiriment “" + experimentName + "” added new variants after variants were defined.");
+      const error = new Error("Experiment “" + experimentName + "” added new variants after variants were defined.");
       error.type = "PUSHTELL_INVALID_VARIANT";
       throw error;
     }
     if(values[experimentName]) {
-      const error = new Error("Expiriment “" + experimentName + "” added new variants after a variant was selected. Declare the variant names using emitter.addExpirimentVariants(expirimentName, variantNames).");
+      const error = new Error("Experiment “" + experimentName + "” added new variants after a variant was selected. Declare the variant names using emitter.defineVariants(experimentName, variantNames).");
       error.type = "PUSHTELL_INVALID_VARIANT";
       throw error;
     }

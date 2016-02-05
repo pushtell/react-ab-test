@@ -32,8 +32,8 @@ describe("Emitter", function() {
     };
     let experimentNameGlobal = null;
     let playedVariantNameGlobal = null;
-    let playCallbackGlobal = function(expirimentName, variantName){
-      experimentNameGlobal = expirimentName;
+    let playCallbackGlobal = function(experimentName, variantName){
+      experimentNameGlobal = experimentName;
       playedVariantNameGlobal = variantName;
     };
     let playSubscription = emitter.addPlayListener(experimentName, playCallback);
@@ -64,8 +64,8 @@ describe("Emitter", function() {
     };
     let experimentNameGlobal = null;
     let winningVariantNameGlobal = null;
-    let winCallbackGlobal = function(expirimentName, variantName){
-      experimentNameGlobal = expirimentName;
+    let winCallbackGlobal = function(experimentName, variantName){
+      experimentNameGlobal = experimentName;
       winningVariantNameGlobal = variantName;
     };
     let winSubscription = emitter.addWinListener(experimentName, winCallback);
@@ -97,8 +97,8 @@ describe("Emitter", function() {
     };
     let experimentNameGlobal = null;
     let winningVariantNameGlobal = null;
-    let winCallbackGlobal = function(expirimentName, variantName){
-      experimentNameGlobal = expirimentName;
+    let winCallbackGlobal = function(experimentName, variantName){
+      experimentNameGlobal = experimentName;
       winningVariantNameGlobal = variantName;
     };
     let winSubscription = emitter.addWinListener(experimentName, winCallback);
@@ -134,8 +134,8 @@ describe("Emitter", function() {
     };
     let experimentNameGlobal = null;
     let activeVariantNameGlobal = null;
-    let activeVariantCallbackGlobal = function(expirimentName, variantName){
-      experimentNameGlobal = expirimentName;
+    let activeVariantCallbackGlobal = function(experimentName, variantName){
+      experimentNameGlobal = experimentName;
       activeVariantNameGlobal = variantName;
     };
     let activeVariantSubscription = emitter.addActiveVariantListener(experimentName, activeVariantCallback);
