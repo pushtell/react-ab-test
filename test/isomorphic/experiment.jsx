@@ -8,6 +8,7 @@ import co from "co";
 import UUID from "node-uuid";
 
 describe("Experiment", function() {
+  this.timeout(10000);
   it("should render to a string.", co.wrap(function *(){
     let experimentName = UUID.v4();
     let App = React.createClass({
