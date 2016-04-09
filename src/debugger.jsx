@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import emitter from "./emitter";
 import {canUseDOM} from 'fbjs/lib/ExecutionEnvironment';
-import assign from 'react/lib/Object.assign';
 
 if(process.env.NODE_ENV === "production" || !canUseDOM) {
   module.exports = {
@@ -164,5 +163,3 @@ if(process.env.NODE_ENV === "production" || !canUseDOM) {
     }
   }
 }
-
-
