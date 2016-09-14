@@ -7,6 +7,7 @@ export default React.createClass({
   displayName: "Pushtell.CoreExperiment",
   propTypes: {
     name: React.PropTypes.string.isRequired,
+    isContentDynamic: React.PropTypes.bool,
     value: React.PropTypes.oneOfType([
       React.PropTypes.string,
       React.PropTypes.func
@@ -15,15 +16,20 @@ export default React.createClass({
   win(){
     emitter.emitWin(this.props.name);
   },
+  getDefaultProps() {
+    return {
+      isContentDynamic: false
+    };
+  },
   getInitialState(){
     let children = {};
-    React.Children.forEach(this.props.children, element => {
+    React.Children.forEach(this.props.children, (element, index) => {
       if(!React.isValidElement(element) || element.type.displayName !== "Pushtell.Variant"){
         let error = new Error("Pushtell Experiment children must be Pushtell Variant components.");
         error.type = "PUSHTELL_INVALID_CHILD";
         throw error;
       }
-      children[element.props.name] = element;
+      children[element.props.name] = this.props.isContentDynamic ? index : element;
       emitter.addExperimentVariant(this.props.name, element.props.name);
     });
     emitter.emit("variants-loaded", this.props.name);
@@ -63,6 +69,13 @@ export default React.createClass({
     this.valueSubscription.remove();
   },
   render(){
+    if (this.props.isContentDynamic) {
+      if (Array.isArray(this.props.children)) {
+        const index = this.state.variants[this.state.value];
+        return index !== undefined ? this.props.children[index] : null;
+      }
+      return this.props.children || null;
+    }
     return this.state.variants[this.state.value] || null;
   }
 });

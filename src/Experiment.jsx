@@ -38,6 +38,7 @@ export default React.createClass({
   displayName: "Pushtell.Experiment",
   propTypes: {
     name: React.PropTypes.string.isRequired,
+    isContentDynamic: React.PropTypes.bool,
     defaultVariantName: React.PropTypes.string,
     userIdentifier: React.PropTypes.string
   },
