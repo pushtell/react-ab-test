@@ -72,7 +72,7 @@ export default React.createClass({
     if (this.props.isContentDynamic) {
       if (Array.isArray(this.props.children)) {
         const index = this.state.variants[this.state.value];
-        return index ? this.props.children[index] : null;
+        return index !== undefined ? this.props.children[index] : null;
       }
       return this.props.children || null;
     }

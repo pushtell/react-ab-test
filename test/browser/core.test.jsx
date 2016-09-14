@@ -154,7 +154,6 @@ describe("Core Experiment", function() {
     assert.equal(elementB, null);
 
     let elementAText = document.getElementById('variant-a-text');
-    console.log(elementAText.textContent);
     assert.equal(elementAText.textContent, variantAText);
 
     variantAText = "Initial text 2";
