@@ -11,7 +11,7 @@
     "A/B test"
   ],
   "main": "index.js",
-  "version": "1.6.0",
+  "version": "1.7.0",
   "description": "A/B testing React components and debug tools. Isomorphic with a simple, universal interface. Well documented and lightweight. Tested in popular browsers and Node.js. Includes helpers for Mixpanel and Segment.com.",
   "directories": {
     "test": "test"
@@ -60,7 +60,8 @@
   },
   "scripts": {
     "test": "./node_modules/karma/bin/karma start test/browser/karma.conf.js; mocha --require babel-core/register --require babel-polyfill test/isomorphic/*.jsx",
-    "build": "doctoc . --github --title '<h1>Table of Contents</h1>'; ./node_modules/babel-cli/bin/babel.js --presets es2015,stage-1,react --plugins add-module-exports ./src --out-dir ./lib; ./node_modules/webpack/bin/webpack.js --config webpack.standalone.config.js"
+    "build": "babel --presets es2015,stage-1,react --plugins add-module-exports ./src --out-dir ./lib; webpack --config webpack.standalone.config.js",
+    "prepublish": "npm test && npm run build"
   },
   "repository": {
     "type": "git",
