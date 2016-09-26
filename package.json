@@ -59,7 +59,7 @@
     "webpack": "^1.12.14"
   },
   "scripts": {
-    "test": "./node_modules/karma/bin/karma start test/browser/karma.conf.js; mocha --require babel-core/register --require babel-polyfill test/isomorphic/*.jsx",
+    "test": "karma start test/browser/karma.conf.js; mocha --require babel-core/register --require babel-polyfill test/isomorphic/*.jsx",
     "build": "babel --presets es2015,stage-1,react --plugins add-module-exports ./src --out-dir ./lib; webpack --config webpack.standalone.config.js",
     "prepublish": "npm test && npm run build"
   },
