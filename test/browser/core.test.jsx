@@ -61,7 +61,7 @@ describe("Core Experiment", function() {
       return;
     }
     throw new Error("Experiment has invalid children.");
-  }));
+  })); 
   it("should update on componentWillReceiveProps.", co.wrap(function *(){
     let experimentName = UUID.v4();
     let setState;
@@ -103,5 +103,35 @@ describe("Core Experiment", function() {
     assert.notEqual(elementB, null);
     ReactDOM.unmountComponentAtNode(container);
   }));
+  it("should update the children when props change.", co.wrap(function *(){
+    let experimentName = UUID.v4();
+    let SubComponent = React.createClass({
+      render(){
+        return (
+            <div id="variant-a">
+              <span id="variant-a-text">{this.props.text}</span>
+            </div>
+        )
+      }
+    });
+    let App = React.createClass({
+      render: function(){
+        return <Experiment name={experimentName} value="A">
+          <Variant name="A"><SubComponent text={this.props.text}/></Variant>
+          <Variant name="B"><div id="variant-b" /></Variant>
+        </Experiment>;
+      }
+    });
+    yield new Promise(function(resolve, reject){
+      let component = ReactDOM.render(<App text='original text'/>,container, resolve);
+    });
+    let elementAText = document.getElementById('variant-a-text');
+    assert.equal(elementAText.textContent, "original text");
+    yield new Promise(function(resolve, reject){
+      component = ReactDOM.render(<App text='New text'/>,container, resolve);
+    });
+    elementAText = document.getElementById('variant-a-text');
+    assert.equal(elementAText.textContent, "New text");
+    ReactDOM.unmountComponentAtNode(container);
+  }));
 });
-
