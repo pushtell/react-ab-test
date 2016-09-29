@@ -32,10 +32,15 @@ export default React.createClass({
     };
   },
   componentWillReceiveProps(nextProps) {
-    if(nextProps.value !== this.props.value) {
+    if(nextProps.value !== this.props.value || nextProps.children !== this.props.children) {
       let value = typeof nextProps.value === "function" ? nextProps.value() : nextProps.value;
+      let children = {};
+      React.Children.forEach(nextProps.children, element => {
+        children[element.props.name] = element;
+      });
       this.setState({
-        value: value
+        value: value,
+        variants: children
       });
     }
   },
