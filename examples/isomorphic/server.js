@@ -5,6 +5,7 @@ var session = require('express-session');
 var React = require("react");
 var ReactDOMServer = require("react-dom/server");
 var Component = require("./Component.jsx");
+var abTestsEmitter = require("../../lib/emitter");
 
 var app = express();
 
@@ -19,6 +20,9 @@ app.use(session({
 app.get('/', function (req, res) {
   var reactElement = React.createElement(Component, {userIdentifier: req.sessionID});
   var reactString = ReactDOMServer.renderToString(reactElement);
+
+  // important to prevent memory leaks
+  abTestsEmitter.rewind();
   res.render('template', {
     sessionID: req.sessionID,
     reactOutput: reactString
