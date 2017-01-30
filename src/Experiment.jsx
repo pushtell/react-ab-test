@@ -44,20 +44,7 @@ export default React.createClass({
   win(){
     emitter.emitWin(this.props.name);
   },
-  getLocalStorageValue() {
-    const activeValue = emitter.getActiveVariant(this.props.name);
-    if(typeof activeValue === "string") {
-      return activeValue;
-    }
-    const storedValue = store.getItem('PUSHTELL-' + this.props.name);
-    if(typeof storedValue === "string") {
-      emitter.setActiveVariant(this.props.name, storedValue, true);
-      return storedValue;
-    }
-    if(typeof this.props.defaultVariantName === 'string') {
-      emitter.setActiveVariant(this.props.name, this.props.defaultVariantName);
-      return this.props.defaultVariantName;
-    }
+  getRandomValue() {
     const variants = emitter.getSortedVariants(this.props.name);
     const weights = emitter.getSortedVariantWeights(this.props.name);
     const weightSum = weights.reduce((a, b) => {return a + b;}, 0);
@@ -72,6 +59,25 @@ export default React.createClass({
     }
     emitter.setActiveVariant(this.props.name, randomValue);
     return randomValue;
+  },
+  getLocalStorageValue() {
+    if(typeof this.props.userIdentifier === "string") {
+      return this.getRandomValue();
+    }
+    const activeValue = emitter.getActiveVariant(this.props.name);
+    if(typeof activeValue === "string") {
+      return activeValue;
+    }
+    const storedValue = store.getItem('PUSHTELL-' + this.props.name);
+    if(typeof storedValue === "string") {
+      emitter.setActiveVariant(this.props.name, storedValue, true);
+      return storedValue;
+    }
+    if(typeof this.props.defaultVariantName === 'string') {
+      emitter.setActiveVariant(this.props.name, this.props.defaultVariantName);
+      return this.props.defaultVariantName;
+    }
+    return this.getRandomValue();
   },
   render() {
     return <CoreExperiment {...this.props} value={this.getLocalStorageValue} />;
