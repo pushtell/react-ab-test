@@ -1,9 +1,10 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 export default React.createClass({
   displayName: "Pushtell.Variant",
   propTypes: {
-    name: React.PropTypes.string.isRequired
+    name: PropTypes.string.isRequired
   },
   render(){
     if(React.isValidElement(this.props.children)) {

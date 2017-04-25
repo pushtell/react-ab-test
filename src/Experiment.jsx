@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from 'prop-types';
 import CoreExperiment from "./CoreExperiment";
 import emitter from "./emitter";
 import crc32 from "fbjs/lib/crc32";
@@ -37,9 +38,9 @@ emitter.addActiveVariantListener(function(experimentName, variantName, skipSave)
 export default React.createClass({
   displayName: "Pushtell.Experiment",
   propTypes: {
-    name: React.PropTypes.string.isRequired,
-    defaultVariantName: React.PropTypes.string,
-    userIdentifier: React.PropTypes.string
+    name: PropTypes.string.isRequired,
+    defaultVariantName: PropTypes.string,
+    userIdentifier: PropTypes.string
   },
   win(){
     emitter.emitWin(this.props.name);

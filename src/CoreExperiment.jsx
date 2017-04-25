@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import warning from 'fbjs/lib/warning';
 import emitter from "./emitter";
 import Variant from "./Variant";
@@ -6,10 +7,10 @@ import Variant from "./Variant";
 export default React.createClass({
   displayName: "Pushtell.CoreExperiment",
   propTypes: {
-    name: React.PropTypes.string.isRequired,
-    value: React.PropTypes.oneOfType([
-      React.PropTypes.string,
-      React.PropTypes.func
+    name: PropTypes.string.isRequired,
+    value: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.func
     ]).isRequired
   },
   win(){
