@@ -659,7 +659,7 @@ var Experiment = require("react-ab-test/lib/Experiment");
 var Variant = require("react-ab-test/lib/Variant");
 var segmentHelper = require("react-ab-test/lib/helpers/segment");
 
-// window.segment has been set by Segment's embed snippet.
+// window.analytics has been set by Segment's embed snippet.
 segmentHelper.enable();
 
 var App = React.createClass({
