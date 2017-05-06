@@ -11,7 +11,7 @@
     "A/B test"
   ],
   "main": "index.js",
-  "version": "1.7.0",
+  "version": "1.7.1",
   "description": "A/B testing React components and debug tools. Isomorphic with a simple, universal interface. Well documented and lightweight. Tested in popular browsers and Node.js. Includes helpers for Mixpanel and Segment.com.",
   "directories": {
     "test": "test"
