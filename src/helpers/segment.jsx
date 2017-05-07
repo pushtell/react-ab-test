@@ -1,4 +1,4 @@
-import emitter from "../emitter";
+import emitter from "../emitter.jsx";
 import {canUseDOM} from 'fbjs/lib/ExecutionEnvironment';
 
 let playSubscription, winSubscription;
