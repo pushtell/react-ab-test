@@ -314,6 +314,7 @@ var session = require('express-session');
 var React = require("react");
 var ReactDOMServer = require("react-dom/server");
 var Component = require("./Component.jsx");
+var abEmitter = require("react-ab-test/lib/emitter")
 
 var app = express();
 
@@ -328,6 +329,7 @@ app.use(session({
 app.get('/', function (req, res) {
   var reactElement = React.createElement(Component, {userIdentifier: req.sessionID});
   var reactString = ReactDOMServer.renderToString(reactElement);
+  abEmitter.rewind();
   res.render('template', {
     sessionID: req.sessionID,
     reactOutput: reactString
@@ -338,6 +340,8 @@ app.use(express.static('www'));
 
 app.listen(8080);
 ```
+
+Remember to call `abEmitter.rewind()` to prevent memory leaks.
 
 An [EJS](https://github.com/mde/ejs) template in [`template.ejs`](https://github.com/pushtell/react-ab-test/blob/master/examples/isomorphic/views/template.ejs):
 
