@@ -69,7 +69,8 @@ Please [★ on GitHub](https://github.com/pushtell/react-ab-test)!
     - [Usage](#usage-2)
     - [`segmentHelper.enable()`](#segmenthelperenable)
     - [`segmentHelper.disable()`](#segmenthelperdisable)
-- [Tests](#tests)
+- [How to contribute](#how-to-contribute)
+  - [Requisites](#requisites)
   - [Browser Coverage](#browser-coverage)
   - [Running Tests](#running-tests)
 
