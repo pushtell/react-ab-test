@@ -705,10 +705,19 @@ Remove `win` and `play` listeners and stop reporting results to Segment.
 
 * **Return Type:** No return value
 
-## Tests
+## How to contribute
+### Requisites
+Before contribuiting you need:
+- [doctoc](https://github.com/thlorenz/doctoc) installed
+
+Then you can:
+- Apply your changes :sunglasses:
+- Build your changes with `npm run build`
+- Test your changes with `npm test`
+- Lint your changes with `npm run lint`
+- And finally open the PR! :tada:
 
 ### Browser Coverage
-
 [Karma](http://karma-runner.github.io/0.13/index.html) tests are performed on [Browserstack](https://www.browserstack.com/) in the following browsers:
 
 * IE 9, Windows 7
