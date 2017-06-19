@@ -1,7 +1,7 @@
 import React from 'react';
 import warning from 'fbjs/lib/warning';
-import emitter from "./emitter";
-import Variant from "./Variant";
+import emitter from "./emitter.jsx";
+import Variant from "./Variant.jsx";
 
 export default React.createClass({
   displayName: "Pushtell.CoreExperiment",

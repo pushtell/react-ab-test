@@ -1,6 +1,6 @@
 import React from "react";
-import CoreExperiment from "./CoreExperiment";
-import emitter from "./emitter";
+import CoreExperiment from "./CoreExperiment.jsx";
+import emitter from "./emitter.jsx";
 import crc32 from "fbjs/lib/crc32";
 
 let store;

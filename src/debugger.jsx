@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import emitter from "./emitter";
+import emitter from "./emitter.jsx";
 import {canUseDOM} from 'fbjs/lib/ExecutionEnvironment';
 
 if(process.env.NODE_ENV === "production" || !canUseDOM) {
@@ -143,7 +143,7 @@ if(process.env.NODE_ENV === "production" || !canUseDOM) {
     }
   });
 
-  module.exports = {
+const debuggerExport = {
     enable() {
       attachStyleSheet();
       let body = document.getElementsByTagName('body')[0];
@@ -163,3 +163,5 @@ if(process.env.NODE_ENV === "production" || !canUseDOM) {
     }
   }
 }
+
+export default debuggerExport;
