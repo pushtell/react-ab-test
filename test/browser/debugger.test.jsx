@@ -7,7 +7,7 @@ import emitter from "../../src/emitter.jsx";
 import assert from "assert";
 import co from "co";
 import UUID from "node-uuid";
-import TestUtils from 'react/lib/ReactTestUtils';
+import TestUtils from 'react-dom/test-utils';
 import ES6Promise from 'es6-promise';
 ES6Promise.polyfill();
 
