@@ -1,0 +1,24 @@
+{
+  "parser": "babel-eslint",
+  "env": {
+    "browser": true,
+    "mocha": true,
+    "node": true,
+    "es6": true,
+  },
+  "globals": {
+    "assert": true
+  },
+  "plugins": [
+    "babel",
+    "react",
+    "promise"
+  ],
+  "rules": {
+    "camelcase": 0,
+    "no-sequences": 0,
+    "no-extra-parens": 2,
+    "no-loop-func": 2,
+    "require-yield": 2
+  }
+}

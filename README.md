@@ -314,6 +314,7 @@ var session = require('express-session');
 var React = require("react");
 var ReactDOMServer = require("react-dom/server");
 var Component = require("./Component.jsx");
+var abEmitter = require("react-ab-test/lib/emitter")
 
 var app = express();
 
@@ -328,6 +329,7 @@ app.use(session({
 app.get('/', function (req, res) {
   var reactElement = React.createElement(Component, {userIdentifier: req.sessionID});
   var reactString = ReactDOMServer.renderToString(reactElement);
+  abEmitter.rewind();
   res.render('template', {
     sessionID: req.sessionID,
     reactOutput: reactString
@@ -338,6 +340,8 @@ app.use(express.static('www'));
 
 app.listen(8080);
 ```
+
+Remember to call `abEmitter.rewind()` to prevent memory leaks.
 
 An [EJS](https://github.com/mde/ejs) template in [`template.ejs`](https://github.com/pushtell/react-ab-test/blob/master/examples/isomorphic/views/template.ejs):
 
@@ -643,13 +647,13 @@ Remove `win` and `play` listeners and stop reporting results to Mixpanel.
 
 ### `segmentHelper`
 
-Sends events to [Segment](https://segment.com). Requires `window.segment` to be set using [Segment's embed snippet](https://segment.com/docs/libraries/analytics.js/quickstart/#step-1-copy-the-snippet).
+Sends events to [Segment](https://segment.com). Requires `window.analytics` to be set using [Segment's embed snippet](https://segment.com/docs/libraries/analytics.js/quickstart/#step-1-copy-the-snippet).
 
 #### Usage
 
-When the [`<Experiment />`](#experiment-) is mounted, the helper sends an `Experiment Play` event using [`segment.track(...)`](https://segment.com/docs/libraries/analytics.js/#track) with `Experiment` and `Variant` properties.
+When the [`<Experiment />`](#experiment-) is mounted, the helper sends an `Experiment Viewed` event using [`segment.track(...)`](https://segment.com/docs/libraries/analytics.js/#track) with `experimentName` and `variationName` properties.
 
-When a [win is emitted](#emitteremitwinexperimentname) the helper sends an `Experiment Win` event using [`segment.track(...)`](https://segment.com/docs/libraries/analytics.js/#track) with `Experiment` and `Variant` properties.
+When a [win is emitted](#emitteremitwinexperimentname) the helper sends an `Experiment Won` event using [`segment.track(...)`](https://segment.com/docs/libraries/analytics.js/#track) with `experimentName` and `variationName` properties.
 
 Try it [on JSFiddle](https://jsfiddle.net/pushtell/ae1jeo2k/)
 
@@ -659,18 +663,18 @@ var Experiment = require("react-ab-test/lib/Experiment");
 var Variant = require("react-ab-test/lib/Variant");
 var segmentHelper = require("react-ab-test/lib/helpers/segment");
 
-// window.segment has been set by Segment's embed snippet.
+// window.analytics has been set by Segment's embed snippet.
 segmentHelper.enable();
 
 var App = React.createClass({
   onButtonClick: function(e){
     emitter.emitWin("My Example");
-    // segmentHelper sends the 'Experiment Win' event, equivalent to:
-    // segment.track('Experiment Win', {Experiment: "My Example", Variant: "A"})
+    // segmentHelper sends the 'Experiment Won' event, equivalent to:
+    // segment.track('Experiment Won', {experimentName: "My Example", variationName: "A"})
   },
   componentWillMount: function(){
-    // segmentHelper sends the 'Experiment Play' event, equivalent to:
-    // segment.track('Experiment Play', {Experiment: "My Example", Variant: "A"})
+    // segmentHelper sends the 'Experiment Viewed' event, equivalent to:
+    // segment.track('Experiment Viewed, {experimentName: "My Example", variationName: "A"})
   },
   render: function(){
     return <div>
@@ -701,10 +705,19 @@ Remove `win` and `play` listeners and stop reporting results to Segment.
 
 * **Return Type:** No return value
 
-## Tests
+## How to contribute
+### Requisites
+Before contribuiting you need:
+- [doctoc](https://github.com/thlorenz/doctoc) installed
+
+Then you can:
+- Apply your changes :sunglasses:
+- Build your changes with `npm run build`
+- Test your changes with `npm test`
+- Lint your changes with `npm run lint`
+- And finally open the PR! :tada:
 
 ### Browser Coverage
-
 [Karma](http://karma-runner.github.io/0.13/index.html) tests are performed on [Browserstack](https://www.browserstack.com/) in the following browsers:
 
 * IE 9, Windows 7
