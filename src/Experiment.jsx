@@ -1,4 +1,5 @@
-import React from "react";
+import React, {Component} from "react";
+import PropTypes from 'prop-types';
 import CoreExperiment from "./CoreExperiment";
 import emitter from "./emitter";
 import crc32 from "fbjs/lib/crc32";
@@ -10,7 +11,7 @@ const noopStore = {
   setItem: function(){}
 };
 
-if(typeof window !== 'undefined' && 'localStorage' in window && window['localStorage'] !== null) {
+if (typeof window !== 'undefined' && 'localStorage' in window && window['localStorage'] !== null) {
   try {
     let key = '__pushtell_react__';
     window.localStorage.setItem(key, key);
@@ -20,34 +21,39 @@ if(typeof window !== 'undefined' && 'localStorage' in window && window['localSto
       window.localStorage.removeItem(key);
       store = window.localStorage;
     }
-  } catch(e) {
+  } catch (e) {
     store = noopStore;
   }
 } else {
   store = noopStore;
 }
 
-emitter.addActiveVariantListener(function(experimentName, variantName, skipSave){
-  if(skipSave) {
+emitter.addActiveVariantListener(function (experimentName, variantName, skipSave) {
+  if (skipSave) {
     return;
   }
   store.setItem('PUSHTELL-' + experimentName, variantName);
 });
 
-export default React.createClass({
-  displayName: "Pushtell.Experiment",
-  propTypes: {
-    name: React.PropTypes.string.isRequired,
-    defaultVariantName: React.PropTypes.string,
-    userIdentifier: React.PropTypes.string
-  },
-  win(){
+export default class Experiment extends Component {
+  static propTypes = {
+    name: PropTypes.string.isRequired,
+    defaultVariantName: PropTypes.string,
+    userIdentifier: PropTypes.string
+  };
+
+  static displayName = "Pushtell.Experiment";
+
+  win = () => {
     emitter.emitWin(this.props.name);
-  },
-  getRandomValue() {
+  };
+
+  getRandomValue = () => {
     const variants = emitter.getSortedVariants(this.props.name);
     const weights = emitter.getSortedVariantWeights(this.props.name);
-    const weightSum = weights.reduce((a, b) => {return a + b;}, 0);
+    const weightSum = weights.reduce((a, b) => {
+      return a + b;
+    }, 0);
     let weightedIndex = typeof this.props.userIdentifier === 'string' ? Math.abs(crc32(this.props.userIdentifier) % weightSum) : Math.floor(Math.random() * weightSum);
     let randomValue = variants[variants.length - 1];
     for (let index = 0; index < weights.length; index++) {
@@ -59,8 +65,9 @@ export default React.createClass({
     }
     emitter.setActiveVariant(this.props.name, randomValue);
     return randomValue;
-  },
-  getLocalStorageValue() {
+  }
+
+  getLocalStorageValue = () => {
     if(typeof this.props.userIdentifier === "string") {
       return this.getRandomValue();
     }
@@ -78,8 +85,9 @@ export default React.createClass({
       return this.props.defaultVariantName;
     }
     return this.getRandomValue();
-  },
-  render() {
-    return <CoreExperiment {...this.props} value={this.getLocalStorageValue} />;
   }
-});
+
+  render() {
+    return <CoreExperiment {...this.props} value={this.getLocalStorageValue}/>;
+  }
+}
