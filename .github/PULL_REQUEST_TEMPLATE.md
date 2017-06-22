@@ -1,3 +1,16 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+<h1>Table of Contents</h1>
+
+- [Description](#description)
+- [Motivation and Context](#motivation-and-context)
+- [How Has This Been Tested?](#how-has-this-been-tested)
+- [Screenshots (if appropriate):](#screenshots-if-appropriate)
+- [Types of changes](#types-of-changes)
+- [Checklist:](#checklist)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 <!--- Thank you for your pull request! This is a community supported 
 project initially released by https://github.com/wehriam for your use
 and enjoyment. -->

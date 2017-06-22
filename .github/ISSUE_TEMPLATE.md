@@ -1,3 +1,16 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+<h1>Table of Contents</h1>
+
+- [Expected Behavior](#expected-behavior)
+- [Current Behavior](#current-behavior)
+- [Possible Solution](#possible-solution)
+- [Steps to Reproduce (for bugs)](#steps-to-reproduce-for-bugs)
+- [Context](#context)
+- [Your Environment](#your-environment)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 <!--- Thank you for your issue report! This is a community supported 
 project initially released by https://github.com/wehriam for your use
 and enjoyment. -->

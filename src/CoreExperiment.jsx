@@ -27,7 +27,6 @@ export default class CoreExperiment extends Component {
     let children = {};
     React.Children.forEach(props.children, element => {
       if (!React.isValidElement(element) || element.type.displayName !== "Pushtell.Variant") {
-        console.log(element.type);
         let error = new Error("Pushtell Experiment children must be Pushtell Variant components.");
         error.type = "PUSHTELL_INVALID_CHILD";
         throw error;
