@@ -48,42 +48,26 @@ export default class Experiment extends Component {
     emitter.emitWin(this.props.name);
   };
 
-  getLocalStorageValue = () => {
-    const activeValue = emitter.getActiveVariant(this.props.name);
-    if (typeof activeValue === "string") {
-      return activeValue;
-    }
-    const storedValue = store.getItem('PUSHTELL-' + this.props.name);
-    if (typeof storedValue === "string") {
-      emitter.setActiveVariant(this.props.name, storedValue, true);
-      return storedValue;
-    }
-    if (typeof this.props.defaultVariantName === 'string') {
-      emitter.setActiveVariant(this.props.name, this.props.defaultVariantName);
-      return this.props.defaultVariantName;
-    }
-
+  getSelectedVariant = () => {
     /*
-    
-    Choosing a weighted variant:
 
+    Choosing a weighted variant:
       For C, A, B with weights 2, 4, 8
-      
+
       variants = A, B, C
       weights = 4, 8, 2
       weightSum = 14
       weightedIndex = 9
-      
+
       AAAABBBBBBBBCC
       ========^
-
       Select B
 
     */
 
     // Sorted array of the variant names, example: ["A", "B", "C"]
     const variants = emitter.getSortedVariants(this.props.name);
-    // Array of the variant weights, also sorted by variant name. For example, if 
+    // Array of the variant weights, also sorted by variant name. For example, if
     // variant C had weight 2, variant A had weight 4, and variant B had weight 8
     // return [4, 8, 2] to correspond with ["A", "B", "C"]
     const weights = emitter.getSortedVariantWeights(this.props.name);
@@ -106,7 +90,27 @@ export default class Experiment extends Component {
     }
     emitter.setActiveVariant(this.props.name, selectedVariant);
     return selectedVariant;
-  };
+  }
+
+  getLocalStorageValue = () => {
+    if(typeof this.props.userIdentifier === "string") {
+      return this.getSelectedVariant();
+    }
+    const activeValue = emitter.getActiveVariant(this.props.name);
+    if(typeof activeValue === "string") {
+      return activeValue;
+    }
+    const storedValue = store.getItem('PUSHTELL-' + this.props.name);
+    if(typeof storedValue === "string") {
+      emitter.setActiveVariant(this.props.name, storedValue, true);
+      return storedValue;
+    }
+    if(typeof this.props.defaultVariantName === 'string') {
+      emitter.setActiveVariant(this.props.name, this.props.defaultVariantName);
+      return this.props.defaultVariantName;
+    }
+    return this.getSelectedVariant();
+  }
 
   render() {
     return <CoreExperiment {...this.props} value={this.getLocalStorageValue}/>;
