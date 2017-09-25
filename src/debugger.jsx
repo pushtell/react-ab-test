@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 import emitter from "./emitter";
 import {canUseDOM} from 'fbjs/lib/ExecutionEnvironment';
@@ -72,48 +72,61 @@ if(process.env.NODE_ENV === "production" || !canUseDOM) {
     addCSSRule("#pushtell-debugger .pushtell-close:hover", "color: #FF0000");
     addCSSRule("#pushtell-debugger .pushtell-close, #pushtell-debugger label", "transition: all .25s");
   }
+
   function removeStyleSheet() {
-    if(style !== null){
+    if(style !== null) {
       document.head.removeChild(style);
       style = null;
     }
   }
-  const Debugger = React.createClass({
-    displayName: "Pushtell.Debugger",
-    getInitialState(){
-      return {
-        experiments: emitter.getActiveExperiments(),
-        visible: false
-      };
-    },
+
+  class Debugger extends Component {
+    displayName = "Pushtell.Debugger";
+
+    state = {
+      experiments: emitter.getActiveExperiments(),
+      visible: false
+    };
+
+    constructor(props) {
+      super(props);
+
+      this.toggleVisibility = this.toggleVisibility.bind(this);
+    }
+
     toggleVisibility() {
       this.setState({
         visible: !this.state.visible
       });
-    },
-    updateExperiments(){
+    }
+
+    updateExperiments() {
       this.setState({
         experiments: emitter.getActiveExperiments()
       });
-    },
+    }
+
     setActiveVariant(experimentName, variantName) {
       emitter.setActiveVariant(experimentName, variantName);
-    },
-    componentWillMount(){
+    }
+
+    componentWillMount() {
       this.activeSubscription = emitter.addListener("active", this.updateExperiments);
       this.inactiveSubscription = emitter.addListener("inactive", this.updateExperiments);
-    },
-    componentWillUnmount(){
+    }
+
+    componentWillUnmount() {
       this.activeSubscription.remove();
       this.inactiveSubscription.remove();
-    },
-    render(){
-      var experimentNames = Object.keys(this.state.experiments);
+    }
+
+    render() {
+      const experimentNames = Object.keys(this.state.experiments);
       if(this.state.visible) {
         return <div className="pushtell-container pushtell-panel">
           <div className="pushtell-close" onClick={this.toggleVisibility}>×</div>
           {experimentNames.map(experimentName => {
-            var variantNames = Object.keys(this.state.experiments[experimentName]);
+            const variantNames = Object.keys(this.state.experiments[experimentName]);
             if(variantNames.length === 0) {
               return;
             }
@@ -133,7 +146,7 @@ if(process.env.NODE_ENV === "production" || !canUseDOM) {
           })}
           <div className="pushtell-production-build-note">This panel is hidden on production builds.</div>
         </div>;
-      } else if(experimentNames.length > 0){
+      } else if(experimentNames.length > 0) {
         return <div className="pushtell-container pushtell-handle" onClick={this.toggleVisibility}>
           {experimentNames.length} Active Experiment{experimentNames.length > 1 ? "s" : ""}
         </div>;
@@ -141,7 +154,7 @@ if(process.env.NODE_ENV === "production" || !canUseDOM) {
         return null;
       }
     }
-  });
+  }
 
   module.exports = {
     enable() {
@@ -152,6 +165,7 @@ if(process.env.NODE_ENV === "production" || !canUseDOM) {
       body.appendChild(container);
       ReactDOM.render(<Debugger />, container);
     },
+
     disable() {
       removeStyleSheet();
       let body = document.getElementsByTagName('body')[0];
