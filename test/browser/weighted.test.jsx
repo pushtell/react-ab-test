@@ -78,7 +78,7 @@ describe("Weighted Experiment", function() {
       playCount[variantName] += 1;
     });
     for(let i = 0; i < 1000; i++) {
-      yield new Promise(function(resolve, reject){
+      yield new Promise(function(resolve, reject){ // eslint-disable-line no-loop-func
         ReactDOM.render(<App />, container, resolve);
       });
       ReactDOM.unmountComponentAtNode(container);
@@ -89,7 +89,7 @@ describe("Weighted Experiment", function() {
       return playCount[variantName] || 0;
     }).reduce(add, 0);
     const playCountToWeightRatios = variantNames.map(function(variantName, index){
-      return (playCount[variantName] / playSum) / (variantWeights[index] / weightSum)
+      return playCount[variantName] / playSum / (variantWeights[index] / weightSum)
     });
     const ratioMean = playCountToWeightRatios.reduce(add, 0) / playCountToWeightRatios.length;
     const ratioVariance = playCountToWeightRatios.map(function(ratio){

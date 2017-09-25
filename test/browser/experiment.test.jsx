@@ -302,7 +302,7 @@ describe("Experiment", function() {
     for(let i = 0; i < 100; i++) {
       emitter._reset();
       store.clear();
-      yield new Promise(function(resolve, reject){
+      yield new Promise(function(resolve, reject){ // eslint-disable-line no-loop-func
         ReactDOM.render(<App />, container, resolve);
       });
       let element = document.getElementById('variant-' + chosenVariant);
