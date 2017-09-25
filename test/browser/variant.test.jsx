@@ -11,43 +11,43 @@ ES6Promise.polyfill();
 
 describe("Variant", function() {
   let container;
-  before(function(){
+  before(function() {
     container = document.createElement("div");
     container.id = "react";
     document.getElementsByTagName('body')[0].appendChild(container);
   });
-  after(function(){
+  after(function() {
     document.getElementsByTagName('body')[0].removeChild(container);
     emitter._reset();
   });
-  it("should render text nodes.", co.wrap(function *(){
+  it("should render text nodes.", co.wrap(function *() {
     let experimentName = UUID.v4();
     let variantTextA = UUID.v4();
     let variantTextB = UUID.v4();
     let App = React.createClass({
-      render: function(){
+      render: function() {
         return <Experiment name={experimentName} value="A">
           <Variant name="A">{variantTextA}</Variant>
           <Variant name="B">{variantTextB}</Variant>
         </Experiment>;
       }
     });
-    yield new Promise(function(resolve, reject){
+    yield new Promise(function(resolve, reject) {
       ReactDOM.render(<App />, container, resolve);
     });
     assert.notEqual(container.innerHTML.indexOf(variantTextA), null);
   }));
-  it("should render components.", co.wrap(function *(){
+  it("should render components.", co.wrap(function *() {
     let experimentName = UUID.v4();
     let App = React.createClass({
-      render: function(){
+      render: function() {
         return <Experiment name={experimentName} value="A">
           <Variant name="A"><div id="variant-a" /></Variant>
           <Variant name="B"><div id="variant-b" /></Variant>
         </Experiment>;
       }
     });
-    yield new Promise(function(resolve, reject){
+    yield new Promise(function(resolve, reject) {
       ReactDOM.render(<App />, container, resolve);
     });
     let elementA = document.getElementById('variant-a');
@@ -56,10 +56,10 @@ describe("Variant", function() {
     assert.equal(elementB, null);
     ReactDOM.unmountComponentAtNode(container);
   }));
-  it("should render arrays of components.", co.wrap(function *(){
+  it("should render arrays of components.", co.wrap(function *() {
     let experimentName = UUID.v4();
     let App = React.createClass({
-      render: function(){
+      render: function() {
         return <Experiment name={experimentName} value="A">
           <Variant name="A">
             <div id="variant-a" />
@@ -72,7 +72,7 @@ describe("Variant", function() {
         </Experiment>;
       }
     });
-    yield new Promise(function(resolve, reject){
+    yield new Promise(function(resolve, reject) {
       ReactDOM.render(<App />, container, resolve);
     });
     let elementA = document.getElementById('variant-a');

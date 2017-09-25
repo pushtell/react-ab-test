@@ -11,14 +11,14 @@ const emitter = new EventEmitter();
 
 const PushtellEventEmitter = function() {};
 
-PushtellEventEmitter.prototype.emitWin = function(experimentName){
+PushtellEventEmitter.prototype.emitWin = function(experimentName) {
   if(typeof experimentName !== 'string') {
     throw new Error("Required argument 'experimentName' should have type 'string'");
   }
   emitter.emit("win", experimentName, values[experimentName]);
 };
 
-PushtellEventEmitter.prototype._emitPlay = function(experimentName, variantName){
+PushtellEventEmitter.prototype._emitPlay = function(experimentName, variantName) {
   if(typeof experimentName !== 'string') {
     throw new Error("Required argument 'experimentName' should have type 'string'");
   }
@@ -31,12 +31,12 @@ PushtellEventEmitter.prototype._emitPlay = function(experimentName, variantName)
   }
 };
 
-PushtellEventEmitter.prototype._resetPlayedExperiments = function(){
+PushtellEventEmitter.prototype._resetPlayedExperiments = function() {
   values = {};
   playedExperiments = {};
 }
 
-PushtellEventEmitter.prototype._reset = function(){
+PushtellEventEmitter.prototype._reset = function() {
   values = {};
   experiments = {};
   experimentWeights = {};
@@ -115,7 +115,7 @@ PushtellEventEmitter.prototype.addWinListener = function(experimentName, callbac
   });
 };
 
-PushtellEventEmitter.prototype.defineVariants = function(experimentName, variantNames, variantWeights){
+PushtellEventEmitter.prototype.defineVariants = function(experimentName, variantNames, variantWeights) {
   const variantsNamesMap = {};
   const variantWeightsMap = {};
   variantNames.forEach(variantName => {
@@ -148,12 +148,12 @@ PushtellEventEmitter.prototype.getSortedVariants = function(experimentName) {
 };
 
 PushtellEventEmitter.prototype.getSortedVariantWeights = function(experimentName) {
-  return this.getSortedVariants(experimentName).map(function(variantName){
+  return this.getSortedVariants(experimentName).map(function(variantName) {
     return experimentWeights[experimentName][variantName];
   });
 };
 
-PushtellEventEmitter.prototype.getActiveExperiments = function(){
+PushtellEventEmitter.prototype.getActiveExperiments = function() {
   const response = {};
   Object.keys(activeExperiments).forEach(experimentName => {
     if(activeExperiments[experimentName] === 0) {
@@ -167,16 +167,16 @@ PushtellEventEmitter.prototype.getActiveExperiments = function(){
   return response;
 }
 
-PushtellEventEmitter.prototype.getActiveVariant = function(experimentName){
+PushtellEventEmitter.prototype.getActiveVariant = function(experimentName) {
   return values[experimentName];
 }
 
-PushtellEventEmitter.prototype.setActiveVariant = function(experimentName, variantName, passthrough){
+PushtellEventEmitter.prototype.setActiveVariant = function(experimentName, variantName, passthrough) {
   values[experimentName] = variantName;
   emitter.emit("active-variant", experimentName, variantName, passthrough);
 }
 
-PushtellEventEmitter.prototype.addExperimentVariant = function(experimentName, variantName){
+PushtellEventEmitter.prototype.addExperimentVariant = function(experimentName, variantName) {
   experiments[experimentName] = experiments[experimentName] || {};
   experimentWeights[experimentName] = experimentWeights[experimentName] || {};
   if(experiments[experimentName][variantName] !== true) {

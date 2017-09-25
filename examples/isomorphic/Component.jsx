@@ -6,7 +6,7 @@ module.exports = React.createClass({
   propTypes: {
     userIdentifier: React.PropTypes.string.isRequired
   },
-  render: function(){
+  render: function() {
     return <div>
       <Experiment ref="experiment" name="My Example" userIdentifier={this.props.userIdentifier}>
         <Variant name="A">

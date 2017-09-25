@@ -13,9 +13,9 @@ ES6Promise.polyfill();
 let store;
 
 let noopStore = {
-  getItem: function(){},
-  setItem: function(){},
-  clear: function(){}
+  getItem: function() {},
+  setItem: function() {},
+  clear: function() {}
 };
 
 if(typeof window !== 'undefined' && 'localStorage' in window && window['localStorage'] !== null) {
@@ -37,23 +37,23 @@ if(typeof window !== 'undefined' && 'localStorage' in window && window['localSto
 
 describe("Experiment", function() {
   let container;
-  before(function(){
+  before(function() {
     container = document.createElement("div");
     container.id = "react";
     document.getElementsByTagName('body')[0].appendChild(container);
   });
-  after(function(){
+  after(function() {
     document.getElementsByTagName('body')[0].removeChild(container);
     emitter._reset();
   });
-  it("should choose a version.", co.wrap(function *(){
+  it("should choose a version.", co.wrap(function *() {
     let experimentName = UUID.v4();
     let variantNames = [];
     for(let i = 0; i < 100; i++) {
       variantNames.push(UUID.v4());
     }
     let App = React.createClass({
-      render: function(){
+      render: function() {
         return <Experiment name={experimentName}>
           {variantNames.map(name => {
             return <Variant key={name} name={name}><div id={'variant-' + name}></div></Variant>
@@ -61,12 +61,12 @@ describe("Experiment", function() {
         </Experiment>;
       }
     });
-    yield new Promise(function(resolve, reject){
+    yield new Promise(function(resolve, reject) {
       ReactDOM.render(<App />, container, resolve);
     });
     ReactDOM.unmountComponentAtNode(container);
   }));
-  it("should render the correct variant.", co.wrap(function *(){
+  it("should render the correct variant.", co.wrap(function *() {
     let experimentName = UUID.v4();
     let variantNames = [];
     for(let i = 0; i < 100; i++) {
@@ -74,7 +74,7 @@ describe("Experiment", function() {
     }
     let defaultVariantName = variantNames[Math.floor(Math.random() * variantNames.length)];
     let AppWithdefaultVariantName = React.createClass({
-      render: function(){
+      render: function() {
         return <Experiment name={experimentName} defaultVariantName={defaultVariantName}>
           {variantNames.map(name => {
             return <Variant key={name} name={name}><div id={'variant-' + name}></div></Variant>
@@ -83,7 +83,7 @@ describe("Experiment", function() {
       }
     });
     let AppWithoutdefaultVariantName = React.createClass({
-      render: function(){
+      render: function() {
         return <Experiment name={experimentName}>
           {variantNames.map(name => {
             return <Variant key={name} name={name}><div id={'variant-' + name}></div></Variant>
@@ -91,26 +91,26 @@ describe("Experiment", function() {
         </Experiment>;
       }
     });
-    yield new Promise(function(resolve, reject){
+    yield new Promise(function(resolve, reject) {
       ReactDOM.render(<AppWithdefaultVariantName />, container, resolve);
     });
     let elementWithdefaultVariantName = document.getElementById('variant-' + defaultVariantName);
     assert.notEqual(elementWithdefaultVariantName, null);
     ReactDOM.unmountComponentAtNode(container);
-    yield new Promise(function(resolve, reject){
+    yield new Promise(function(resolve, reject) {
       ReactDOM.render(<AppWithoutdefaultVariantName />, container, resolve);
     });
     let elementWithoutdefaultVariantName = document.getElementById('variant-' + defaultVariantName);
     assert.notEqual(elementWithoutdefaultVariantName, null);
     ReactDOM.unmountComponentAtNode(container);
   }));
-  it("should error if variants are added to a experiment after a variant was selected.", co.wrap(function *(){
+  it("should error if variants are added to a experiment after a variant was selected.", co.wrap(function *() {
     let experimentName = UUID.v4();
     let AppPart1 = React.createClass({
-      onClickVariant: function(e){
+      onClickVariant: function(e) {
         this.refs.experiment.win();
       },
-      render: function(){
+      render: function() {
         return <Experiment ref="experiment" name={experimentName}>
           <Variant name="A"><a id="variant-a" href="#A">A</a></Variant>
           <Variant name="B"><a id="variant-b" href="#B">B</a></Variant>
@@ -118,22 +118,22 @@ describe("Experiment", function() {
       }
     });
     let AppPart2 = React.createClass({
-      onClickVariant: function(e){
+      onClickVariant: function(e) {
         this.refs.experiment.win();
       },
-      render: function(){
+      render: function() {
         return <Experiment ref="experiment" name={experimentName}>
           <Variant name="C"><a id="variant-c" href="#C">C</a></Variant>
           <Variant name="D"><a id="variant-d" href="#D">D</a></Variant>
         </Experiment>;
       }
     });
-    yield new Promise(function(resolve, reject){
+    yield new Promise(function(resolve, reject) {
       ReactDOM.render(<AppPart1 />, container, resolve);
     });
     ReactDOM.unmountComponentAtNode(container);
     try {
-      yield new Promise(function(resolve, reject){
+      yield new Promise(function(resolve, reject) {
         ReactDOM.render(<AppPart2 />, container, resolve);
       });
     } catch(error) {
@@ -145,14 +145,14 @@ describe("Experiment", function() {
     }
     throw new Error("New variant was added after variant was selected.");
   }));
-  it("should not error if variants are added to a experiment after a variant was selected if variants were defined.", co.wrap(function *(){
+  it("should not error if variants are added to a experiment after a variant was selected if variants were defined.", co.wrap(function *() {
     let experimentName = UUID.v4();
     emitter.defineVariants(experimentName, ["A", "B", "C", "D"]);
     let AppPart1 = React.createClass({
-      onClickVariant: function(e){
+      onClickVariant: function(e) {
         this.refs.experiment.win();
       },
-      render: function(){
+      render: function() {
         return <Experiment ref="experiment" name={experimentName}>
           <Variant name="A"><a id="variant-a" href="#A">A</a></Variant>
           <Variant name="B"><a id="variant-b" href="#B">B</a></Variant>
@@ -160,33 +160,33 @@ describe("Experiment", function() {
       }
     });
     let AppPart2 = React.createClass({
-      onClickVariant: function(e){
+      onClickVariant: function(e) {
         this.refs.experiment.win();
       },
-      render: function(){
+      render: function() {
         return <Experiment ref="experiment" name={experimentName}>
           <Variant name="C"><a id="variant-c" href="#C">C</a></Variant>
           <Variant name="D"><a id="variant-d" href="#D">D</a></Variant>
         </Experiment>;
       }
     });
-    yield new Promise(function(resolve, reject){
+    yield new Promise(function(resolve, reject) {
       ReactDOM.render(<AppPart1 />, container, resolve);
     });
     ReactDOM.unmountComponentAtNode(container);
-    yield new Promise(function(resolve, reject){
+    yield new Promise(function(resolve, reject) {
       ReactDOM.render(<AppPart2 />, container, resolve);
     });
     ReactDOM.unmountComponentAtNode(container);
   }));
-  it("should error if a variant is added to an experiment after variants were defined.", co.wrap(function *(){
+  it("should error if a variant is added to an experiment after variants were defined.", co.wrap(function *() {
     let experimentName = UUID.v4();
     emitter.defineVariants(experimentName, ["A", "B", "C"]);
     let AppPart1 = React.createClass({
-      onClickVariant: function(e){
+      onClickVariant: function(e) {
         this.refs.experiment.win();
       },
-      render: function(){
+      render: function() {
         return <Experiment ref="experiment" name={experimentName}>
           <Variant name="A"><a id="variant-a" href="#A">A</a></Variant>
           <Variant name="B"><a id="variant-b" href="#B">B</a></Variant>
@@ -194,22 +194,22 @@ describe("Experiment", function() {
       }
     });
     let AppPart2 = React.createClass({
-      onClickVariant: function(e){
+      onClickVariant: function(e) {
         this.refs.experiment.win();
       },
-      render: function(){
+      render: function() {
         return <Experiment ref="experiment" name={experimentName}>
           <Variant name="C"><a id="variant-c" href="#C">C</a></Variant>
           <Variant name="D"><a id="variant-d" href="#D">D</a></Variant>
         </Experiment>;
       }
     });
-    yield new Promise(function(resolve, reject){
+    yield new Promise(function(resolve, reject) {
       ReactDOM.render(<AppPart1 />, container, resolve);
     });
     ReactDOM.unmountComponentAtNode(container);
     try {
-      yield new Promise(function(resolve, reject){
+      yield new Promise(function(resolve, reject) {
         ReactDOM.render(<AppPart2 />, container, resolve);
       });
     } catch(error) {
@@ -221,48 +221,48 @@ describe("Experiment", function() {
     }
     throw new Error("New variant was added after variants were defined.");
   }));
-  it("should not error if an older test variant is set.", co.wrap(function *(){
+  it("should not error if an older test variant is set.", co.wrap(function *() {
     let experimentName = UUID.v4();
     localStorage.setItem("PUSHTELL-" + experimentName, "C");
     let App = React.createClass({
-      render: function(){
+      render: function() {
         return <Experiment name={experimentName}>
           <Variant name="A"><a id="variant-a" href="#A" onClick={this.onClickVariant}>A</a></Variant>
           <Variant name="B"><a id="variant-b" href="#B" onClick={this.onClickVariant}>B</a></Variant>
         </Experiment>;
       }
     });
-    yield new Promise(function(resolve, reject){
+    yield new Promise(function(resolve, reject) {
       ReactDOM.render(<App />, container, resolve);
     });
     ReactDOM.unmountComponentAtNode(container);
   }));
-  it("should emit when a variant is clicked.", co.wrap(function *(){
+  it("should emit when a variant is clicked.", co.wrap(function *() {
     let experimentName = UUID.v4();
     let winningVariantName = null;
-    let winCallback = function(experimentName, variantName){
+    let winCallback = function(experimentName, variantName) {
       winningVariantName = variantName;
     };
     let experimentNameGlobal = null;
     let winningVariantNameGlobal = null;
-    let winCallbackGlobal = function(experimentName, variantName){
+    let winCallbackGlobal = function(experimentName, variantName) {
       experimentNameGlobal = experimentName;
       winningVariantNameGlobal = variantName;
     };
     let winSubscription = emitter.addWinListener(experimentName, winCallback);
     let winSubscriptionGlobal = emitter.addWinListener(winCallbackGlobal);
     let App = React.createClass({
-      onClickVariant: function(e){
+      onClickVariant: function(e) {
         this.refs.experiment.win();
       },
-      render: function(){
+      render: function() {
         return <Experiment ref="experiment" name={experimentName} defaultVariantName="A">
           <Variant name="A"><a id="variant-a" href="#A" onClick={this.onClickVariant}>A</a></Variant>
           <Variant name="B"><a id="variant-b" href="#B" onClick={this.onClickVariant}>B</a></Variant>
         </Experiment>;
       }
     });
-    yield new Promise(function(resolve, reject){
+    yield new Promise(function(resolve, reject) {
       ReactDOM.render(<App />, container, resolve);
     });
     let elementA = document.getElementById('variant-a');
@@ -274,7 +274,7 @@ describe("Experiment", function() {
     winSubscriptionGlobal.remove();
     ReactDOM.unmountComponentAtNode(container);
   }));
-  it("should choose the same variant when a user identifier is defined.", co.wrap(function *(){
+  it("should choose the same variant when a user identifier is defined.", co.wrap(function *() {
     let userIdentifier = UUID.v4();
     let experimentName = UUID.v4();
     let variantNames = [];
@@ -282,7 +282,7 @@ describe("Experiment", function() {
       variantNames.push(UUID.v4());
     }
     let App = React.createClass({
-      render: function(){
+      render: function() {
         return <Experiment name={experimentName} userIdentifier={userIdentifier}>
           {variantNames.map(name => {
             return <Variant key={name} name={name}><div id={'variant-' + name}></div></Variant>
@@ -291,10 +291,10 @@ describe("Experiment", function() {
       }
     });
     let chosenVariant;
-    emitter.once("play", function(experimentName, variantName){
+    emitter.once("play", function(experimentName, variantName) {
       chosenVariant = variantName;
     });
-    yield new Promise(function(resolve, reject){
+    yield new Promise(function(resolve, reject) {
       ReactDOM.render(<App />, container, resolve);
     });
     ReactDOM.unmountComponentAtNode(container);
@@ -302,7 +302,7 @@ describe("Experiment", function() {
     for(let i = 0; i < 100; i++) {
       emitter._reset();
       store.clear();
-      yield new Promise(function(resolve, reject){
+      yield new Promise(function(resolve, reject) { // eslint-disable-line no-loop-func
         ReactDOM.render(<App />, container, resolve);
       });
       let element = document.getElementById('variant-' + chosenVariant);
