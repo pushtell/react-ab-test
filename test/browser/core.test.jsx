@@ -11,26 +11,26 @@ ES6Promise.polyfill();
 
 describe("Core Experiment", function() {
   let container;
-  before(function(){
+  before(function() {
     container = document.createElement("div");
     container.id = "react";
     document.getElementsByTagName('body')[0].appendChild(container);
   });
-  after(function(){
+  after(function() {
     document.getElementsByTagName('body')[0].removeChild(container);
     emitter._reset();
   });
-  it("should render the correct variant.", co.wrap(function *(){
+  it("should render the correct variant.", co.wrap(function *() {
     let experimentName = UUID.v4();
     let App = React.createClass({
-      render: function(){
+      render: function() {
         return <Experiment name={experimentName} value="A">
           <Variant name="A"><div id="variant-a" /></Variant>
           <Variant name="B"><div id="variant-b" /></Variant>
         </Experiment>;
       }
     });
-    yield new Promise(function(resolve, reject){
+    yield new Promise(function(resolve, reject) {
       ReactDOM.render(<App />, container, resolve);
     });
     let elementA = document.getElementById('variant-a');
@@ -39,10 +39,10 @@ describe("Core Experiment", function() {
     assert.equal(elementB, null);
     ReactDOM.unmountComponentAtNode(container);
   }));
-  it("should error if invalid children exist.", co.wrap(function *(){
+  it("should error if invalid children exist.", co.wrap(function *() {
     let experimentName = UUID.v4();
     let App = React.createClass({
-      render: function(){
+      render: function() {
         return <Experiment name={experimentName} value="A">
           <Variant name="A"><div id="variant-a" /></Variant>
           <div />
@@ -50,7 +50,7 @@ describe("Core Experiment", function() {
       }
     });
     try {
-      yield new Promise(function(resolve, reject){
+      yield new Promise(function(resolve, reject) {
         ReactDOM.render(<App />, container, resolve);
       });
     } catch(error) {
@@ -62,32 +62,32 @@ describe("Core Experiment", function() {
     }
     throw new Error("Experiment has invalid children.");
   })); 
-  it("should update on componentWillReceiveProps.", co.wrap(function *(){
+  it("should update on componentWillReceiveProps.", co.wrap(function *() {
     let experimentName = UUID.v4();
     let setState;
-    let getValueA = function(){
+    let getValueA = function() {
       return "A";
     }
     let getValueB = function() {
       return "B";
     }
     let App = React.createClass({
-      getInitialState: function(){
+      getInitialState: function() {
         return {
           value: getValueA
         }
       },
-      componentWillMount: function(){
+      componentWillMount: function() {
         setState = this.setState.bind(this);
       },
-      render: function(){
+      render: function() {
         return <Experiment name={experimentName} value={this.state.value}>
           <Variant name="A"><div id="variant-a" /></Variant>
           <Variant name="B"><div id="variant-b" /></Variant>
         </Experiment>;
       }
     });
-    yield new Promise(function(resolve, reject){
+    yield new Promise(function(resolve, reject) {
       ReactDOM.render(<App />, container, resolve);
     });
     let elementA = document.getElementById('variant-a');
@@ -103,10 +103,10 @@ describe("Core Experiment", function() {
     assert.notEqual(elementB, null);
     ReactDOM.unmountComponentAtNode(container);
   }));
-  it("should update the children when props change.", co.wrap(function *(){
+  it("should update the children when props change.", co.wrap(function *() {
     let experimentName = UUID.v4();
     let SubComponent = React.createClass({
-      render(){
+      render() {
         return (
             <div id="variant-a">
               <span id="variant-a-text">{this.props.text}</span>
@@ -115,19 +115,19 @@ describe("Core Experiment", function() {
       }
     });
     let App = React.createClass({
-      render: function(){
+      render: function() {
         return <Experiment name={experimentName} value="A">
           <Variant name="A"><SubComponent text={this.props.text}/></Variant>
           <Variant name="B"><div id="variant-b" /></Variant>
         </Experiment>;
       }
     });
-    yield new Promise(function(resolve, reject){
+    yield new Promise(function(resolve, reject) {
       let component = ReactDOM.render(<App text='original text'/>,container, resolve);
     });
     let elementAText = document.getElementById('variant-a-text');
     assert.equal(elementAText.textContent, "original text");
-    yield new Promise(function(resolve, reject){
+    yield new Promise(function(resolve, reject) {
       component = ReactDOM.render(<App text='New text'/>,container, resolve);
     });
     elementAText = document.getElementById('variant-a-text');

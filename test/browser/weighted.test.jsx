@@ -13,9 +13,9 @@ ES6Promise.polyfill();
 let store;
 
 let noopStore = {
-  getItem: function(){},
-  setItem: function(){},
-  clear: function(){}
+  getItem: function() {},
+  setItem: function() {},
+  clear: function() {}
 };
 
 if(typeof window !== 'undefined' && 'localStorage' in window && window['localStorage'] !== null) {
@@ -42,16 +42,16 @@ function add(a, b) {
 describe("Weighted Experiment", function() {
   this.timeout(10000);
   let container;
-  before(function(){
+  before(function() {
     container = document.createElement("div");
     container.id = "react";
     document.getElementsByTagName('body')[0].appendChild(container);
   });
-  after(function(){
+  after(function() {
     document.getElementsByTagName('body')[0].removeChild(container);
     emitter._reset();
   });
-  it("should choose a weighted variants.", co.wrap(function *(){
+  it("should choose a weighted variants.", co.wrap(function *() {
     const experimentName = UUID.v4();
     const variantNames = [];
     const variantWeights = [];
@@ -64,7 +64,7 @@ describe("Weighted Experiment", function() {
     emitter.defineVariants(experimentName, variantNames, variantWeights);
     assert.equal(emitter.getSortedVariantWeights(experimentName).reduce(add, 0), weightSum);
     let App = React.createClass({
-      render: function(){
+      render: function() {
         return <Experiment name={experimentName}>
           {variantNames.map(name => {
             return <Variant key={name} name={name}><div id={'variant-' + name}></div></Variant>
@@ -73,26 +73,26 @@ describe("Weighted Experiment", function() {
       }
     });
     let chosenVariant;
-    emitter.addListener("play", function(experimentName, variantName){
+    emitter.addListener("play", function(experimentName, variantName) {
       playCount[variantName] = playCount[variantName] || 0;
       playCount[variantName] += 1;
     });
     for(let i = 0; i < 1000; i++) {
-      yield new Promise(function(resolve, reject){ // eslint-disable-line no-loop-func
+      yield new Promise(function(resolve, reject) { // eslint-disable-line no-loop-func
         ReactDOM.render(<App />, container, resolve);
       });
       ReactDOM.unmountComponentAtNode(container);
       store.clear();
       emitter._resetPlayedExperiments();
     }
-    const playSum = Object.keys(playCount).map(function(variantName){
+    const playSum = Object.keys(playCount).map(function(variantName) {
       return playCount[variantName] || 0;
     }).reduce(add, 0);
-    const playCountToWeightRatios = variantNames.map(function(variantName, index){
+    const playCountToWeightRatios = variantNames.map(function(variantName, index) {
       return playCount[variantName] / playSum / (variantWeights[index] / weightSum)
     });
     const ratioMean = playCountToWeightRatios.reduce(add, 0) / playCountToWeightRatios.length;
-    const ratioVariance = playCountToWeightRatios.map(function(ratio){
+    const ratioVariance = playCountToWeightRatios.map(function(ratio) {
       return Math.pow(ratioMean - ratio, 2);
     }).reduce(add, 0);
     const ratioStandardDeviation = Math.sqrt(ratioVariance);

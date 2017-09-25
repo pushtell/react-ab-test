@@ -12,41 +12,41 @@ ES6Promise.polyfill();
 
 describe("Emitter", function() {
   let container;
-  before(function(){
+  before(function() {
     container = document.createElement("div");
     container.id = "react";
     document.getElementsByTagName('body')[0].appendChild(container);
   });
-  after(function(){
+  after(function() {
     document.getElementsByTagName('body')[0].removeChild(container);
     emitter._reset();
   });
-  it("should throw an error when passed an invalid name argument.", function (){
-    assert.throws(function(){emitter.emitWin(1)}, /type \'string\'/);
+  it("should throw an error when passed an invalid name argument.", function () {
+    assert.throws(function() {emitter.emitWin(1)}, /type \'string\'/);
   });
-  it("should emit when a variant is played.", co.wrap(function *(){
+  it("should emit when a variant is played.", co.wrap(function *() {
     let experimentName = UUID.v4();
     let playedVariantName = null;
-    let playCallback = function(experimentName, variantName){
+    let playCallback = function(experimentName, variantName) {
       playedVariantName = variantName;
     };
     let experimentNameGlobal = null;
     let playedVariantNameGlobal = null;
-    let playCallbackGlobal = function(experimentName, variantName){
+    let playCallbackGlobal = function(experimentName, variantName) {
       experimentNameGlobal = experimentName;
       playedVariantNameGlobal = variantName;
     };
     let playSubscription = emitter.addPlayListener(experimentName, playCallback);
     let playSubscriptionGlobal = emitter.addPlayListener(playCallbackGlobal);
     let App = React.createClass({
-      render: function(){
+      render: function() {
         return <Experiment name={experimentName} value="A">
           <Variant name="A"><div id="variant-a"/></Variant>
           <Variant name="B"><div id="variant-b"/></Variant>
         </Experiment>;
       }
     });
-    yield new Promise(function(resolve, reject){
+    yield new Promise(function(resolve, reject) {
       ReactDOM.render(<App />, container, resolve);
     });
     assert.equal(playedVariantName, "A");
@@ -56,29 +56,29 @@ describe("Emitter", function() {
     playSubscriptionGlobal.remove();
     ReactDOM.unmountComponentAtNode(container);
   }));
-  it("should emit when a variant wins.", co.wrap(function *(){
+  it("should emit when a variant wins.", co.wrap(function *() {
     let experimentName = UUID.v4();
     let winningVariantName = null;
-    let winCallback = function(experimentName, variantName){
+    let winCallback = function(experimentName, variantName) {
       winningVariantName = variantName;
     };
     let experimentNameGlobal = null;
     let winningVariantNameGlobal = null;
-    let winCallbackGlobal = function(experimentName, variantName){
+    let winCallbackGlobal = function(experimentName, variantName) {
       experimentNameGlobal = experimentName;
       winningVariantNameGlobal = variantName;
     };
     let winSubscription = emitter.addWinListener(experimentName, winCallback);
     let winSubscriptionGlobal = emitter.addWinListener(winCallbackGlobal);
     let App = React.createClass({
-      render: function(){
+      render: function() {
         return <Experiment name={experimentName} value="A">
           <Variant name="A"><div id="variant-a"/></Variant>
           <Variant name="B"><div id="variant-b"/></Variant>
         </Experiment>;
       }
     });
-    yield new Promise(function(resolve, reject){
+    yield new Promise(function(resolve, reject) {
       ReactDOM.render(<App />, container, resolve);
     });
     emitter.emitWin(experimentName);
@@ -89,32 +89,32 @@ describe("Emitter", function() {
     winSubscriptionGlobal.remove();
     ReactDOM.unmountComponentAtNode(container);
   }));
-  it("should emit when a variant is clicked.", co.wrap(function *(){
+  it("should emit when a variant is clicked.", co.wrap(function *() {
     let experimentName = UUID.v4();
     let winningVariantName = null;
-    let winCallback = function(experimentName, variantName){
+    let winCallback = function(experimentName, variantName) {
       winningVariantName = variantName;
     };
     let experimentNameGlobal = null;
     let winningVariantNameGlobal = null;
-    let winCallbackGlobal = function(experimentName, variantName){
+    let winCallbackGlobal = function(experimentName, variantName) {
       experimentNameGlobal = experimentName;
       winningVariantNameGlobal = variantName;
     };
     let winSubscription = emitter.addWinListener(experimentName, winCallback);
     let winSubscriptionGlobal = emitter.addWinListener(winCallbackGlobal);
     let App = React.createClass({
-      onClickVariant: function(e){
+      onClickVariant: function(e) {
         this.refs.experiment.win();
       },
-      render: function(){
+      render: function() {
         return <Experiment ref="experiment" name={experimentName} value="A">
           <Variant name="A"><a id="variant-a" href="#A" onClick={this.onClickVariant}>A</a></Variant>
           <Variant name="B"><a id="variant-b" href="#B" onClick={this.onClickVariant}>B</a></Variant>
         </Experiment>;
       }
     });
-    yield new Promise(function(resolve, reject){
+    yield new Promise(function(resolve, reject) {
       ReactDOM.render(<App />, container, resolve);
     });
     let elementA = document.getElementById('variant-a');
@@ -126,29 +126,29 @@ describe("Emitter", function() {
     winSubscriptionGlobal.remove();
     ReactDOM.unmountComponentAtNode(container);
   }));
-  it("should emit when a variant is chosen.", co.wrap(function *(){
+  it("should emit when a variant is chosen.", co.wrap(function *() {
     let experimentName = UUID.v4();
     let activeVariantName = null;
-    let activeVariantCallback = function(experimentName, variantName){
+    let activeVariantCallback = function(experimentName, variantName) {
       activeVariantName = variantName;
     };
     let experimentNameGlobal = null;
     let activeVariantNameGlobal = null;
-    let activeVariantCallbackGlobal = function(experimentName, variantName){
+    let activeVariantCallbackGlobal = function(experimentName, variantName) {
       experimentNameGlobal = experimentName;
       activeVariantNameGlobal = variantName;
     };
     let activeVariantSubscription = emitter.addActiveVariantListener(experimentName, activeVariantCallback);
     let activeVariantSubscriptionGlobal = emitter.addActiveVariantListener(activeVariantCallbackGlobal);
     let App = React.createClass({
-      render: function(){
+      render: function() {
         return <Experiment ref="experiment" name={experimentName} value="A">
           <Variant name="A"><a id="variant-a" href="#A">A</a></Variant>
           <Variant name="B"><a id="variant-b" href="#B">B</a></Variant>
         </Experiment>;
       }
     });
-    yield new Promise(function(resolve, reject){
+    yield new Promise(function(resolve, reject) {
       ReactDOM.render(<App />, container, resolve);
     });
     assert.equal(activeVariantName, "A");
@@ -158,33 +158,33 @@ describe("Emitter", function() {
     activeVariantSubscriptionGlobal.remove();
     ReactDOM.unmountComponentAtNode(container);
   }));
-  it("should get the experiment value.", co.wrap(function *(){
+  it("should get the experiment value.", co.wrap(function *() {
     let experimentName = UUID.v4();
     let App = React.createClass({
-      render: function(){
+      render: function() {
         return <Experiment ref="experiment" name={experimentName} value="A">
           <Variant name="A"><a id="variant-a" href="#A">A</a></Variant>
           <Variant name="B"><a id="variant-b" href="#B">B</a></Variant>
         </Experiment>;
       }
     });
-    yield new Promise(function(resolve, reject){
+    yield new Promise(function(resolve, reject) {
       ReactDOM.render(<App />, container, resolve);
     });
     assert.equal(emitter.getActiveVariant(experimentName), "A");
     ReactDOM.unmountComponentAtNode(container);
   }));
-  it("should update the rendered component.", co.wrap(function *(){
+  it("should update the rendered component.", co.wrap(function *() {
     let experimentName = UUID.v4();
     let App = React.createClass({
-      render: function(){
+      render: function() {
         return <Experiment name={experimentName} value="A">
           <Variant name="A"><div id="variant-a" /></Variant>
           <Variant name="B"><div id="variant-b" /></Variant>
         </Experiment>;
       }
     });
-    yield new Promise(function(resolve, reject){
+    yield new Promise(function(resolve, reject) {
       ReactDOM.render(<App />, container, resolve);
     });
     let elementA = document.getElementById('variant-a');
@@ -198,11 +198,11 @@ describe("Emitter", function() {
     assert.notEqual(elementB, null);
     ReactDOM.unmountComponentAtNode(container);
   }));
-  it("should report active components.", co.wrap(function *(){
+  it("should report active components.", co.wrap(function *() {
     let experimentNameA = UUID.v4();
     let experimentNameB = UUID.v4();
     let AppA = React.createClass({
-      render: function(){
+      render: function() {
         return <Experiment name={experimentNameA} value="A">
           <Variant name="A"><div id="variant-a" /></Variant>
           <Variant name="B"><div id="variant-b" /></Variant>
@@ -210,7 +210,7 @@ describe("Emitter", function() {
       }
     });
     let AppB = React.createClass({
-      render: function(){
+      render: function() {
         return <Experiment name={experimentNameB} value="C">
           <Variant name="C"><div id="variant-c" /></Variant>
           <Variant name="D"><div id="variant-d" /></Variant>
@@ -218,14 +218,14 @@ describe("Emitter", function() {
       }
     });
     let AppCombined = React.createClass({
-      render: function(){
+      render: function() {
         return <div>
           <AppA />
           <AppB />
         </div>;
       }
     });
-    yield new Promise(function(resolve, reject){
+    yield new Promise(function(resolve, reject) {
       ReactDOM.render(<AppA />, container, resolve);
     });
     let activeExperiments = {};
@@ -235,7 +235,7 @@ describe("Emitter", function() {
     };
     assert.deepEqual(emitter.getActiveExperiments(), activeExperiments);
     ReactDOM.unmountComponentAtNode(container);
-    yield new Promise(function(resolve, reject){
+    yield new Promise(function(resolve, reject) {
       ReactDOM.render(<AppB />, container, resolve);
     });
     activeExperiments = {};
@@ -245,7 +245,7 @@ describe("Emitter", function() {
     };
     assert.deepEqual(emitter.getActiveExperiments(), activeExperiments);
     ReactDOM.unmountComponentAtNode(container);
-    yield new Promise(function(resolve, reject){
+    yield new Promise(function(resolve, reject) {
       ReactDOM.render(<AppCombined />, container, resolve);
     });
     activeExperiments = {};

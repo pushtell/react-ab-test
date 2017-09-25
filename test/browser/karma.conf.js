@@ -135,7 +135,7 @@ module.exports = function (karma) {
       accessKey: process.env.BROWSERSTACK_ACCESS_KEY,
       pollingTimeout: 10000
     };
-    options.browsers = Object.keys(options.customLaunchers).filter(function(key){
+    options.browsers = Object.keys(options.customLaunchers).filter(function(key) {
       return key.indexOf("bs_") !== -1;
     });
   } else {

@@ -13,7 +13,7 @@ ES6Promise.polyfill();
 
 // See http://stackoverflow.com/a/985070
 
-function hasCSSSelector(s){
+function hasCSSSelector(s) {
   if(!document.styleSheets) {
     return '';
   }
@@ -22,7 +22,7 @@ function hasCSSSelector(s){
   for(let i = 0; i < document.styleSheets.length; i++) {
     let sheet = document.styleSheets[i];
     let rules = sheet.rules ? sheet.rules : sheet.cssRules;
-    for(let j = 0; j < rules.length; j++){
+    for(let j = 0; j < rules.length; j++) {
       let selector = rules[j].selectorText ? rules[j].selectorText : rules[j].toString();
       if(selector.toLowerCase() === s) {
         return true;
@@ -34,26 +34,26 @@ function hasCSSSelector(s){
 
 describe("Debugger", function() {
   let container;
-  before(function(){
+  before(function() {
     container = document.createElement("div");
     container.id = "react";
     document.getElementsByTagName('body')[0].appendChild(container);
   });
-  after(function(){
+  after(function() {
     document.getElementsByTagName('body')[0].removeChild(container);
     emitter._reset();
   });
-  it("should enable and disable.", co.wrap(function *(){
+  it("should enable and disable.", co.wrap(function *() {
     let experimentName = UUID.v4();
     let App = React.createClass({
-      render: function(){
+      render: function() {
         return <Experiment name={experimentName} value="A">
           <Variant name="A"><div id="variant-a" /></Variant>
           <Variant name="B"><div id="variant-b" /></Variant>
         </Experiment>;
       }
     });
-    yield new Promise(function(resolve, reject){
+    yield new Promise(function(resolve, reject) {
       ReactDOM.render(<App />, container, resolve);
     });
     experimentDebugger.enable();
@@ -70,17 +70,17 @@ describe("Debugger", function() {
     experimentDebugger.disable();
     assert.equal(hasCSSSelector("#pushtell-debugger"), false);
   });
-  it("should change an experiment's value.", co.wrap(function *(){
+  it("should change an experiment's value.", co.wrap(function *() {
     let experimentName = UUID.v4();
     let App = React.createClass({
-      render: function(){
+      render: function() {
         return <Experiment name={experimentName} value="A">
           <Variant name="A"><div id="variant-a" /></Variant>
           <Variant name="B"><div id="variant-b" /></Variant>
         </Experiment>;
       }
     });
-    yield new Promise(function(resolve, reject){
+    yield new Promise(function(resolve, reject) {
       ReactDOM.render(<App />, container, resolve);
     });
     experimentDebugger.enable();

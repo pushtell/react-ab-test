@@ -7,8 +7,8 @@ import crc32 from "fbjs/lib/crc32";
 let store;
 
 const noopStore = {
-  getItem: function(){},
-  setItem: function(){}
+  getItem: function() {},
+  setItem: function() {}
 };
 
 if (typeof window !== 'undefined' && 'localStorage' in window && window['localStorage'] !== null) {
