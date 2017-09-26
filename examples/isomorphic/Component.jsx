@@ -1,8 +1,9 @@
 var React = require("react");
+var createReactClass = require('create-react-class');
 var Experiment = require("../../lib/Experiment");
 var Variant = require("../../lib/Variant");
 
-module.exports = React.createClass({
+module.exports = createReactClass({
   propTypes: {
     userIdentifier: React.PropTypes.string.isRequired
   },
