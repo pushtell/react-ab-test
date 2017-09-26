@@ -1,12 +1,13 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
+var createReactClass = require('create-react-class');
 var Experiment = require("../../lib/Experiment");
 var Variant = require("../../lib/Variant");
 var experimentDebugger = require("../../lib/debugger");
 
 experimentDebugger.enable();
 
-var App = React.createClass({
+var App = createReactClass({
   render() {
     return <div>
       <h1>Experiment 1</h1>
