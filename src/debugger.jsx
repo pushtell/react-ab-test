@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import createReactClass from 'create-react-class';
 import emitter from "./emitter";
 import {canUseDOM} from 'fbjs/lib/ExecutionEnvironment';
 
@@ -78,7 +79,7 @@ if(process.env.NODE_ENV === "production" || !canUseDOM) {
       style = null;
     }
   }
-  const Debugger = React.createClass({
+  const Debugger = createReactClass({
     displayName: "Pushtell.Debugger",
     getInitialState(){
       return {

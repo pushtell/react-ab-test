@@ -1,5 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import createReactClass from "create-react-class";
 import Experiment from "../../src/CoreExperiment.jsx";
 import Variant from "../../src/Variant.jsx";
 import emitter from "../../src/emitter.jsx";
@@ -72,7 +73,7 @@ describe("Mixpanel Helper", function() {
     }
     mixpanelHelper.enable();
     let experimentName = UUID.v4();
-    let App = React.createClass({
+    let App = createReactClass({
       render: function(){
         return <Experiment name={experimentName} value="A">
           <Variant name="A"><div id="variant-a" /></Variant>

@@ -1,5 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import createReactClass from "create-react-class";
 import Experiment from "../../src/CoreExperiment.jsx";
 import Variant from "../../src/Variant.jsx";
 import emitter from "../../src/emitter.jsx";
@@ -38,7 +39,7 @@ describe("Emitter", function() {
     };
     let playSubscription = emitter.addPlayListener(experimentName, playCallback);
     let playSubscriptionGlobal = emitter.addPlayListener(playCallbackGlobal);
-    let App = React.createClass({
+    let App = createReactClass({
       render: function(){
         return <Experiment name={experimentName} value="A">
           <Variant name="A"><div id="variant-a"/></Variant>
@@ -70,7 +71,7 @@ describe("Emitter", function() {
     };
     let winSubscription = emitter.addWinListener(experimentName, winCallback);
     let winSubscriptionGlobal = emitter.addWinListener(winCallbackGlobal);
-    let App = React.createClass({
+    let App = createReactClass({
       render: function(){
         return <Experiment name={experimentName} value="A">
           <Variant name="A"><div id="variant-a"/></Variant>
@@ -103,7 +104,7 @@ describe("Emitter", function() {
     };
     let winSubscription = emitter.addWinListener(experimentName, winCallback);
     let winSubscriptionGlobal = emitter.addWinListener(winCallbackGlobal);
-    let App = React.createClass({
+    let App = createReactClass({
       onClickVariant: function(e){
         this.refs.experiment.win();
       },
@@ -140,7 +141,7 @@ describe("Emitter", function() {
     };
     let activeVariantSubscription = emitter.addActiveVariantListener(experimentName, activeVariantCallback);
     let activeVariantSubscriptionGlobal = emitter.addActiveVariantListener(activeVariantCallbackGlobal);
-    let App = React.createClass({
+    let App = createReactClass({
       render: function(){
         return <Experiment ref="experiment" name={experimentName} value="A">
           <Variant name="A"><a id="variant-a" href="#A">A</a></Variant>
@@ -160,7 +161,7 @@ describe("Emitter", function() {
   }));
   it("should get the experiment value.", co.wrap(function *(){
     let experimentName = UUID.v4();
-    let App = React.createClass({
+    let App = createReactClass({
       render: function(){
         return <Experiment ref="experiment" name={experimentName} value="A">
           <Variant name="A"><a id="variant-a" href="#A">A</a></Variant>
@@ -176,7 +177,7 @@ describe("Emitter", function() {
   }));
   it("should update the rendered component.", co.wrap(function *(){
     let experimentName = UUID.v4();
-    let App = React.createClass({
+    let App = createReactClass({
       render: function(){
         return <Experiment name={experimentName} value="A">
           <Variant name="A"><div id="variant-a" /></Variant>
@@ -201,7 +202,7 @@ describe("Emitter", function() {
   it("should report active components.", co.wrap(function *(){
     let experimentNameA = UUID.v4();
     let experimentNameB = UUID.v4();
-    let AppA = React.createClass({
+    let AppA = createReactClass({
       render: function(){
         return <Experiment name={experimentNameA} value="A">
           <Variant name="A"><div id="variant-a" /></Variant>
@@ -209,7 +210,7 @@ describe("Emitter", function() {
         </Experiment>;
       }
     });
-    let AppB = React.createClass({
+    let AppB = createReactClass({
       render: function(){
         return <Experiment name={experimentNameB} value="C">
           <Variant name="C"><div id="variant-c" /></Variant>
@@ -217,7 +218,7 @@ describe("Emitter", function() {
         </Experiment>;
       }
     });
-    let AppCombined = React.createClass({
+    let AppCombined = createReactClass({
       render: function(){
         return <div>
           <AppA />

@@ -1,5 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import createReactClass from "create-react-class";
 import Experiment from "../../src/CoreExperiment.jsx";
 import Variant from "../../src/Variant.jsx";
 import emitter from "../../src/emitter.jsx";
@@ -22,7 +23,7 @@ describe("Core Experiment", function() {
   });
   it("should render the correct variant.", co.wrap(function *(){
     let experimentName = UUID.v4();
-    let App = React.createClass({
+    let App = createReactClass({
       render: function(){
         return <Experiment name={experimentName} value="A">
           <Variant name="A"><div id="variant-a" /></Variant>
@@ -41,7 +42,7 @@ describe("Core Experiment", function() {
   }));
   it("should error if invalid children exist.", co.wrap(function *(){
     let experimentName = UUID.v4();
-    let App = React.createClass({
+    let App = createReactClass({
       render: function(){
         return <Experiment name={experimentName} value="A">
           <Variant name="A"><div id="variant-a" /></Variant>
@@ -71,7 +72,7 @@ describe("Core Experiment", function() {
     let getValueB = function() {
       return "B";
     }
-    let App = React.createClass({
+    let App = createReactClass({
       getInitialState: function(){
         return {
           value: getValueA
@@ -105,7 +106,7 @@ describe("Core Experiment", function() {
   }));
   it("should update the children when props change.", co.wrap(function *(){
     let experimentName = UUID.v4();
-    let SubComponent = React.createClass({
+    let SubComponent = createReactClass({
       render(){
         return (
             <div id="variant-a">
@@ -114,7 +115,7 @@ describe("Core Experiment", function() {
         )
       }
     });
-    let App = React.createClass({
+    let App = createReactClass({
       render: function(){
         return <Experiment name={experimentName} value="A">
           <Variant name="A"><SubComponent text={this.props.text}/></Variant>

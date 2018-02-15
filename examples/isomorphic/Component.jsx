@@ -2,11 +2,12 @@ var React = require("react");
 var Experiment = require("../../lib/Experiment");
 var Variant = require("../../lib/Variant");
 
-module.exports = React.createClass({
-  propTypes: {
+class App extends React.Component {
+  static propTypes = {
     userIdentifier: React.PropTypes.string.isRequired
-  },
-  render: function(){
+  };
+
+  render(){
     return <div>
       <Experiment ref="experiment" name="My Example" userIdentifier={this.props.userIdentifier}>
         <Variant name="A">
@@ -18,4 +19,6 @@ module.exports = React.createClass({
       </Experiment>
     </div>;
   }
-});
+}
+
+module.exports App;
