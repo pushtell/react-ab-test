@@ -1,5 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import createReactClass from "create-react-class";
 import Experiment from "../../src/Experiment.jsx";
 import Variant from "../../src/Variant.jsx";
 import emitter from "../../src/emitter.jsx";
@@ -63,7 +64,7 @@ describe("Weighted Experiment", function() {
     const weightSum = variantWeights.reduce(add, 0);
     emitter.defineVariants(experimentName, variantNames, variantWeights);
     assert.equal(emitter.getSortedVariantWeights(experimentName).reduce(add, 0), weightSum);
-    let App = React.createClass({
+    let App = createReactClass({
       render: function(){
         return <Experiment name={experimentName}>
           {variantNames.map(name => {
@@ -89,7 +90,7 @@ describe("Weighted Experiment", function() {
       return playCount[variantName] || 0;
     }).reduce(add, 0);
     const playCountToWeightRatios = variantNames.map(function(variantName, index){
-      return (playCount[variantName] / playSum) / (variantWeights[index] / weightSum)
+      return playCount[variantName] / playSum / (variantWeights[index] / weightSum)
     });
     const ratioMean = playCountToWeightRatios.reduce(add, 0) / playCountToWeightRatios.length;
     const ratioVariance = playCountToWeightRatios.map(function(ratio){

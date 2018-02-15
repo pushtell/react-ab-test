@@ -1,5 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import createReactClass from "create-react-class";
 import Experiment from "../../src/CoreExperiment.jsx";
 import Variant from "../../src/Variant.jsx";
 import experimentDebugger from "../../src/debugger.jsx";
@@ -45,7 +46,7 @@ describe("Debugger", function() {
   });
   it("should enable and disable.", co.wrap(function *(){
     let experimentName = UUID.v4();
-    let App = React.createClass({
+    let App = createReactClass({
       render: function(){
         return <Experiment name={experimentName} value="A">
           <Variant name="A"><div id="variant-a" /></Variant>
@@ -72,7 +73,7 @@ describe("Debugger", function() {
   });
   it("should change an experiment's value.", co.wrap(function *(){
     let experimentName = UUID.v4();
-    let App = React.createClass({
+    let App = createReactClass({
       render: function(){
         return <Experiment name={experimentName} value="A">
           <Variant name="A"><div id="variant-a" /></Variant>
