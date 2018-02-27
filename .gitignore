@@ -31,5 +31,3 @@ run-browserstack-tests.sh
 bundle.js
 
 .idea
-lib/
-standalone.min.js
