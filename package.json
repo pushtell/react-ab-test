@@ -49,6 +49,8 @@
     "fbemitter": "^2.0.2",
     "fbjs": "^0.8.0",
     "isparta-loader": "^2.0.0",
+    "jsdom": "11.6.2",
+    "jsdom-global": "3.0.2",
     "karma": "^0.13.22",
     "karma-browserstack-launcher": "^0.1.10",
     "karma-chrome-launcher": "^0.2.3",
@@ -59,6 +61,7 @@
     "karma-sourcemap-loader": "^0.3.7",
     "karma-webpack": "^1.7.0",
     "mocha": "^2.4.5",
+    "mock-local-storage": "^1.0.5",
     "node-uuid": "^1.4.7",
     "react": "^15.0.1",
     "react-dom": "^15.5.4",
@@ -68,7 +71,7 @@
     "webpack": "^1.12.14"
   },
   "scripts": {
-    "test": "./node_modules/karma/bin/karma start test/browser/karma.conf.js; mocha --require babel-core/register --require babel-polyfill test/isomorphic/*.jsx",
+    "test": "mocha --require jsdom-global/register --require mock-local-storage  --require babel-polyfill --require babel-core/register test/isomorphic/*.jsx",
     "build": "./node_modules/.bin/doctoc . --github --title '<h1>Table of Contents</h1>'; ./node_modules/babel-cli/bin/babel.js --presets es2015,stage-1,react --plugins add-module-exports ./src --out-dir ./lib; ./node_modules/webpack/bin/webpack.js --config webpack.standalone.config.js",
     "lint": "eslint .",
     "lint:fix": "eslint --fix ."
