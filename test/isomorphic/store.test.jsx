@@ -3,7 +3,7 @@ import assert from "assert";
 
 describe("Store", function() {
     it("should enable store", () =>  {
-        assert.equal(store.storeAvailable, true);
+        assert.equal(store.available, true);
     });
 
     it("should store item", () =>  {
