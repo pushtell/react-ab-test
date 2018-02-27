@@ -71,7 +71,7 @@
     "webpack": "^1.12.14"
   },
   "scripts": {
-    "test": "mocha --require jsdom-global/register --require mock-local-storage  --require babel-polyfill --require babel-core/register test/isomorphic/*.jsx",
+    "test": "./node_modules/karma/bin/karma start test/browser/karma.conf.js; mocha --require jsdom-global/register --require mock-local-storage  --require babel-polyfill --require babel-core/register test/isomorphic/*.jsx",
     "build": "./node_modules/.bin/doctoc . --github --title '<h1>Table of Contents</h1>'; ./node_modules/babel-cli/bin/babel.js --presets es2015,stage-1,react --plugins add-module-exports ./src --out-dir ./lib; ./node_modules/webpack/bin/webpack.js --config webpack.standalone.config.js",
     "lint": "eslint .",
     "lint:fix": "eslint --fix ."
