@@ -3,37 +3,13 @@ import ReactDOM from "react-dom";
 import Experiment from "../../src/Experiment.jsx";
 import Variant from "../../src/Variant.jsx";
 import emitter from "../../src/emitter.jsx";
+import store from "../../src/store.jsx"
 import assert from "assert";
 import co from "co";
 import UUID from "node-uuid";
 import TestUtils from 'react-dom/test-utils';
 import ES6Promise from 'es6-promise';
 ES6Promise.polyfill();
-
-let store;
-
-let noopStore = {
-  getItem: function(){},
-  setItem: function(){},
-  clear: function(){}
-};
-
-if(typeof window !== 'undefined' && 'localStorage' in window && window['localStorage'] !== null) {
-  try {
-    let key = '__pushtell_react__';
-    window.localStorage.setItem(key, key);
-    if (window.localStorage.getItem(key) !== key) {
-      store = noopStore;
-    } else {
-      window.localStorage.removeItem(key);
-      store = window.localStorage;
-    }
-  } catch(e) {
-    store = noopStore;
-  }
-} else {
-  store = noopStore;
-}
 
 describe("Experiment", function() {
   let container;
