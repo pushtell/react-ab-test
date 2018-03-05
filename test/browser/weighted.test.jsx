@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import Experiment from "../../src/Experiment.jsx";
+import WeightedExperiment from "../../src/WeightedExperiment.jsx";
 import Variant from "../../src/Variant.jsx";
 import emitter from "../../src/emitter.jsx";
 import assert from "assert";
@@ -41,11 +41,11 @@ describe("Weighted Experiment", function() {
     assert.equal(emitter.getSortedVariantWeights(experimentName).reduce(add, 0), weightSum);
     let App = React.createClass({
       render: function(){
-        return <Experiment name={experimentName}>
+        return <WeightedExperiment name={experimentName}>
           {variantNames.map(name => {
             return <Variant key={name} name={name}><div id={'variant-' + name}></div></Variant>
           })}
-        </Experiment>;
+        </WeightedExperiment>;
       }
     });
     let chosenVariant;

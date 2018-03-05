@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import Experiment from "../../src/Experiment.jsx";
+import WeightedExperiment from "../../src/WeightedExperiment.jsx";
 import Variant from "../../src/Variant.jsx";
 import emitter from "../../src/emitter.jsx";
 import store from "../../src/store.jsx"
@@ -11,7 +11,7 @@ import TestUtils from 'react-dom/test-utils';
 import ES6Promise from 'es6-promise';
 ES6Promise.polyfill();
 
-describe("Experiment", function() {
+describe("WeightedExperiment", function() {
   let container;
   before(function(){
     container = document.createElement("div");
@@ -30,11 +30,11 @@ describe("Experiment", function() {
     }
     let App = React.createClass({
       render: function(){
-        return <Experiment name={experimentName}>
+        return <WeightedExperiment name={experimentName}>
           {variantNames.map(name => {
             return <Variant key={name} name={name}><div id={'variant-' + name}></div></Variant>
           })}
-        </Experiment>;
+        </WeightedExperiment>;
       }
     });
     yield new Promise(function(resolve, reject){
@@ -51,20 +51,20 @@ describe("Experiment", function() {
     let defaultVariantName = variantNames[Math.floor(Math.random() * variantNames.length)];
     let AppWithdefaultVariantName = React.createClass({
       render: function(){
-        return <Experiment name={experimentName} defaultVariantName={defaultVariantName}>
+        return <WeightedExperiment name={experimentName} defaultVariantName={defaultVariantName}>
           {variantNames.map(name => {
             return <Variant key={name} name={name}><div id={'variant-' + name}></div></Variant>
           })}
-        </Experiment>;
+        </WeightedExperiment>;
       }
     });
     let AppWithoutdefaultVariantName = React.createClass({
       render: function(){
-        return <Experiment name={experimentName}>
+        return <WeightedExperiment name={experimentName}>
           {variantNames.map(name => {
             return <Variant key={name} name={name}><div id={'variant-' + name}></div></Variant>
           })}
-        </Experiment>;
+        </WeightedExperiment>;
       }
     });
     yield new Promise(function(resolve, reject){
@@ -87,10 +87,10 @@ describe("Experiment", function() {
         this.refs.experiment.win();
       },
       render: function(){
-        return <Experiment ref="experiment" name={experimentName}>
+        return <WeightedExperiment ref="experiment" name={experimentName}>
           <Variant name="A"><a id="variant-a" href="#A">A</a></Variant>
           <Variant name="B"><a id="variant-b" href="#B">B</a></Variant>
-        </Experiment>;
+        </WeightedExperiment>;
       }
     });
     let AppPart2 = React.createClass({
@@ -98,10 +98,10 @@ describe("Experiment", function() {
         this.refs.experiment.win();
       },
       render: function(){
-        return <Experiment ref="experiment" name={experimentName}>
+        return <WeightedExperiment ref="experiment" name={experimentName}>
           <Variant name="C"><a id="variant-c" href="#C">C</a></Variant>
           <Variant name="D"><a id="variant-d" href="#D">D</a></Variant>
-        </Experiment>;
+        </WeightedExperiment>;
       }
     });
     yield new Promise(function(resolve, reject){
@@ -129,10 +129,10 @@ describe("Experiment", function() {
         this.refs.experiment.win();
       },
       render: function(){
-        return <Experiment ref="experiment" name={experimentName}>
+        return <WeightedExperiment ref="experiment" name={experimentName}>
           <Variant name="A"><a id="variant-a" href="#A">A</a></Variant>
           <Variant name="B"><a id="variant-b" href="#B">B</a></Variant>
-        </Experiment>;
+        </WeightedExperiment>;
       }
     });
     let AppPart2 = React.createClass({
@@ -140,10 +140,10 @@ describe("Experiment", function() {
         this.refs.experiment.win();
       },
       render: function(){
-        return <Experiment ref="experiment" name={experimentName}>
+        return <WeightedExperiment ref="experiment" name={experimentName}>
           <Variant name="C"><a id="variant-c" href="#C">C</a></Variant>
           <Variant name="D"><a id="variant-d" href="#D">D</a></Variant>
-        </Experiment>;
+        </WeightedExperiment>;
       }
     });
     yield new Promise(function(resolve, reject){
@@ -163,10 +163,10 @@ describe("Experiment", function() {
         this.refs.experiment.win();
       },
       render: function(){
-        return <Experiment ref="experiment" name={experimentName}>
+        return <WeightedExperiment ref="experiment" name={experimentName}>
           <Variant name="A"><a id="variant-a" href="#A">A</a></Variant>
           <Variant name="B"><a id="variant-b" href="#B">B</a></Variant>
-        </Experiment>;
+        </WeightedExperiment>;
       }
     });
     let AppPart2 = React.createClass({
@@ -174,10 +174,10 @@ describe("Experiment", function() {
         this.refs.experiment.win();
       },
       render: function(){
-        return <Experiment ref="experiment" name={experimentName}>
+        return <WeightedExperiment ref="experiment" name={experimentName}>
           <Variant name="C"><a id="variant-c" href="#C">C</a></Variant>
           <Variant name="D"><a id="variant-d" href="#D">D</a></Variant>
-        </Experiment>;
+        </WeightedExperiment>;
       }
     });
     yield new Promise(function(resolve, reject){
@@ -202,10 +202,10 @@ describe("Experiment", function() {
     localStorage.setItem("PUSHTELL-" + experimentName, "C");
     let App = React.createClass({
       render: function(){
-        return <Experiment name={experimentName}>
+        return <WeightedExperiment name={experimentName}>
           <Variant name="A"><a id="variant-a" href="#A" onClick={this.onClickVariant}>A</a></Variant>
           <Variant name="B"><a id="variant-b" href="#B" onClick={this.onClickVariant}>B</a></Variant>
-        </Experiment>;
+        </WeightedExperiment>;
       }
     });
     yield new Promise(function(resolve, reject){
@@ -232,10 +232,10 @@ describe("Experiment", function() {
         this.refs.experiment.win();
       },
       render: function(){
-        return <Experiment ref="experiment" name={experimentName} defaultVariantName="A">
+        return <WeightedExperiment ref="experiment" name={experimentName} defaultVariantName="A">
           <Variant name="A"><a id="variant-a" href="#A" onClick={this.onClickVariant}>A</a></Variant>
           <Variant name="B"><a id="variant-b" href="#B" onClick={this.onClickVariant}>B</a></Variant>
-        </Experiment>;
+        </WeightedExperiment>;
       }
     });
     yield new Promise(function(resolve, reject){
@@ -259,11 +259,11 @@ describe("Experiment", function() {
     }
     let App = React.createClass({
       render: function(){
-        return <Experiment name={experimentName} userIdentifier={userIdentifier}>
+        return <WeightedExperiment name={experimentName} userIdentifier={userIdentifier}>
           {variantNames.map(name => {
             return <Variant key={name} name={name}><div id={'variant-' + name}></div></Variant>
           })}
-        </Experiment>;
+        </WeightedExperiment>;
       }
     });
     let chosenVariant;
