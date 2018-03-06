@@ -38,6 +38,7 @@ Please [★ on GitHub](https://github.com/pushtell/react-ab-test)!
   - [Standalone Component](#standalone-component)
   - [Coordinate Multiple Components](#coordinate-multiple-components)
   - [Weighting Variants](#weighting-variants)
+  - [Disabling tests](#disabling-tests)
   - [Debugging](#debugging)
   - [Server Rendering](#server-rendering)
     - [Example](#example)
@@ -52,7 +53,7 @@ Please [★ on GitHub](https://github.com/pushtell/react-ab-test)!
     - [`emitter.addActiveVariantListener([experimentName, ] callback)`](#emitteraddactivevariantlistenerexperimentname--callback)
     - [`emitter.addPlayListener([experimentName, ] callback)`](#emitteraddplaylistenerexperimentname--callback)
     - [`emitter.addWinListener([experimentName, ] callback)`](#emitteraddwinlistenerexperimentname--callback)
-    - [`emitter.defineVariants(experimentName, variantNames [, variantWeights])`](#emitterdefinevariantsexperimentname-variantnames--variantweights)
+    - [`emitter.defineVariants(experimentName, variantNames [, variantWeights])`](#emitterdefinevariantsexperimentname-variantnames--variantweights-defaultvariant)
     - [`emitter.setActiveVariant(experimentName, variantName)`](#emittersetactivevariantexperimentname-variantname)
     - [`emitter.getActiveVariant(experimentName)`](#emittergetactivevariantexperimentname)
     - [`emitter.getSortedVariants(experimentName)`](#emittergetsortedvariantsexperimentname)
@@ -69,6 +70,10 @@ Please [★ on GitHub](https://github.com/pushtell/react-ab-test)!
     - [Usage](#usage-2)
     - [`segmentHelper.enable()`](#segmenthelperenable)
     - [`segmentHelper.disable()`](#segmenthelperdisable)
+  - [`piwikHelper`](#piwikhelper)
+    - [Usage](#usage-3)
+    - [`piwikHelper.enable()`](#piwikhelperenable)
+    - [`piwikHelper.disable()`](#piwikhelperdisable)
 - [How to contribute](#how-to-contribute)
   - [Requisites](#requisites)
   - [Browser Coverage](#browser-coverage)
@@ -204,7 +209,7 @@ emitter.addWinListener(function(experimentName, variantName){
 
 Try it [on JSFiddle](http://jsfiddle.net/pushtell/e2q7xe4f/)
 
-Use [emitter.defineVariants()](#emitterdefinevariantsexperimentname-variantnames--variantweights) to optionally define the ratios by which variants are chosen.
+Use [emitter.defineVariants()](#emitterdefinevariantsexperimentname-variantnames--variantweights-defaultvariant) to optionally define the ratios by which variants are chosen.
 
 ```js
 
@@ -219,6 +224,45 @@ var App = React.createClass({
   render: function(){
     return <div>
       <Experiment ref="experiment" name="My Example">
+        <Variant name="A">
+          <div>Section A</div>
+        </Variant>
+        <Variant name="B">
+          <div>Section B</div>
+        </Variant>
+        <Variant name="C">
+          <div>Section C</div>
+        </Variant>
+      </Experiment>
+    </div>;
+  }
+});
+
+```
+
+### Disabling tests
+
+Use `defaultVariant` parameter from [emitter.defineVariants()](#emitterdefinevariantsexperimentname-variantnames--variantweights-defaultvariant) and define variant to be displayed when tests are disabled. In `Experiment` component you can provide `runTest` prop to decide if execute the test or display default variant. When tests are executed variants will be displayed according to the weighted ratios. When tests are disabled no events will be triggered.
+
+```js
+
+var Experiment = require("react-ab-test/lib/Experiment");
+var Variant = require("react-ab-test/lib/Variant");
+var emitter = require("react-ab-test/lib/emitter");
+
+// Define variants and weights in advance and default variant.
+emitter.defineVariants("My Example", ["A", "B", "C"], [10, 40, 40], "A");
+
+var App = React.createClass({
+  
+  runTest: function() {
+    // Define function according to your needs  
+    return true; 
+  },
+  
+  render: function(){
+    return <div>
+      <Experiment ref="experiment" name="My Example" runTest={ this.runTest() }>
         <Variant name="A">
           <div>Section A</div>
         </Variant>
@@ -413,6 +457,10 @@ Experiment container component. Children must be of type [`Variant`](#variant-).
     * **Optional**
     * **Type:** `string`
     * **Example:** `"A"`
+  * `runTest` - determines if tests should be executed. When set to `false` `defaultVariant` will be displayed as defined in [emitter.defineVariants()](#emitterdefinevariantsexperimentname-variantnames--variantweights-defaultvariant).
+     * **Optional**
+     * **Type:** `bool`
+     * **Example:** `true`
 
 ### `<Variant />`
 
@@ -496,13 +544,15 @@ Listen for a successful outcome from the experiment. Trigged by the [emitter.emi
       * `variantName` - Name of the variant.
         * **Type:** `string`
 
-#### `emitter.defineVariants(experimentName, variantNames [, variantWeights])`
+#### `emitter.defineVariants(experimentName, variantNames [, variantWeights, defaultVariant])`
 
 Define experiment variant names and weighting. Required when an experiment [spans multiple components](#coordinate-multiple-components) containing different sets of variants.
 
 If `variantWeights` are not specified variants will be chosen at equal rates.
 
 The variants will be chosen according to the ratio of the numbers, for example variants `["A", "B", "C"]` with weights `[20, 40, 40]` will be chosen 20%, 40%, and 40% of the time, respectively.
+
+When test are disabled (`runTest` prop is set to `false` in `Experiment` component) `defaultVariant` will be displayed. 
 
 * **Return Type:** No return value
 * **Parameters:**
@@ -518,6 +568,10 @@ The variants will be chosen according to the ratio of the numbers, for example v
     * **Optional**
     * **Type:** `Array.<number>`
     * **Example:** `[20, 40, 40]`
+  * `defaultVariant` - Name of the default variant to be displayed when tests are disabled.
+    * **Optional**
+    * **Type:** `<string>`
+    * **Example:** `"A"`  
 
 #### `emitter.setActiveVariant(experimentName, variantName)`
 
@@ -703,6 +757,64 @@ Add listeners to `win` and `play` events and report results to Segment.
 #### `segmentHelper.disable()`
 
 Remove `win` and `play` listeners and stop reporting results to Segment.
+
+* **Return Type:** No return value
+
+### `piwikHelper`
+
+Sends events to [Piwik](https://piwik.org). Requires `window._paq` to be set.
+
+#### Usage
+
+When the [`<Experiment />`](#experiment-) is mounted, the helper sends an `Simple metrics` event using `_paq.push` with `experimentName` and `variantName` properties.
+
+When a [win is emitted](#emitteremitwinexperimentname) the helper sends an `Simple metrics WIN` event using `_paq.push` with `experimentName` and `variantName` properties.
+
+```js
+
+var Experiment = require("react-ab-test/lib/Experiment");
+var Variant = require("react-ab-test/lib/Variant");
+var piwikHelper = require("react-ab-test/lib/helpers/piwik");
+
+// window.analytics has been set by Piwik embed snippet.
+piwikHelper.enable();
+
+var App = React.createClass({
+  onButtonClick: function(e){
+    emitter.emitWin("My Example");
+    // piwikHelper sends the 'Simple metrics WIN' event, equivalent to:
+    // window._paq.push(["trackEvent", "Simple metrics WIN", "[Experiment] " + experimentName, variantName]);
+  },
+  componentWillMount: function(){
+    // piwikHelper sends the 'Simple metrics' event, equivalent to:
+    // window._paq.push(["trackEvent", "Simple metrics", "[Experiment] " + experimentName, variantName]);
+  },
+  render: function(){
+    return <div>
+      <Experiment ref="experiment" name="My Example">
+        <Variant name="A">
+          <div>Section A</div>
+        </Variant>
+        <Variant name="B">
+          <div>Section B</div>
+        </Variant>
+      </Experiment>
+      <button onClick={this.onButtonClick}>Emit a win</button>
+    </div>;
+  }
+});
+
+```
+
+#### `piwikHelper.enable()`
+
+Add listeners to `win` and `play` events and report results to Piwik.
+
+* **Return Type:** No return value
+
+#### `piwikHelper.disable()`
+
+Remove `win` and `play` listeners and stop reporting results to Piwik.
 
 * **Return Type:** No return value
 
