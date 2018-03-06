@@ -235,6 +235,46 @@ var App = React.createClass({
 
 ```
 
+### Disabling tests
+
+
+Use [emitter.defineVariants()](#emitterdefinevariantsexperimentname-variantnames--variantweights) default variant which sould be displayed when tests are disabled. To `Experiment` component you can provide `runTest` prop which indicates if tests should be executed or default variant should be displayed. When tests are executed variants will be displayed according to the weighted ratios. 
+
+```js
+
+var Experiment = require("react-ab-test/lib/Experiment");
+var Variant = require("react-ab-test/lib/Variant");
+var emitter = require("react-ab-test/lib/emitter");
+
+// Define variants and weights in advance and default variant.
+emitter.defineVariants("My Example", ["A", "B", "C"], [10, 40, 40], "A");
+
+var App = React.createClass({
+  
+  runTest: function() {
+    // Define function according to your needs  
+    return true; 
+  },
+  
+  render: function(){
+    return <div>
+      <Experiment ref="experiment" name="My Example" runTest={ this.runTest() }>
+        <Variant name="A">
+          <div>Section A</div>
+        </Variant>
+        <Variant name="B">
+          <div>Section B</div>
+        </Variant>
+        <Variant name="C">
+          <div>Section C</div>
+        </Variant>
+      </Experiment>
+    </div>;
+  }
+});
+
+```
+
 ### Debugging
 
 The [debugger](#experimentdebugger) attaches a fixed-position panel to the bottom of the `<body>` element that displays mounted experiments and enables the user to change active variants in real-time.
@@ -413,6 +453,10 @@ Experiment container component. Children must be of type [`Variant`](#variant-).
     * **Optional**
     * **Type:** `string`
     * **Example:** `"A"`
+  * `runTest` - determines if tests should be executed. When set to `false` `defaultVariant` will be displayed as defined in [emitter.defineVariants()](#emitterdefinevariantsexperimentname-variantnames--variantweights).
+     * **Optional**
+     * **Type:** `bool`
+     * **Example:** `true`
 
 ### `<Variant />`
 
@@ -496,13 +540,15 @@ Listen for a successful outcome from the experiment. Trigged by the [emitter.emi
       * `variantName` - Name of the variant.
         * **Type:** `string`
 
-#### `emitter.defineVariants(experimentName, variantNames [, variantWeights])`
+#### `emitter.defineVariants(experimentName, variantNames [, variantWeights, defaultVariant])`
 
 Define experiment variant names and weighting. Required when an experiment [spans multiple components](#coordinate-multiple-components) containing different sets of variants.
 
 If `variantWeights` are not specified variants will be chosen at equal rates.
 
 The variants will be chosen according to the ratio of the numbers, for example variants `["A", "B", "C"]` with weights `[20, 40, 40]` will be chosen 20%, 40%, and 40% of the time, respectively.
+
+When `runTest` prop is set to `false` in `Experiment` component `defaultVariant` will be displayed. 
 
 * **Return Type:** No return value
 * **Parameters:**
@@ -518,6 +564,10 @@ The variants will be chosen according to the ratio of the numbers, for example v
     * **Optional**
     * **Type:** `Array.<number>`
     * **Example:** `[20, 40, 40]`
+  * `defaultVariant` - Name of the default variant to be displayed when tests are disabled.
+    * **Optional**
+    * **Type:** `<string>`
+    * **Example:** `"A"`  
 
 #### `emitter.setActiveVariant(experimentName, variantName)`
 
