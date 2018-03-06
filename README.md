@@ -770,8 +770,6 @@ When the [`<Experiment />`](#experiment-) is mounted, the helper sends an `Simpl
 
 When a [win is emitted](#emitteremitwinexperimentname) the helper sends an `Simple metrics WIN` event using `_paq.push` with `experimentName` and `variantName` properties.
 
-Try it [on JSFiddle](https://jsfiddle.net/pushtell/ae1jeo2k/)
-
 ```js
 
 var Experiment = require("react-ab-test/lib/Experiment");
