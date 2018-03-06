@@ -5,5 +5,6 @@ module.exports = {
   store: require("./lib/store"),
   experimentDebugger: require("./lib/debugger"),
   mixpanelHelper: require("./lib/helpers/mixpanel"),
-  segmentHelper: require("./lib/helpers/segment")
+  segmentHelper: require("./lib/helpers/segment"),
+  piwikHelper: require("./lib/helpers/piwik")
 };

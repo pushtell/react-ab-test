@@ -33,6 +33,9 @@ module.exports = {
         test: require.resolve("./lib/emitter"),
         loader: "expose?emitter"
       }, {
+        test: require.resolve("./lib/store"),
+        loader: "expose?store"
+      }, {
         test: require.resolve("./lib/debugger"),
         loader: "expose?experimentDebugger"
       }, {
@@ -41,6 +44,9 @@ module.exports = {
       }, {
         test: require.resolve("./lib/helpers/segment"),
         loader: "expose?segmentHelper"
+      }, {
+        test: require.resolve("./lib/helpers/piwik"),
+        loader: "expose?piwikHelper"
       }
     ],
     postLoaders: [

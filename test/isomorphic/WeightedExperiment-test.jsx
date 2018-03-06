@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOMServer from "react-dom/server";
-import Experiment from "../../src/Experiment.jsx";
+import WeightedExperiment from "../../src/WeightedExperiment.jsx";
 import Variant from "../../src/Variant.jsx";
 import emitter from "../../src/emitter.jsx";
 import assert from "assert";
@@ -9,23 +9,23 @@ import UUID from "node-uuid";
 
 const renderApp = (experimentName, variantNames, userIdentifier) => {
   return () =>
-  	<Experiment name={experimentName} userIdentifier={userIdentifier}>
+  	<WeightedExperiment name={experimentName} userIdentifier={userIdentifier}>
       {variantNames.map(name => {
         return <Variant key={name} name={name}><div id={'variant-' + name}></div></Variant>
       })}
-    </Experiment>
+    </WeightedExperiment>
 }
 
-describe("Experiment", () => {
+describe("WeightedExperiment", () => {
 
 
   it("should render to a string.", () => {
     const experimentName = UUID.v4();
     const App = () =>
-    	<Experiment name={experimentName}>
+    	<WeightedExperiment name={experimentName}>
         <Variant name="A"><div id="variant-a" /></Variant>
         <Variant name="B"><div id="variant-b" /></Variant>
-      </Experiment>
+      </WeightedExperiment>
 
     const result = ReactDOMServer.renderToString(<App />);
     expect(result).to.be.a('string');

@@ -6,6 +6,7 @@ let experimentWeights = {};
 let activeExperiments = {};
 let experimentsWithDefinedVariants = {};
 let playedExperiments = {};
+let defaultVariants = {};
 
 const emitter = new EventEmitter();
 
@@ -43,6 +44,7 @@ PushtellEventEmitter.prototype._reset = function(){
   activeExperiments = {};
   experimentsWithDefinedVariants = {};
   playedExperiments = {};
+  defaultVariants = {};
 }
 
 PushtellEventEmitter.prototype.rewind = function() {
@@ -115,7 +117,7 @@ PushtellEventEmitter.prototype.addWinListener = function(experimentName, callbac
   });
 };
 
-PushtellEventEmitter.prototype.defineVariants = function(experimentName, variantNames, variantWeights){
+PushtellEventEmitter.prototype.defineVariants = function(experimentName, variantNames, variantWeights, defaultVariant){
   const variantsNamesMap = {};
   const variantWeightsMap = {};
   variantNames.forEach(variantName => {
@@ -136,10 +138,21 @@ PushtellEventEmitter.prototype.defineVariants = function(experimentName, variant
       variantWeightsMap[variantName] = 1;
     });
   }
+  this._defineConditionalVariant(experimentName, variantNames, defaultVariant);
   experimentWeights[experimentName] = variantWeightsMap;
   experiments[experimentName] = variantsNamesMap;
   experimentsWithDefinedVariants[experimentName] = true;
+
 };
+
+PushtellEventEmitter.prototype._defineConditionalVariant = function(experimentName, variantNames, defaultVariant) {
+    if (typeof defaultVariant !== 'undefined') {
+        if (variantNames.indexOf(defaultVariant) < 0) {
+            throw new Error("Required argument 'defaultVariant' should have existing variantName");
+        }
+        defaultVariants[experimentName] = defaultVariant;
+    }
+}
 
 PushtellEventEmitter.prototype.getSortedVariants = function(experimentName) {
   const variantNames = Object.keys(experiments[experimentName]);
@@ -194,5 +207,9 @@ PushtellEventEmitter.prototype.addExperimentVariant = function(experimentName, v
   }
   experiments[experimentName][variantName] = true;
 }
+
+PushtellEventEmitter.prototype.getDefaultVariantName = function(experimentName) {
+    return defaultVariants[experimentName];
+};
 
 export default new PushtellEventEmitter();;
