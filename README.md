@@ -388,7 +388,7 @@ Please [let us know](https://github.com/pushtell/react-ab-test/issues/new) about
 ## Resources for A/B Testing with React
 
 * [Product Experimentation with React and PlanOut](http://product.hubspot.com/blog/product-experimentation-with-planout-and-react.js) on the [HubSpot Product Blog](http://product.hubspot.com/)
-* [Roll Your Own A/B Tests With Optimizely and React](http://engineering.tilt.com/roll-your-own-ab-tests-with-optimizely-and-react/) on the [Tilt Engineering Blog](http://engineering.tilt.com/)
+* [Roll Your Own A/B Tests With Optimizely and React](https://web.archive.org/web/20170611112545/http://engineering.tilt.com/roll-your-own-ab-tests-with-optimizely-and-react/) on the [Tilt Engineering Blog](http://engineering.tilt.com/)
 * [Simple Sequential A/B Testing](http://www.evanmiller.org/sequential-ab-testing.html)
 * [A/B Testing Rigorously (without losing your job)](http://elem.com/~btilly/ab-testing-multiple-looks/part1-rigorous.html)
 
