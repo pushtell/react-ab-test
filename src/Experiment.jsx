@@ -1,14 +1,15 @@
 import React, { Component } from "react";
+import PropTypes from 'prop-types';
 import emitter from "./emitter";
 import WeightedExperiment from "./WeightedExperiment";
 import store from "./store";
 
 export default class Experiment extends Component {
     static propTypes = {
-        name: React.PropTypes.string.isRequired,
-        defaultVariantName: React.PropTypes.string,
-        userIdentifier: React.PropTypes.string,
-        runTest: React.PropTypes.bool
+        name: PropTypes.string.isRequired,
+        defaultVariantName: PropTypes.string,
+        userIdentifier: PropTypes.string,
+        runTest: PropTypes.bool
     };
 
     static displayName = "Pushtell.Experiment";
