@@ -1,4 +1,5 @@
 import {EventEmitter} from 'fbemitter';
+import crc32 from "fbjs/lib/crc32";
 
 let values = {};
 let experiments = {};
@@ -174,6 +175,62 @@ PushtellEventEmitter.prototype.getActiveVariant = function(experimentName){
 PushtellEventEmitter.prototype.setActiveVariant = function(experimentName, variantName, passthrough){
   values[experimentName] = variantName;
   emitter.emit("active-variant", experimentName, variantName, passthrough);
+}
+
+PushtellEventEmitter.prototype.setRandomActiveVariant = function(experimentName, userIdentifier){
+  /*
+
+  Choosing a weighted variant:
+    For C, A, B with weights 2, 4, 8
+
+    variants = A, B, C
+    weights = 4, 8, 2
+    weightSum = 14
+    weightedIndex = 9
+
+    AAAABBBBBBBBCC
+    ========^
+    Select B
+
+  */
+
+  // Sorted array of the variant names, example: ["A", "B", "C"]
+  const variants = this.getSortedVariants(experimentName);
+  // Array of the variant weights, also sorted by variant name. For example, if
+  // variant C had weight 2, variant A had weight 4, and variant B had weight 8
+  // return [4, 8, 2] to correspond with ["A", "B", "C"]
+  const weights = this.getSortedVariantWeights(experimentName);
+  // Sum the weights
+  const weightSum = weights.reduce((a, b) => {
+    return a + b;
+  }, 0);
+  // A random number between 0 and weightSum
+  let weightedIndex = typeof userIdentifier === 'string' ? Math.abs(crc32(userIdentifier) % weightSum) : Math.floor(Math.random() * weightSum);
+  // Iterate through the sorted weights, and deduct each from the weightedIndex.
+  // If weightedIndex drops < 0, select the variant. If weightedIndex does not
+  // drop < 0, default to the last variant in the array that is initially assigned.
+  let selectedVariant = variants[variants.length - 1];
+  for (let index = 0; index < weights.length; index++) {
+    weightedIndex -= weights[index];
+    if (weightedIndex < 0) {
+      selectedVariant = variants[index];
+      break;
+    }
+  }
+  this.setActiveVariant(experimentName, selectedVariant);
+  return selectedVariant;
+}
+
+PushtellEventEmitter.prototype.getActiveVariantWithOverride = function(experimentName){
+  if (typeof window !== 'undefined' && 'localStorage' in window && window['localStorage'] !== null) {
+    const experimentVariant = window.localStorage.getItem(experimentName);
+    
+    if (typeof experimentVariant === 'string' && experimentVariant.length > 0) {
+        return experimentVariant;
+    }
+  }
+
+  return this.getActiveVariant(experimentName);
 }
 
 PushtellEventEmitter.prototype.addExperimentVariant = function(experimentName, variantName){

@@ -54,7 +54,9 @@ Please [★ on GitHub](https://github.com/pushtell/react-ab-test)!
     - [`emitter.addWinListener([experimentName, ] callback)`](#emitteraddwinlistenerexperimentname--callback)
     - [`emitter.defineVariants(experimentName, variantNames [, variantWeights])`](#emitterdefinevariantsexperimentname-variantnames--variantweights)
     - [`emitter.setActiveVariant(experimentName, variantName)`](#emittersetactivevariantexperimentname-variantname)
+    - [`emitter.setRandomActiveVariant(experimentName, variantName)`](#emittersetrandomactivevariantexperimentname-variantname)
     - [`emitter.getActiveVariant(experimentName)`](#emittergetactivevariantexperimentname)
+    - [`emitter.getActiveVariantWithOverride(experimentName)`](#emittergetactivevariantwithoverrideexperimentname)
     - [`emitter.getSortedVariants(experimentName)`](#emittergetsortedvariantsexperimentname)
   - [`Subscription`](#subscription)
     - [`subscription.remove()`](#subscriptionremove)
@@ -534,9 +536,37 @@ Set the active variant of an experiment.
     * **Type:** `string`
     * **Example:** `"A"`
 
+#### `emitter.setRandomActiveVariant(experimentName, variantName)`
+
+Choose a random variant of an experiment and set is as active variant of an experiment.
+
+* **Return Type:** `string`
+* **Parameters:**
+  * `experimentName` - Name of the experiment.
+    * **Required**
+    * **Type:** `string`
+    * **Example:** `"My Example"`
+  * `userIdentifier` - Distinct user identifier. When defined, this value is hashed to choose a variant if `defaultVariantName` or a stored value is not present. Useful for [server side rendering](#server-rendering).
+    * **Optional**
+    * **Type:** `string`
+    * **Example:** `"7cf61a4521f24507936a8977e1eee2d4"`
+
 #### `emitter.getActiveVariant(experimentName)`
 
 Returns the variant name currently displayed by the experiment.
+
+* **Return Type:** `string`
+* **Parameters:**
+  * `experimentName` - Name of the experiment.
+    * **Required**
+    * **Type:** `string`
+    * **Example:** `"My Example"`
+
+#### `emitter.getActiveVariantWithOverride(experimentName)`
+
+Returns the variant name currently displayed by the experiment, including manual localStorage overrides.
+To perform an override on a browser instance run:
+`window.localStorage.EXPERIMENT_NAME = 'EXPERIMENT_VARIANT';`
 
 * **Return Type:** `string`
 * **Parameters:**
