@@ -1,5 +1,6 @@
 import {EventEmitter} from 'fbemitter';
 import crc32 from "fbjs/lib/crc32";
+import store from "./store";
 
 let values = {};
 let experiments = {};
